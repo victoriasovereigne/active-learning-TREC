@@ -29,8 +29,8 @@ np.random.seed(1335)
 TEXT_DATA_DIR = '/home/nahid/TREC/v4/'
 RELEVANCE_DATA_DIR = '/home/nahid/relevance.txt'
 topic_number = '401'
-docrepresentation = "BOW"  # can be BOW, TF-IDF
-sampling=True # can be True or False
+docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
+sampling=False # can be True or False
 test_size = 0.6    # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
 
@@ -260,27 +260,25 @@ X_train, X_test, y_train, y_test = \
 if sampling == True:
     ros = RandomOverSampler()
     X_train, y_train = ros.fit_sample(X_train, y_train)
+    X_train = X_train.tolist()
+    y_train = y_train.tolist()
+    print "Before", y_train
+    print "Number of one in train after sampling", y_train.count(1)
+    print "Number of one in test after sampling", y_test.count(1)
 
-X_train = X_train.tolist()
-y_train = y_train.tolist()
+    # we have to do this because randomoversampling placing all the zero at the first halh
+    # and all the one label at last half
+    # which is creating problem for activer learning (logistic regression module)
+    # we are passing the first 10 sample and becuase of this the first ten sample
+    # only contains zero
 
-print "Before", y_train
-print "Number of one in train after sampling", y_train.count(1)
-print "Number of one in test after sampling", y_test.count(1)
+    X_a, X_b, y_a, y_b = \
+        train_test_split(X_train, y_train, test_size=test_size, stratify=y_train)
 
-# we have to do this because randomoversampling placing all the zero at the first halh
-# and all the one label at last half
-# which is creating problem for activer learning (logistic regression module)
-# we are passing the first 10 sample and becuase of this the first ten sample
-# only contains zero
+    X_train = X_a + X_b
+    y_train = y_a + y_b
 
-X_a, X_b, y_a, y_b = \
-    train_test_split(X_train, y_train, test_size=test_size, stratify=y_train)
-
-X_train = X_a + X_b
-y_train = y_a + y_b
-
-print "After", y_train
+    print "After", y_train
 
 trn_ds = Dataset(X_train, np.concatenate(
     [y_train[:n_labeled], [None] * (len(y_train) - n_labeled)]))
