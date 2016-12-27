@@ -5,15 +5,11 @@ from bs4 import BeautifulSoup
 import re
 import nltk
 import copy
-
-#nltk.download()  # Download text data sets, including stop words
-
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 from sklearn.model_selection import train_test_split
-#from sklearn.linear_model import LogisticRegression
-#from sklearn import svm
 import matplotlib.pyplot as plt
 from libact.base.dataset import Dataset, import_libsvm_sparse
 from libact.models import *
@@ -30,6 +26,9 @@ import logging
 logging.basicConfig()
 
 np.random.seed(1335)
+TEXT_DATA_DIR = '/home/nahid/TREC/v4/'
+docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
+sampling=True # can be True or False
 
 
 
@@ -79,7 +78,6 @@ def run(trn_ds, tst_ds, lbr, model, qs, quota):
 
     return E_in, E_out
 
-TEXT_DATA_DIR = '/home/nahid/TREC/v4/'
 
 print ('Processing news text')
 # we have in total 20 news label, for each news label we have a directory so we will store the label from there as dictionary
@@ -163,22 +161,35 @@ for lines in f:
 f.close()
 #print relevance_label
 
-# Initialize the "CountVectorizer" object, which is scikit-learn's
-# bag of words tool.
-vectorizer = CountVectorizer(analyzer = "word",   \
+bag_of_word = []
+if docrepresentation == "TF-IDF":
+    vectorizer = TfidfVectorizer(min_df=5, \
+                             analyzer = "word",   \
                              tokenizer = None,    \
                              preprocessor = None, \
                              stop_words = None,   \
-                             max_features = 5000)
+                             max_features = 15000)
 
-# fit_transform() does two functions: First, it fits the model
-# and learns the vocabulary; second, it transforms our training data
-# into feature vectors. The input to fit_transform should be a list of
-# strings.
-bag_of_word = vectorizer.fit_transform(clear_review)
+    bag_of_word = vectorizer.fit_transform(clear_review)
 
-# Numpy arrays are easy to work with, so convert the result to an
-# array
+
+elif docrepresentation == "BOW":
+    # Initialize the "CountVectorizer" object, which is scikit-learn's
+    # bag of words tool.
+    vectorizer = CountVectorizer(analyzer = "word",   \
+                                 tokenizer = None,    \
+                                 preprocessor = None, \
+                                 stop_words = None,   \
+                                 max_features = 5000)
+
+    # fit_transform() does two functions: First, it fits the model
+    # and learns the vocabulary; second, it transforms our training data
+    # into feature vectors. The input to fit_transform should be a list of
+    # strings.
+    bag_of_word = vectorizer.fit_transform(clear_review)
+    # Numpy arrays are easy to work with, so convert the result to an
+    # array
+
 bag_of_word = bag_of_word.toarray()
 #print bag_of_word.shape
 #vocab = vectorizer.get_feature_names()
@@ -223,27 +234,28 @@ print len(y)
 print y.count(1)
 print y.count(0)
 
-
-ros = RandomOverSampler()
-X_resampled, y_resampled = ros.fit_sample(X, y)
-
-
-print 'Resampled Version'
-print len(X_resampled)
-print len(y_resampled)
-#print y
-print y_resampled.tolist().count(1)
-print y_resampled.tolist().count(0)
+if sampling is True:
+    ros = RandomOverSampler()
+    X_resampled, y_resampled = ros.fit_sample(X, y)
 
 
-#X = X_resampled
-#y = y_resampled
+    print 'Resampled Version'
+    print len(X_resampled)
+    print len(y_resampled)
+    #print y
+    print y_resampled.tolist().count(1)
+    print y_resampled.tolist().count(0)
+
+
+    X = X_resampled
+    y = y_resampled
 
 test_size = 0.6    # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
 
 X_train, X_test, y_train, y_test = \
     train_test_split(X, y, test_size=test_size)
+
 trn_ds = Dataset(X_train, np.concatenate(
     [y_train[:n_labeled], [None] * (len(y_train) - n_labeled)]))
 tst_ds = Dataset(X_test, y_test)
