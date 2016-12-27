@@ -79,24 +79,9 @@ def run(trn_ds, tst_ds, lbr, model, qs, quota):
 
     return E_in, E_out
 
-BASE_DIR = ''
-GLOVE_DIR = '/home/nahid/PycharmProjects/kerasLearning' + '/glove.6B/'
 TEXT_DATA_DIR = '/home/nahid/TREC/v4/'
-MAX_SEQUENCE_LENGTH = 1000
-MAX_NB_WORDS = 20000
-EMBEDDING_DIM = 100
-VALIDATION_SPLIT = 0.2
-
-
-
-
-
 
 print ('Processing news text')
-#collect all the news as a text in one index of a list
-texts = []
-#corresponding label of that news in a list
-label = []
 # we have in total 20 news label, for each news label we have a directory so we will store the label from there as dictionary
 # label_name --> label_index
 docno_rawtext = {} #original text with headline appended at the first
