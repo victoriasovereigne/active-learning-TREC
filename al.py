@@ -27,8 +27,13 @@ logging.basicConfig()
 
 np.random.seed(1335)
 TEXT_DATA_DIR = '/home/nahid/TREC/v4/'
+RELEVANCE_DATA_DIR = '/home/nahid/relevance.txt'
+topic_number = '401'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
+test_size = 0.6    # the percentage of samples in the dataset that will be
+n_labeled = 10      # number of samples that are initially labeled
+
 
 
 
@@ -80,8 +85,6 @@ def run(trn_ds, tst_ds, lbr, model, qs, quota):
 
 
 print ('Processing news text')
-# we have in total 20 news label, for each news label we have a directory so we will store the label from there as dictionary
-# label_name --> label_index
 docno_rawtext = {} #original text with headline appended at the first
 docno_bagtext = {}  # bag of word models
 docno_docindex = {}
@@ -141,12 +144,12 @@ relevance_label = [0]*len(docno_docindex)
 print len(relevance_label)
 print('Reading the relevance label')
 # file open
-f = open('/home/nahid/relevance.txt')
+f = open(RELEVANCE_DATA_DIR)
 print f
 for lines in f:
     values = lines.split()
     # print values[0]
-    if values[0] == '401':
+    if values[0] == topic_number:
         label = int(values[3])
 
         docNo = values[2]
@@ -161,14 +164,15 @@ for lines in f:
 f.close()
 #print relevance_label
 
-bag_of_word = []
+
 if docrepresentation == "TF-IDF":
+    print "Using TF-IDF"
     vectorizer = TfidfVectorizer(min_df=5, \
                              analyzer = "word",   \
                              tokenizer = None,    \
                              preprocessor = None, \
                              stop_words = None,   \
-                             max_features = 15000)
+                             max_features = 5000)
 
     bag_of_word = vectorizer.fit_transform(clear_review)
 
@@ -176,6 +180,7 @@ if docrepresentation == "TF-IDF":
 elif docrepresentation == "BOW":
     # Initialize the "CountVectorizer" object, which is scikit-learn's
     # bag of words tool.
+    print "Uisng Bag of Word"
     vectorizer = CountVectorizer(analyzer = "word",   \
                                  tokenizer = None,    \
                                  preprocessor = None, \
@@ -187,9 +192,9 @@ elif docrepresentation == "BOW":
     # into feature vectors. The input to fit_transform should be a list of
     # strings.
     bag_of_word = vectorizer.fit_transform(clear_review)
-    # Numpy arrays are easy to work with, so convert the result to an
-    # array
 
+# Numpy arrays are easy to work with, so convert the result to an
+# array
 bag_of_word = bag_of_word.toarray()
 #print bag_of_word.shape
 #vocab = vectorizer.get_feature_names()
@@ -208,14 +213,13 @@ print "Bag of word completed"
 X=[]
 y=[]
 
-f = open('/home/nahid/relevance.txt')
+f = open(RELEVANCE_DATA_DIR)
 print f
 for lines in f:
     values = lines.split()
     # print values[0]
-    if values[0] == '401':
+    if values[0] == topic_number:
         label = int(values[3])
-
         docNo = values[2]
         #print docNo, label
         if docNo[0]=='F':
@@ -234,10 +238,9 @@ print len(y)
 print y.count(1)
 print y.count(0)
 
-if sampling is True:
+if sampling == True:
     ros = RandomOverSampler()
     X_resampled, y_resampled = ros.fit_sample(X, y)
-
 
     print 'Resampled Version'
     print len(X_resampled)
@@ -250,8 +253,6 @@ if sampling is True:
     X = X_resampled
     y = y_resampled
 
-test_size = 0.6    # the percentage of samples in the dataset that will be
-n_labeled = 10      # number of samples that are initially labeled
 
 X_train, X_test, y_train, y_test = \
     train_test_split(X, y, test_size=test_size)
@@ -287,4 +288,5 @@ plt.title('Experiment Result')
 plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
            fancybox=True, shadow=True, ncol=5)
 plt.show()
+
 
