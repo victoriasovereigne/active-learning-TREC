@@ -1,0 +1,46 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="33">
+            <item index="0" class="java.lang.String" itemvalue="Explore" />
+            <item index="1" class="java.lang.String" itemvalue="Help" />
+            <item index="2" class="java.lang.String" itemvalue="Fork" />
+            <item index="3" class="java.lang.String" itemvalue="48" />
+            <item index="4" class="java.lang.String" itemvalue="input-compatable" />
+            <item index="5" class="java.lang.String" itemvalue="Issues" />
+            <item index="6" class="java.lang.String" itemvalue="sklearn-adapter" />
+            <item index="7" class="java.lang.String" itemvalue="fbe9877" />
+            <item index="8" class="java.lang.String" itemvalue="Projects" />
+            <item index="9" class="java.lang.String" itemvalue="v0.1" />
+            <item index="10" class="java.lang.String" itemvalue="labeler_error_handling" />
+            <item index="11" class="java.lang.String" itemvalue="DWUS" />
+            <item index="12" class="java.lang.String" itemvalue="Integrations" />
+            <item index="13" class="java.lang.String" itemvalue="itemscope" />
+            <item index="14" class="java.lang.String" itemvalue="v0.1.2" />
+            <item index="15" class="java.lang.String" itemvalue="Star" />
+            <item index="16" class="java.lang.String" itemvalue="v0.1.1" />
+            <item index="17" class="java.lang.String" itemvalue="Unwatch" />
+            <item index="18" class="java.lang.String" itemvalue="Watch" />
+            <item index="19" class="java.lang.String" itemvalue="Graphs" />
+            <item index="20" class="java.lang.String" itemvalue="Unstar" />
+            <item index="21" class="java.lang.String" itemvalue="sphinx-gallery" />
+            <item index="22" class="java.lang.String" itemvalue="Settings" />
+            <item index="23" class="java.lang.String" itemvalue="data-pjax" />
+            <item index="24" class="java.lang.String" itemvalue="35" />
+            <item index="25" class="java.lang.String" itemvalue="Pulse" />
+            <item index="26" class="java.lang.String" itemvalue="master" />
+            <item index="27" class="java.lang.String" itemvalue="multilabel" />
+            <item index="28" class="java.lang.String" itemvalue="EER" />
+            <item index="29" class="java.lang.String" itemvalue="229" />
+            <item index="30" class="java.lang.String" itemvalue="Wiki" />
+            <item index="31" class="java.lang.String" itemvalue="remove_import_libsvm_sparse_scipy_mat" />
+            <item index="32" class="java.lang.String" itemvalue="contributors" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

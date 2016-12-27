@@ -29,7 +29,7 @@ np.random.seed(1335)
 TEXT_DATA_DIR = '/home/nahid/TREC/v4/'
 RELEVANCE_DATA_DIR = '/home/nahid/relevance.txt'
 topic_number = '401'
-docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
+docrepresentation = "BOW"  # can be BOW, TF-IDF
 sampling=True # can be True or False
 test_size = 0.6    # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
@@ -61,9 +61,6 @@ def review_to_words( raw_review ):
     # 6. Join the words back into one string separated by space,
     # and return the result.
     return( " ".join( meaningful_words ))
-
-
-
 
 
 def run(trn_ds, tst_ds, lbr, model, qs, quota):
@@ -232,12 +229,13 @@ for lines in f:
                     y.append(relevance_label[docIndex])
 f.close()
 
-print len(X)
-print len(y)
+print "Whole Dataset size: ", len(X)
+#print len(y)
 #print y
-print y.count(1)
-print y.count(0)
+print "Number of One", y.count(1)
+print "Number of zero", y.count(0)
 
+'''
 if sampling == True:
     ros = RandomOverSampler()
     X_resampled, y_resampled = ros.fit_sample(X, y)
@@ -252,10 +250,37 @@ if sampling == True:
 
     X = X_resampled
     y = y_resampled
+'''
 
-
+#This stratify parameter makes a split so that the proportion of values in the sample produced will be the same as the proportion of values provided to parameter stratify.
+#For example, if variable y is a binary categorical variable with values 0 and 1 and there are 25% of zeros and 75% of ones, stratify=y will make sure that your random split has 25% of 0's and 75% of 1's.
 X_train, X_test, y_train, y_test = \
-    train_test_split(X, y, test_size=test_size)
+    train_test_split(X, y, test_size=test_size, stratify=y)
+
+if sampling == True:
+    ros = RandomOverSampler()
+    X_train, y_train = ros.fit_sample(X_train, y_train)
+
+X_train = X_train.tolist()
+y_train = y_train.tolist()
+
+print "Before", y_train
+print "Number of one in train after sampling", y_train.count(1)
+print "Number of one in test after sampling", y_test.count(1)
+
+# we have to do this because randomoversampling placing all the zero at the first halh
+# and all the one label at last half
+# which is creating problem for activer learning (logistic regression module)
+# we are passing the first 10 sample and becuase of this the first ten sample
+# only contains zero
+
+X_a, X_b, y_a, y_b = \
+    train_test_split(X_train, y_train, test_size=test_size, stratify=y_train)
+
+X_train = X_a + X_b
+y_train = y_a + y_b
+
+print "After", y_train
 
 trn_ds = Dataset(X_train, np.concatenate(
     [y_train[:n_labeled], [None] * (len(y_train) - n_labeled)]))
