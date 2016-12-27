@@ -1,3 +1,6 @@
+'''Active learning for labeling the relevant document for TREC-8 dataset
+@author: Md Mustafizur Rahman (nahid@utexas.edu)'''
+
 import os
 import numpy as np
 import sys
@@ -15,11 +18,6 @@ from libact.base.dataset import Dataset, import_libsvm_sparse
 from libact.models import *
 from libact.query_strategies import *
 from libact.labelers import IdealLabeler
-
-
-from sklearn.datasets import make_classification
-from sklearn.decomposition import PCA
-
 from imblearn.over_sampling import RandomOverSampler
 
 import logging
@@ -29,8 +27,8 @@ np.random.seed(1335)
 TEXT_DATA_DIR = '/home/nahid/TREC/v4/'
 RELEVANCE_DATA_DIR = '/home/nahid/relevance.txt'
 topic_number = '401'
-docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
-sampling=False # can be True or False
+docrepresentation = "BOW"  # can be BOW, TF-IDF
+sampling=True # can be True or False
 test_size = 0.6    # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
 
@@ -305,6 +303,7 @@ query_num = np.arange(1, quota + 1)
 #plt.plot(query_num, E_in_1, 'g', label='qs Ein')
 #plt.plot(query_num, E_in_2, 'r', label='random Ein')
 plt.plot(query_num, E_out_1, 'b', label='')
+print E_out_1
 plt.xlabel('Number of Queries')
 plt.ylabel('Error')
 plt.title('Experiment Result')
