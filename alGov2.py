@@ -4,10 +4,14 @@
 import os
 import numpy as np
 import sys
+sys.setrecursionlimit(100000000)
 from bs4 import BeautifulSoup
 import re
 import nltk
 import copy
+import bz2
+
+
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -28,14 +32,14 @@ import logging
 logging.basicConfig()
 
 np.random.seed(1335)
-TEXT_DATA_DIR = '/home/nahid/TREC/data/'
-RELEVANCE_DATA_DIR = '/home/nahid/TREC/relevance.txt'
+TEXT_DATA_DIR = '/home/nahid/TREC/gov2/'
+RELEVANCE_DATA_DIR = '/home/nahid/TREC/qrels.tb06.top50.txt'
 topic_number = '410'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
 test_size = 0.6    # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
-preloaded = True
+preloaded = False
 
 
 
@@ -119,55 +123,74 @@ if preloaded==False:
         #if name == "ft":
         path = os.path.join(TEXT_DATA_DIR, name)
         print path
-        if os.path.isdir(path):
-            for fname in sorted(os.listdir(path)):
-                #print fname
-                fpath = os.path.join(path,fname)
-                print fpath
-                if os.path.isdir(fpath):
-                    for fpname in sorted(os.listdir(fpath)):
-                        fpname = os.path.join(fpath,fpname)
-                        #print fpname
+        if os.path.isfile(path):
+            #f = open(path)
+            bz_file = bz2.BZ2File(path)
 
-                        f = open(fpname)
-                        s = f.read()
+            s = bz_file.readlines()
+            #str1 = ' '.join(s)
+            #s = ""
+            length = len(s)
+            tmp=""
+            accumulate = False
 
-                        soup = BeautifulSoup(s, 'html.parser')
-                        docsNos = soup.find_all('docno')
-                        texts = soup.find_all('text')
-                        '''
-                        if len(docsNos) != len(headLines):
-                            print "UNEQUAL"
-                            print len(docsNos)
-                            print len(headLines)
-                            print len(texts)
-                        '''
-                        for i in xrange(0, min(len(docsNos), len(texts))):
-                            #print docsNos[i].next
-                            docNo = docsNos[i].next.replace(" ", "").replace("\t", "")
-                            if docNo in docNo_label:
-                                all_reviews[docNo] = (review_to_words(texts[i].next))
-                                #print "in List", docsNos[i].next
+            for i in xrange(0,length):
+                s[i] = str(s[i])
+                #s[i] = str(s[i]).replace(" ", "").replace("\t", "")
+                '''print s[i]
+                for j in xrange(0,len(s[i])):
+                    print j,":", s[i][j]
+                print len(s[i])
+                print type(s[i])
+                print type("<DOC>")
+                print len("<DOC>")
+                '''
+                if s[i].find("<DOC>")!=-1:
+                    #print "Doc Start"
+                    tmp=tmp+s[i]
+                    accumulate = True
+
+                if accumulate == True:
+                    tmp=tmp+s[i]
+
+                if s[i].find("</DOC>")!=-1:
+                    tmp=tmp+s[i]
+                    accumulate = False
+                    #print "Doc End"
+                    #print tmp
+                    soup = BeautifulSoup(tmp, 'html.parser')
+                    docs = soup.find_all('doc')
+                    #print docs[0]
+                    tmp = ""
+                    soup = BeautifulSoup(str(docs[0]), 'html.parser')
+                    docNo = soup.find_all('docno')[0].next.replace(" ", "").replace("\t", "")
+                    #p = soup.find_all("p")
+                    print docNo
+                    #print len(p)
+                    #text=soup.get_text()
+
+                    #print p[0].next
+                    #print p[len(p)-1].next
+                    #print docsNos[0]
+                    #print len(docsNos)
+                    #print text
+                    '''
+                    if len(docsNos) != len(headLines):
+                        print "UNEQUAL"
+                        print len(docsNos)
+                        print len(headLines)
+                        print len(texts)
+                    '''
+
+                    if docNo in docNo_label:
+                        all_reviews[docNo] = review_to_words(soup.get_text())
+                        print "in List", docNo
 
 
-                        f.close()
-                else:
-                    f = open(fpath)
-                    s = f.read()
 
-                    soup = BeautifulSoup(s, 'html.parser')
-                    docsNos = soup.find_all('docno')
-                    texts = soup.find_all('text')
-                    for i in xrange(0, min(len(docsNos), len(texts))):
-                        # print docsNos[i].next
-                        docNo = docsNos[i].next.replace(" ", "").replace("\t", "")
-                        if docNo in docNo_label:
-                            all_reviews[docNo] = (review_to_words(texts[i].next))
-                            #print "in List", docsNos[i].next
+            f.close()
 
-                    f.close()
-
-    output = open('/home/nahid/TREC/data/output.txt', 'ab+')
+    output = open('/home/nahid/TREC/govcombine/output.txt', 'ab+')
     # data = {'a': [1, 2, 3], }
 
     pickle.dump(all_reviews, output)
@@ -180,7 +203,7 @@ else:
 
 s = "";
 #for topic in sorted(topic_to_doclist.keys()):
-for topic in xrange(421,422):
+for topic in xrange(801,850):
     print "Topic:", topic
     topic = str(topic)
     docList = topic_to_doclist[topic]
@@ -202,7 +225,7 @@ for topic in xrange(421,422):
                                  tokenizer = None,    \
                                  preprocessor = None, \
                                  stop_words = None,   \
-                                 max_features = 15000)
+                                 max_features = 5000)
 
         bag_of_word = vectorizer.fit_transform(judged_review)
 
@@ -215,7 +238,7 @@ for topic in xrange(421,422):
                                      tokenizer = None,    \
                                      preprocessor = None, \
                                      stop_words = None,   \
-                                     max_features = 15000)
+                                     max_features = 5000)
 
         # fit_transform() does two functions: First, it fits the model
         # and learns the vocabulary; second, it transforms our training data
@@ -297,12 +320,12 @@ for topic in xrange(421,422):
     print "quotas:", quota
 
     batch_size = int(quota / 10)
-    quota = 1
+    #quota = 50
 
     # Comparing UncertaintySampling strategy with RandomSampling.
     # model is the base learner, e.g. LogisticRegression, SVM ... etc.
-    qs = UncertaintySampling(trn_ds, method='lc', model=SVM())
-    model = SVM()
+    qs = UncertaintySampling(trn_ds, method='lc', model=LogisticRegression())
+    model = LogisticRegression()
 
     E_in_1, E_out_1, model = run(trn_ds, tst_ds, lbr, model, qs, quota, batch_size)
     y_pred = model.predict(X_test)
@@ -311,14 +334,9 @@ for topic in xrange(421,422):
     recall = recall_score(y_test, y_pred, average='binary')
     f1score = f1_score(y_test, y_pred, average='binary')
 
-    index=0
-    for y in y_pred:
-        print 'real:', y_test[index], 'pred:', y
-        index=index+1
     print "precision score:", precision
     print "recall score:", recall
     print "f-1 score:", f1score
-
 
 
     s=s+topic+","+str(datasize)+","+str(numberOne)+","+str(numberZero)+","+str(precision)+","+str(recall)+","+str(f1score)+"\n";
