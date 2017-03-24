@@ -21,26 +21,28 @@ from imblearn.over_sampling import RandomOverSampler
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
-from nltk.stem.porter import PorterStemmer
 from sklearn.linear_model import LogisticRegression
-
-
+from sklearn import svm
+import collections
+compare = lambda x, y: collections.Counter(x) == collections.Counter(y)
 import pickle
 
 import logging
 logging.basicConfig()
 
-np.random.seed(1335)
-TEXT_DATA_DIR = '/home/nahid//UT_research/TREC/data/'
-RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/relevance.txt'
-#topic_number = '410'
+#np.random.seed(1335)
+TEXT_DATA_DIR = '/home/nahid/UT_research/clueweb12/IndriProcessedclueweb12files/'
+RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
-test_size = 0.2    # the percentage of samples in the dataset that will be
+test_size = 0.2   # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
-preloaded = False
+preloaded = True
+processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
+result_location = '/home/nahid/UT_research/clueweb12/result/results_80_percentage_train_Basic_LR_over2_sampling_adhoc_2013.txt'
+start_topic = 201
+end_topic = 251
 
-stemmer = PorterStemmer()
 
 
 def review_to_words( raw_review ):
@@ -66,13 +68,7 @@ def review_to_words( raw_review ):
     #
     # 6. Join the words back into one string separated by space,
     # and return the result.
-    stemmed = []
-    for item in meaningful_words:
-        stemmed.append(stemmer.stem(item))
-
-    #print stemmed
-
-    return( " ".join( stemmed ))
+    return( " ".join( meaningful_words ))
 
 
 def run(trn_ds, tst_ds, lbr, model, qs, quota, batch_size):
@@ -99,118 +95,139 @@ def run(trn_ds, tst_ds, lbr, model, qs, quota, batch_size):
 
 
 
-topic_to_doclist = {} # key is the topic(string) and value is the list of docNumber
-docNo_label = {} # key is the DocNo and the value is the label
-print('Reading the relevance label')
-# file open
-f = open(RELEVANCE_DATA_DIR)
-print f
-tmplist = []
-for lines in f:
-    values = lines.split()
-    topic = values[0]
-    docNo = values[2]
-    label = int(values[3])
-    docNo_label[docNo] = label
-    if(topic_to_doclist.has_key(topic)):
-        tmplist.append(docNo)
-    else:
-        tmplist = []
-        tmplist.append(docNo)
-        topic_to_doclist[topic] = tmplist
-f.close()
+
 
 all_reviews = {}
 
 if preloaded==False:
     for name in sorted(os.listdir(TEXT_DATA_DIR)):
-        print name
+        #print name
         #if name == "ft":
         path = os.path.join(TEXT_DATA_DIR, name)
         print path
-        if os.path.isdir(path):
-            for fname in sorted(os.listdir(path)):
-                #print fname
-                fpath = os.path.join(path,fname)
-                print fpath
-                if os.path.isdir(fpath):
-                    for fpname in sorted(os.listdir(fpath)):
-                        fpname = os.path.join(fpath,fpname)
-                        #print fpname
-
-                        f = open(fpname)
-                        s = f.read()
-
-                        soup = BeautifulSoup(s, 'html.parser')
-                        docsNos = soup.find_all('docno')
-                        texts = soup.find_all('text')
-                        #print texts
-                        '''
-                        if len(docsNos) != len(headLines):
-                            print "UNEQUAL"
-                            print len(docsNos)
-                            print len(headLines)
-                            print len(texts)
-                        '''
-                        for i in xrange(0, min(len(docsNos), len(texts))):
-                            #print docsNos[i].next
-                            docNo = docsNos[i].next.replace(" ", "").replace("\t", "")
-                            if docNo in docNo_label:
-                                all_reviews[docNo] = (review_to_words(str(texts[i])))
-                                #print "in List", docsNos[i].next
+        statinfo = os.stat(path)
+        # because some files are of size zero bytes
+        if statinfo.st_size > 0:
 
 
-                        f.close()
-                else:
-                    f = open(fpath)
-                    s = f.read()
+            f = open(path)
 
-                    soup = BeautifulSoup(s, 'html.parser')
-                    docsNos = soup.find_all('docno')
-                    texts = soup.find_all('text')
-                    #print texts
-                    for i in xrange(0, min(len(docsNos), len(texts))):
-                        # print docsNos[i].next
-                        docNo = docsNos[i].next.replace(" ", "").replace("\t", "")
-                        if docNo in docNo_label:
-                            #if docNo=='FBIS3-10009':
-                                #print texts[i].next
-                                #print texts[i]
-                            all_reviews[docNo] = (review_to_words(str(texts[i])))
-                            #print "in List", docsNos[i].next
 
-                    f.close()
 
-    output = open('/home/nahid/UT_research/TREC/data/stemmed_output.txt', 'ab+')
+            docNo = name[0:name.index('.')]
+            #print docNo
+
+            # counting the line number until '---Terms---'
+            count = 0
+            for lines in f:
+                if lines.find("Terms")>0:
+                    count = count + 1
+                    break
+                count = count + 1
+
+            # skipping the lines until  '---Terms---' and reading the rest
+            c = 0
+            tmpStr = ""
+            #print "count:", count
+            #f = open(path)
+            for lines in f:
+                if c < count:
+                    c = c + 1
+                    continue
+                values = lines.split()
+                c = c + 1
+                #print values[0], values[1], values[2]
+                tmpStr = tmpStr + " "+ str(values[2])
+            #print tmpStr
+            #exit(0)
+
+            #if docNo in docNo_label:
+            all_reviews[docNo] = (review_to_words(tmpStr))
+
+            f.close()
+
+    output = open(processed_file_location, 'ab+')
     # data = {'a': [1, 2, 3], }
 
     pickle.dump(all_reviews, output)
     output.close()
 
 else:
-    input = open('/home/nahid/UT_research/TREC/data/stemmed_output.txt', 'rb')
+    input = open(processed_file_location, 'rb')
     all_reviews = pickle.load(input)
     print "pickle loaded"
 
 s = "";
 #for topic in sorted(topic_to_doclist.keys()):
-for topic in xrange(401,402):
+for topic in xrange(start_topic,end_topic):
     print "Topic:", topic
+    if topic == 202:
+        continue
+
     topic = str(topic)
+
+    topic_to_doclist = {}  # key is the topic(string) and value is the list of docNumber
+    docNo_label = {}  # key is the DocNo and the value is the label
+    print('Reading the relevance label')
+    # file open
+    f = open(RELEVANCE_DATA_DIR)
+    print f
+    tmplist = []
+    #g = 0
+    for lines in f:
+        #print lines
+        #g = g + 1
+        # if g>2739:
+        #    break
+        values = lines.split()
+        topicNo = values[0]
+        docNo = values[2]
+        label = int(values[3])
+        if label > 1:
+            label = 1
+        if label < 0:
+            label = 0
+        docNo_label[docNo] = label
+        if (topic_to_doclist.has_key(topicNo)):
+            tmplist.append(docNo)
+            topic_to_doclist[topicNo] = tmplist
+        else:
+            tmplist = []
+            tmplist.append(docNo)
+            topic_to_doclist[topicNo] = tmplist
+    f.close()
+    print len(topic_to_doclist)
     docList = topic_to_doclist[topic]
-    #print docList
-    print ('Processing news text for topic number')
+    print len(docList)
     relevance_label = []
     judged_review = []
 
     for documentNo in docList:
         if all_reviews.has_key(documentNo):
             #print "in List", documentNo
-            print documentNo, 'len:', len(all_reviews[documentNo]), 'type', type(all_reviews[documentNo])
-            print all_reviews[documentNo]
-            exit(0)
+            #print documentNo, 'len:', type(all_reviews[documentNo])
+
+            #print all_reviews[documentNo]
+            #exit(0)
             judged_review.append(all_reviews[documentNo])
             relevance_label.append(docNo_label[documentNo])
+
+    datasize = len(judged_review)
+    numberOne = relevance_label.count(1)
+
+    # print "Number of One", numberOne
+
+    numberZero = relevance_label.count(0)
+    # print "Number of zero", numberZero
+    prevelance = (numberOne * 1.0) / datasize
+
+    print "Number of Relevant", numberOne
+    print "Number of non-relevant", numberZero
+    print "prevelance ratio", prevelance * 100
+    if numberOne == 0:
+        print "############################"
+        print 'No relevant documents for topic', topic
+        continue
 
     if docrepresentation == "TF-IDF":
         print "Using TF-IDF"
@@ -261,15 +278,11 @@ for topic in xrange(401,402):
     y= relevance_label
 
     datasize = len(X)
-    print "Whole Dataset size: ", datasize
+
 
     #print len(y)
     #print y
-    numberOne = y.count(1)
-    print "Number of One", numberOne
 
-    numberZero = y.count(0)
-    print "Number of zero", numberZero
 
 
     #This stratify parameter makes a split so that the proportion of values in the sample produced will be the same as the proportion of values provided to parameter stratify.
@@ -277,19 +290,31 @@ for topic in xrange(401,402):
     X_train, X_test, y_train, y_test = \
         train_test_split(X, y, test_size=test_size, stratify=y)
 
+
+
+    print "=========Before Sampling======"
+    print "Whole Dataset size: ", datasize
+
+    print "Test size :", len(y_test)
+    print "Train size :", len(y_train)
+
     if sampling == True:
         ros = RandomOverSampler()
         X_train, y_train = ros.fit_sample(X_train, y_train)
         X_train = X_train.tolist()
         y_train = y_train.tolist()
+
+        if y_train.count(1)== 0:
+            print topic, "ZERO"
+
         #print "Before", y_train
-        print "Number of one in train after sampling", y_train.count(1)
-        print "Number of one in test after sampling", y_test.count(1)
+        #print "Number of one in train after sampling", y_train.count(1)
+        #print "Number of one in test after sampling", y_test.count(1)
 
         # we have to do this because randomoversampling placing all the zero at the first halh
         # and all the one label at last half
         # which is creating problem for activer learning (logistic regression module)
-        # we are passing the first 10 sample and becuase of this the first ten sample
+        # we are passing the first 10 sample and because of this the first ten sample
         # only contains zero
 
         '''X_a, X_b, y_a, y_b = \
@@ -298,13 +323,26 @@ for topic in xrange(401,402):
         X_train = X_a + X_b
         y_train = y_a + y_b
 
-        print "After", y_train
+        #print "After", y_train
+'''
+    print "=========After Sampling======"
+    #print "Whole Dataset size: ", datasize
+    print "Test size :", len(y_test)
+    print "Train size :", len(y_train)
 
-    n_labeled = int(len(y_train)*0.98)
+    '''n_labeled = int(len(y_train)*0.98)
 
     trn_ds = Dataset(X_train, np.concatenate(
         [y_train[:n_labeled], [None] * (len(y_train) - n_labeled)]))
     tst_ds = Dataset(X_test, y_test)
+    '''
+    '''for a in xrange(0,len(X_train)):
+        for b in xrange(0,len(X_test)):
+            if compare(X_train[a],X_test[b]):
+                print "same" ,a,b, X_train[a],X_test[b]
+
+    '''
+    '''
     fully_labeled_trn_ds = Dataset(X_train, y_train)
 
     trn_ds2 = copy.deepcopy(trn_ds)
@@ -316,42 +354,45 @@ for topic in xrange(401,402):
     batch_size = int(quota / 10)
     quota = 1
 
-    # Comparing UncertaintySampling strategy with RandomSampling.
+
     # model is the base learner, e.g. LogisticRegression, SVM ... etc.
     qs = UncertaintySampling(trn_ds, method='lc', model=LogisticRegression())
     model = LogisticRegression()
 
     E_in_1, E_out_1, model = run(trn_ds, tst_ds, lbr, model, qs, quota, batch_size)
     '''
+
+    print '----Started Training----'
     model = LogisticRegression()
     model.fit(X_train, y_train)
-
     y_pred = model.predict(X_test)
 
     precision = precision_score(y_test, y_pred, average='binary')
     recall = recall_score(y_test, y_pred, average='binary')
     f1score = f1_score(y_test, y_pred, average='binary')
 
-    #index=0
+    index=0
     #for y in y_pred:
-    #    print 'real:', y_test[index], 'pred:', y
+        #print 'real:', y_test[index], 'pred:', y
     #    index=index+1
     print "precision score:", precision
     print "recall score:", recall
     print "f-1 score:", f1score
 
+    num_correct = (y_pred == y_test).sum()
+    recall1 = (num_correct*1.0) / len(y_test)
+    print "model accuracy (%): ", recall1 * 100, "%"
 
+    s=s+topic+","+str(datasize)+","+str(numberOne)+","+str(numberZero)+","+str(prevelance)+","+str(precision)+","+str(recall)+","+str(f1score)+","+str(recall1)+"\n";
 
-    s=s+topic+","+str(datasize)+","+str(numberOne)+","+str(numberZero)+","+str(precision)+","+str(recall)+","+str(f1score)+"\n";
-
-    text_file = open("/home/nahid/UT_research/TREC/stemmed_results_analysis_450.txt", "w")
+    text_file = open(result_location, "w")
     text_file.write(s)
     text_file.close()
 
+    '''
     # Plot the learning curve of UncertaintySampling to RandomSampling
     # The x-axis is the number of queries, and the y-axis is the corresponding
     # error rate.
-    '''
     query_num = np.arange(1, quota + 1)
     #plt.plot(query_num, E_in_1, 'g', label='qs Ein')
     #plt.plot(query_num, E_in_2, 'r', label='random Ein')
@@ -363,5 +404,5 @@ for topic in xrange(401,402):
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
                fancybox=True, shadow=True, ncol=5)
     #plt.show()
-'''
+    '''
 
