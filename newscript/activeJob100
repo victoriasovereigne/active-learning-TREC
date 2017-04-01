@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH -J activeLearning100         # job name
+#SBATCH -o activeLearning100.o%j       # output and error file name (%j expands to jobID)
+#SBATCH -n 20              # total number of mpi tasks requested
+#SBATCH -p gpu     # queue (partition) -- normal, development, etc.
+#SBATCH -t 10:59:59        # run time (hh:mm:ss) - 1.0 hours
+#SBATCH --mail-user=nahidcse05@gmail.com
+#SBATCH --mail-type=begin  # email me when the job starts
+#SBATCH --mail-type=end    # email me when the job finishes
+
+module load python
+python activeCode.py WT2013 70 100 Basic
+python activeCode.py WT2014 30 25 SAL
+python activeCode.py WT2014 30 25 CAL
+python activeCode.py WT2014 30 25 Basic
+python activeCode.py WT2014 30 50 SAL
+python activeCode.py WT2014 30 50 CAL
+python activeCode.py WT2014 30 50 Basic
+python activeCode.py WT2014 30 100 SAL
+python activeCode.py WT2014 30 100 CAL
+python activeCode.py WT2014 30 100 Basic
+python activeCode.py WT2014 50 25 SAL
+python activeCode.py WT2014 50 25 CAL
+python activeCode.py WT2014 50 25 Basic
+python activeCode.py WT2014 50 50 SAL
+python activeCode.py WT2014 50 50 CAL
+python activeCode.py WT2014 50 50 Basic
+python activeCode.py WT2014 50 100 SAL
+python activeCode.py WT2014 50 100 CAL
+python activeCode.py WT2014 50 100 Basic
+python activeCode.py WT2014 70 25 SAL

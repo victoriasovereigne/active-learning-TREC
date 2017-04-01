@@ -6,17 +6,17 @@ import numpy as np
 import sys
 from bs4 import BeautifulSoup
 import re
-import nltk
-import copy
+#import nltk
+#import copy
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-from libact.base.dataset import Dataset, import_libsvm_sparse
-from libact.models import *
-from libact.query_strategies import *
-from libact.labelers import IdealLabeler
+#import matplotlib.pyplot as plt
+#from libact.base.dataset import Dataset, import_libsvm_sparse
+#from libact.models import *
+#from libact.query_strategies import *
+#from libact.labelers import IdealLabeler
 from imblearn.over_sampling import RandomOverSampler
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
@@ -38,12 +38,12 @@ RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
 test_size = 0.2    # the percentage of samples in the dataset that will be
-#test_size_set = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
-test_size_set = [0.7, 0.8]
+test_size_set = [0.2, 0.4, 0.6, 0.8]
+#test_size_set = [0.7, 0.8]
 
 datasource = sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
-n_labeled =  sys.argv[2] #50      # number of samples that are initially labeled
-batch_size = sys.argv[3] #50
+n_labeled =  int(sys.argv[2]) #50      # number of samples that are initially labeled
+batch_size = int(sys.argv[3]) #50
 protocol = sys.argv[4] #'SAL' can be ['SAL', 'CAL', 'SPL']
 preloaded = True
 
@@ -51,24 +51,35 @@ processed_file_location = ''
 start_topic = 0
 end_topic = 0
 
+result_location=''
+predicted_location='/work/04549/mustaf/wrangler/data/TREC/WT2014/prediction/'
+
 if datasource=='TREC8':
-    processed_file_location = '/home/nahid/UT_research/TREC/TREC8/processed.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
+    processed_file_location = '/work/04549/mustaf/wrangler/data/TREC/TREC8/processed.txt'
+    RELEVANCE_DATA_DIR = '/work/04549/mustaf/wrangler/data/TREC/TREC8/relevance.txt'
+    result_location = '/work/04549/mustaf/wrangler/data/TREC/TREC8/result/'
+    predicted_location = '/work/04549/mustaf/wrangler/data/TREC/TREC8/prediction/'
     start_topic = 401
     end_topic = 451
 elif datasource=='gov2':
-    processed_file_location = '/home/nahid/UT_research/TREC/gov2/processed.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/qrels.tb06.top50.txt'
+    processed_file_location = '/work/04549/mustaf/wrangler/data/TREC/gov2/processed.txt'
+    RELEVANCE_DATA_DIR = '/work/04549/mustaf/wrangler/data/TREC/gov2/qrels.tb06.top50.txt'
+    result_location = '/work/04549/mustaf/wrangler/data/TREC/gov2/result/'
+    predicted_location = '/work/04549/mustaf/wrangler/data/TREC/gov2/prediction/'
     start_topic = 801
     end_topic = 851
 elif datasource=='WT2013':
-    processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
+    processed_file_location = '/work/04549/mustaf/wrangler/data/TREC/WT2013/processed_new.txt'
+    RELEVANCE_DATA_DIR = '/work/04549/mustaf/wrangler/data/TREC/WT2013/qrelsadhoc2013.txt'
+    result_location = '/work/04549/mustaf/wrangler/data/TREC/WT2013/result/'
+    predicted_location = '/work/04549/mustaf/wrangler/data/TREC/WT2013/prediction/'
     start_topic = 201
     end_topic = 251
 else:
-    processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2014.txt'
+    processed_file_location = '/work/04549/mustaf/wrangler/data/TREC/WT2013/processed_new.txt'
+    RELEVANCE_DATA_DIR = '/work/04549/mustaf/wrangler/data/TREC/WT2014/qrelsadhoc2014.txt'
+    result_location = '/work/04549/mustaf/wrangler/data/TREC/WT2014/result/'
+    predicted_location = '/work/04549/mustaf/wrangler/data/TREC/WT2014/prediction/'
     start_topic = 251
     end_topic = 301
 
@@ -195,9 +206,9 @@ for test_size in test_size_set:
     for fold in xrange(1,6):
         np.random.seed(seed)
         seed = seed + fold
-        result_location = '/home/nahid/UT_research/TREC/TREC8/newresult/TREC_8testset:' + str(
+        result_location_final = result_location + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
-        predicted_location = '/home/nahid/UT_research/TREC/TREC8/newresult/TREC_8_Prediction_testset:' + str(
+        predicted_location_final = predicted_location + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
 
         s = "";
@@ -524,11 +535,11 @@ for test_size in test_size_set:
                 pred_str = pred_str + str(docNo) + " " + str(y_pred[counter]) + "\n"
                 counter = counter + 1
 
-        text_file = open(result_location, "w")
+        text_file = open(result_location_final, "w")
         text_file.write(s)
         text_file.close()
 
-        text_file = open(predicted_location, "w")
+        text_file = open(predicted_location_final, "w")
         text_file.write(pred_str)
         text_file.close()
 
