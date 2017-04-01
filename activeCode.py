@@ -216,6 +216,8 @@ for test_size in test_size_set:
         #for topic in sorted(topic_to_doclist.keys()):
         for topic in xrange(start_topic,end_topic):
             print "Topic:", topic
+            if topic == 202:
+                continue
             topic = str(topic)
 
             topic_to_doclist = {}  # key is the topic(string) and value is the list of docNumber
@@ -238,6 +240,8 @@ for test_size in test_size_set:
                 label = int(values[3])
                 if label > 1:
                     label = 1
+                if label < 0:
+                    label = 0
                 docNo_label[docNo] = label
                 if (topic_to_doclist.has_key(topicNo)):
                     tmplist.append(docNo)
@@ -402,7 +406,15 @@ for test_size in test_size_set:
                 print '----Started Training----'
                 model = LogisticRegression()
                 size = len(X_train) - n_labeled
+                if size<0:
+                    print "Train Size:", len(X_train) , "seed:", n_labeled
+                    size = len(X_train)
+
                 numberofloop = size / batch_size
+                #numberofloop can be zero lenX_train = 138 and seed =70 size= 68 and batch_size = 100
+                if numberofloop == 0:
+                    numberofloop = 1
+
                 print "Number of loop",numberofloop
 
 

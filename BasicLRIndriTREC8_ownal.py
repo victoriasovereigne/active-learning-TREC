@@ -37,14 +37,14 @@ TEXT_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/IndriData/'
 RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
-test_size = 0.2    # the percentage of samples in the dataset that will be
+test_size = 0    # the percentage of samples in the dataset that will be
 #test_size_set = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
-test_size_set = [0.7, 0.8]
+test_size_set = [0.8]
 
-datasource = sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
-n_labeled =  sys.argv[2] #50      # number of samples that are initially labeled
-batch_size = sys.argv[3] #50
-protocol = sys.argv[4] #'SAL' can be ['SAL', 'CAL', 'SPL']
+datasource = 'WT2014' # can be  dataset = ['TREC8', 'gov2', 'WT']
+n_labeled =  70 #50      # number of samples that are initially labeled
+batch_size = 100 #50
+protocol = 'CAL' #'SAL' can be ['SAL', 'CAL', 'SPL']
 preloaded = True
 
 processed_file_location = ''
@@ -192,12 +192,12 @@ else:
 
 for test_size in test_size_set:
     seed = 1335
-    for fold in xrange(1,6):
+    for fold in xrange(1,2):
         np.random.seed(seed)
         seed = seed + fold
-        result_location = '/home/nahid/UT_research/TREC/TREC8/newresult/TREC_8testset:' + str(
+        result_location = '/home/nahid/UT_research/clueweb12/result1/' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
-        predicted_location = '/home/nahid/UT_research/TREC/TREC8/newresult/TREC_8_Prediction_testset:' + str(
+        predicted_location = '/home/nahid/UT_research/clueweb12/result1/prediction' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
 
         s = "";
@@ -227,6 +227,8 @@ for test_size in test_size_set:
                 label = int(values[3])
                 if label > 1:
                     label = 1
+                if label < 0:
+                    label = 0
                 docNo_label[docNo] = label
                 if (topic_to_doclist.has_key(topicNo)):
                     tmplist.append(docNo)
@@ -391,7 +393,14 @@ for test_size in test_size_set:
                 print '----Started Training----'
                 model = LogisticRegression()
                 size = len(X_train) - n_labeled
+
+                if size<0:
+                    print "Train Size:", len(X_train) , "seed:", n_labeled
+                    size = len(X_train)
+
                 numberofloop = size / batch_size
+                if numberofloop == 0:
+                    numberofloop = 1
                 print "Number of loop",numberofloop
 
 
