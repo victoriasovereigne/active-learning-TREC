@@ -1,6 +1,7 @@
 #!/bin/sh
 
 sbatch activeJob1
+sbatch activeJob2
 sbatch activeJob3
 sbatch activeJob4
 sbatch activeJob5
@@ -27,6 +28,7 @@ sbatch activeJob25
 sbatch activeJob26
 sbatch activeJob27
 sbatch activeJob28
+sbatch activeJob29
 sbatch activeJob30
 sbatch activeJob31
 sbatch activeJob32

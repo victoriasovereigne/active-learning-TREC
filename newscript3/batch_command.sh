@@ -1,0 +1,33 @@
+#!/bin/sh
+
+sbatch activeJob15
+sbatch activeJob30
+sbatch activeJob45
+sbatch activeJob60
+sbatch activeJob75
+sbatch activeJob82
+sbatch activeJobTREC815
+sbatch activeJobTREC8Batch251
+sbatch activeJobTREC8Batch252
+sbatch activeJobTREC8Batch253
+sbatch activeJobTREC8Batch254
+sbatch activeJobTREC8Batch255
+sbatch activeJobTREC8Batch256
+sbatch activeJobTREC8Batch257
+sbatch activeJobTREC8Batch258
+sbatch activeJobTREC8Batch259
+sbatch activeJobTREC8Batch2510
+sbatch activeJobTREC8Batch2511
+sbatch activeJobTREC8Batch2512
+sbatch activeJobTREC8Batch2513
+sbatch activeJobTREC8Batch2514
+sbatch activeJobTREC8Batch2515
+sbatch activeJobTREC8Batch2516
+sbatch activeJobTREC8Batch2517
+sbatch activeJobTREC8Batch2518
+sbatch activeJobTREC8Batch2519
+sbatch activeJobTREC8Batch2520
+sbatch activeJobTREC8Batch2521
+sbatch activeJobTREC8Batch2522
+sbatch activeJobTREC8Batch2523
+sbatch activeJobTREC8Batch2524

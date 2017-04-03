@@ -1,7 +1,7 @@
 import os
 
 dataset =['WT2014']
-fileList = os.listdir("/media/nahid/Windows8_OS/downloads/WT2014/result")
+fileList = os.listdir("/media/nahid/Windows8_OS/downloadsresult/WT2014/result")
 protocol_list = ['SAL', 'CAL', 'Basic']
 batch_size = [25, 50, 100]
 seed_size = [30, 50, 70]
@@ -9,8 +9,8 @@ seed_size = [30, 50, 70]
 
 test_size_set = [0.2, 0.4, 0.6, 0.8]
 result_location = ''
-counter = 1
-missing = 1
+counter = 0
+missing = 0
 for datasource in dataset: # 1
     for seed in seed_size: # 2
         for batch in batch_size: # 3

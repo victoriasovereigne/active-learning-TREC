@@ -1,9 +1,11 @@
 import sys
 
 protocol_list = ['SAL', 'CAL', 'Basic']
-batch_size = [25, 50, 100]
+batch_size = [50, 100]
 seed_size = [30, 50, 70]
-dataset = ['TREC8', 'gov2', 'WT2013', 'WT2014']
+#dataset = ['gov2', 'WT2013', 'WT2014']
+dataset = ['TREC8']
+
 
 shellcommand = '#!/bin/sh\n'
 s=''
@@ -28,7 +30,7 @@ for datasource in dataset: # 1
                                      '\nmodule load python'
 
                     s = tmp + s + "\nwait"
-                    filname = '/home/nahid/PycharmProjects/parser/newscript1/activeJob'+ str(variation)
+                    filname = '/home/nahid/PycharmProjects/parser/newscript2/activeJobTREC8'+ str(variation)
                     text_file = open(filname, "w")
                     text_file.write(s)
                     text_file.close()
@@ -36,7 +38,7 @@ for datasource in dataset: # 1
                     s=''
 
 
-                    shellcommand = shellcommand + '\nsbatch activeJob'+ str(variation)
+                    shellcommand = shellcommand + '\nsbatch activeJobTREC8'+ str(variation)
                 variation = variation + 1
 
 tmp = '#!/bin/bash\n' \
@@ -52,13 +54,13 @@ tmp = '#!/bin/bash\n' \
                  '\nmodule load python'
 
 s = tmp + s + "\nwait"
-filname = '/home/nahid/PycharmProjects/parser/newscript1/activeJob' + str(variation)
+filname = '/home/nahid/PycharmProjects/parser/newscript2/activeJobTREC8' + str(variation)
 text_file = open(filname, "w")
 text_file.write(s)
 text_file.close()
 shellcommand = shellcommand + '\nsbatch activeJob' + str(variation)
 
-filename1 = '/home/nahid/PycharmProjects/parser/newscript1/batch_command.sh'
+filename1 = '/home/nahid/PycharmProjects/parser/newscript2/batch_command.sh'
 print shellcommand
 text_file = open(filename1, "w")
 text_file.write(shellcommand)
