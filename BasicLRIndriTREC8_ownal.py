@@ -39,9 +39,9 @@ docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
 test_size = 0    # the percentage of samples in the dataset that will be
 #test_size_set = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
-test_size_set = [0.8]
+test_size_set = [0.2]
 
-datasource = 'gov2' # can be  dataset = ['TREC8', 'gov2', 'WT']
+datasource = 'WT2013' # can be  dataset = ['TREC8', 'gov2', 'WT']
 n_labeled =  70 #50      # number of samples that are initially labeled
 batch_size = 100 #50
 protocol = 'CAL' #'SAL' can be ['SAL', 'CAL', 'SPL']
@@ -64,8 +64,8 @@ elif datasource=='gov2':
 elif datasource=='WT2013':
     processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
-    start_topic = 201
-    end_topic = 251
+    start_topic = 202
+    end_topic = 203
 else:
     processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2014.txt'
@@ -313,7 +313,8 @@ for test_size in test_size_set:
             # print "Number of One", numberOne
 
             numberZero = y.count(0)
-
+            print "Number of One", numberOne
+            print "Number of Zero", numberZero
             datasize = len(X)
             prevelance = (numberOne * 1.0) / datasize
             # print "Number of zero", numberZero

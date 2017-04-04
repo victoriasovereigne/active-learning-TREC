@@ -1,7 +1,7 @@
 import os
 
-dataset =['WT2014']
-fileList = os.listdir("/media/nahid/Windows8_OS/downloadsresult/WT2014/result")
+dataset =['TREC8']
+fileList = os.listdir("/media/nahid/Windows8_OS/downloadsresult/TREC8new/result")
 protocol_list = ['SAL', 'CAL', 'Basic']
 batch_size = [25, 50, 100]
 seed_size = [30, 50, 70]

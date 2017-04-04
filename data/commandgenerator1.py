@@ -1,7 +1,8 @@
 import sys
 
-protocol_list = ['SAL', 'CAL', 'Basic']
-batch_size = [50, 100]
+#protocol_list = ['SAL', 'CAL', 'Basic']
+protocol_list = ['Basic']
+batch_size = [25]
 seed_size = [30, 50, 70]
 #dataset = ['gov2', 'WT2013', 'WT2014']
 dataset = ['TREC8']
