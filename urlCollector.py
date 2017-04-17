@@ -5,7 +5,7 @@ import os
 import requests
 from requests.auth import HTTPBasicAuth
 
-dataset = "WT2013"
+dataset = "WT2014"
 
 if dataset == "TREC-8":
     SystemRankingAddress = "http://trec.nist.gov/results/trec8/trec8.results.input/index.html"
@@ -24,7 +24,7 @@ request = urllib2.Request(SystemRankingAddress)
 base64string = base64.encodestring('%s:%s' % ('tipster', 'cdroms')).replace('\n', '')
 request.add_header("Authorization", "Basic %s" % base64string)
 resp = urllib2.urlopen(request)
-destinationAddress = "/home/nahid/PycharmProjects/parser/"+dataset+"/"
+destinationAddress = "/home/nahid/PycharmProjects/parser/systemRanking/"+dataset+"/"
 
 soup = BeautifulSoup(resp, from_encoding=resp.info().getparam('charset'))
 
@@ -50,10 +50,6 @@ for link in soup.find_all('a', href=True):
             print address
             downloadAddress = RankingBaseAddress + address
             fileName = os.path.basename(downloadAddress)
-            # request = requests.get(downloadAddress, auth=('tipster', 'cdroms'))
-            # request = urllib2.Request(downloadAddress)
-            # base64string = base64.encodestring('%s:%s' % ('tipster', 'cdroms')).replace('\n', '')
-            # request.add_header("Authorization", "Basic %s" % base64string)
 
             response = urllib2.urlopen(request)
             r = requests.get(downloadAddress, auth=HTTPBasicAuth('tipster', 'cdroms'))
@@ -65,11 +61,6 @@ for link in soup.find_all('a', href=True):
             print address
             downloadAddress = RankingBaseAddress + address
             fileName = os.path.basename(downloadAddress)
-            # request = requests.get(downloadAddress, auth=('tipster', 'cdroms'))
-            # request = urllib2.Request(downloadAddress)
-            # base64string = base64.encodestring('%s:%s' % ('tipster', 'cdroms')).replace('\n', '')
-            # request.add_header("Authorization", "Basic %s" % base64string)
-
             response = urllib2.urlopen(request)
             r = requests.get(downloadAddress, auth=HTTPBasicAuth('tipster', 'cdroms'))
             output = open(destinationAddress + fileName, "w")

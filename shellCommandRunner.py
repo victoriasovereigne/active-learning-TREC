@@ -4,20 +4,67 @@ from scipy.stats.stats import pearsonr
 from scipy.stats.stats import kendalltau
 import seaborn
 import matplotlib.pyplot as plt
+import pandas as pd
 
 os.chdir('/home/nahid/Downloads/trec_eval.9.0/')
 
+'''
 dataset = ['WT2013']
+datasource = 'WT2013' # can be  dataset = ['TREC8', 'gov2', 'WT']
 # following parameter is selected from learning curve of WT2013
 # note trainsize = 0.6 so test should be 0.4
 protocol_list = ['CAL']
 batch_size = [25]
 seed_size = [70]
 test_size_set = [0.4]
+'''
 
 
-datasource = 'WT2013' # can be  dataset = ['TREC8', 'gov2', 'WT']
-if datasource=='WT2013':
+dataset = ['WT2014']
+datasource = 'WT2014' # can be  dataset = ['TREC8', 'gov2', 'WT']
+# following parameter is selected from learning curve of WT2014
+# note trainsize = 0.4 so test should be 0.6
+protocol_list = ['CAL']
+batch_size = [25]
+seed_size = [30]
+test_size_set = [0.6]
+
+'''
+dataset = ['gov2']
+datasource = 'gov2' # can be  dataset = ['TREC8', 'gov2', 'WT']
+# following parameter is selected from learning curve of WT2014
+# note trainsize = 0.4 so test should be 0.6
+protocol_list = ['CAL']
+batch_size = [50]
+seed_size = [50]
+test_size_set = [0.6]
+'''
+
+'''
+dataset = ['TREC8']
+datasource = 'TREC8' # can be  dataset = ['TREC8', 'gov2', 'WT']
+# following parameter is selected from learning curve of WT2014
+# note trainsize = 0.4 so test should be 0.6
+protocol_list = ['CAL']
+batch_size = [50]
+seed_size = [50]
+test_size_set = [0.6]
+'''
+
+
+if datasource=='gov2':
+    originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/"+datasource+"/"
+    qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/qrels.tb06.top50.txt'
+    destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
+    predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/prediction/"
+    predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/modifiedprediction/"
+elif datasource=='TREC8':
+    originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/"+datasource+"/"
+    qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/relevance.txt'
+    destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
+    predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/prediction/"
+    predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/modifiedprediction/"
+elif datasource=='WT2013':
     originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/"+datasource+"/"
     qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
     destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
@@ -93,7 +140,11 @@ for datasource in dataset: # 1
 
 
 fig = plt.figure(figsize=(17,5))
-seaborn.regplot(x=originalqrelMap, y=predictedqrelMap, fit_reg=True)
+percentile_list = pd.DataFrame(
+    {'original': originalqrelMap,
+     'predicted': predictedqrelMap
+    })
+seaborn.regplot(x='original', y='predicted', fit_reg=True, data=percentile_list)
 fig.tight_layout()
 plt.show()
 

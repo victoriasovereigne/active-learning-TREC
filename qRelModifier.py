@@ -41,8 +41,6 @@ f.close()
 
 print "Real File Contains Line:", lineCounter
 
-
-
 lineCounter = 0
 modified = 0
 f = open(RELEVANCE_DATA_DIR)
