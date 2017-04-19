@@ -18,6 +18,9 @@ from libact.models import *
 from libact.query_strategies import *
 from libact.labelers import IdealLabeler
 from imblearn.over_sampling import RandomOverSampler
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import ADASYN
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
@@ -46,7 +49,7 @@ ranker_location["WT2013"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT20
 datasource = 'WT2013' # can be  dataset = ['TREC8', 'gov2', 'WT']
 n_labeled =  20 #50      # number of samples that are initially labeled
 batch_size = 25 #50
-protocol = 'SPL' #'SAL' can be ['SAL', 'CAL', 'SPL']
+protocol = 'CAL' #'SAL' can be ['SAL', 'CAL', 'SPL']
 preloaded = True
 
 processed_file_location = ''
@@ -66,8 +69,8 @@ elif datasource=='gov2':
 elif datasource=='WT2013':
     processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
-    start_topic = 205
-    end_topic = 206
+    start_topic = 201
+    end_topic = 251
 else:
     processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2014.txt'
@@ -216,9 +219,9 @@ for test_size in test_size_set:
     for fold in xrange(1,2):
         np.random.seed(seed)
         seed = seed + fold
-        result_location = '/home/nahid/UT_research/clueweb12/result1/' + str(
+        result_location = '/home/nahid/UT_research/clueweb12/result3/' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+  '_oversampling:'+str(sampling)+ '.txt'
-        predicted_location = '/home/nahid/UT_research/clueweb12/result1/prediction' + str(
+        predicted_location = '/home/nahid/UT_research/clueweb12/result3/prediction' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_oversampling:'+str(sampling)+ '.txt'
 
         s = "";
@@ -226,7 +229,7 @@ for test_size in test_size_set:
         #for topic in sorted(topic_to_doclist.keys()):
         for topic in xrange(start_topic,end_topic):
             print "Topic:", topic
-            if topic == 202 or topic == 212 or topic ==225:
+            if topic == 202 or topic == 212 or topic ==225 or topic == 239:
                 print "Skipping Topic 202"
                 continue
             topic = str(topic)
@@ -503,7 +506,10 @@ for test_size in test_size_set:
 
                 if sampling == True:
                     print "Oversampling in the seed list"
-                    ros = RandomOverSampler()
+                    #ros = RandomOverSampler()
+                    #ros = RandomUnderSampler()
+                    #ros = SMOTE(random_state=42)
+                    ros = ADASYN()
                     initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
                     initial_X_train = initial_X_train_sampled
                     initial_y_train = initial_y_train_sampled

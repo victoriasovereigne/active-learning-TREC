@@ -18,6 +18,9 @@ from libact.models import *
 from libact.query_strategies import *
 from libact.labelers import IdealLabeler
 from imblearn.over_sampling import RandomOverSampler
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import ADASYN
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
@@ -36,18 +39,23 @@ logging.basicConfig()
 TEXT_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/IndriData/'
 RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
-sampling=False # can be True or False
+sampling=True # can be True or False
 test_size = 0    # the percentage of samples in the dataset that will be
 #test_size_set = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
-test_size_set = [0.2]
+test_size_set = [0.3]
 ranker_location = {}
 ranker_location["WT2013"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2013/input.ICTNET13RSR2"
+ranker_location["WT2014"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2014/input.Protoss"
+ranker_location["gov2"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/gov2/input.indri06AdmD"
 
-datasource = 'WT2013' # can be  dataset = ['TREC8', 'gov2', 'WT']
+
+datasource = 'gov2' # can be  dataset = ['TREC8', 'gov2', 'WT']
 n_labeled =  20 #50      # number of samples that are initially labeled
 batch_size = 25 #50
-protocol = 'CAL' #'SAL' can be ['SAL', 'CAL', 'SPL']
+protocol = 'Basic' #'SAL' can be ['SAL', 'CAL', 'SPL']
 preloaded = True
+
+topicSkipList = [202, 212, 225, 255, 278, 805]
 
 processed_file_location = ''
 start_topic = 0
@@ -62,7 +70,7 @@ elif datasource=='gov2':
     processed_file_location = '/home/nahid/UT_research/TREC/gov2/processed.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/qrels.tb06.top50.txt'
     start_topic = 801
-    end_topic = 802
+    end_topic = 851
 elif datasource=='WT2013':
     processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
@@ -216,18 +224,18 @@ for test_size in test_size_set:
     for fold in xrange(1,2):
         np.random.seed(seed)
         seed = seed + fold
-        result_location = '/home/nahid/UT_research/clueweb12/resultSVM/' + str(
-            test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '_oversampling'+str(sampling)+ '.txt'
-        predicted_location = '/home/nahid/UT_research/clueweb12/resultSVM/prediction' + str(
-            test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '_oversampling'+str(sampling)+ '.txt'
+        result_location = '/home/nahid/UT_research/clueweb12/result4/' + str(
+            test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+  '_oversampling:'+str(sampling)+ '.txt'
+        predicted_location = '/home/nahid/UT_research/clueweb12/result4/prediction' + str(
+            test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_oversampling:'+str(sampling)+ '.txt'
 
         s = "";
         pred_str = ""
         #for topic in sorted(topic_to_doclist.keys()):
         for topic in xrange(start_topic,end_topic):
             print "Topic:", topic
-            if topic == 202 or topic == 212 or topic ==225:
-                print "Skipping Topic 202"
+            if topic in topicSkipList:
+                print "Skipping Topic :", topic
                 continue
             topic = str(topic)
 
@@ -235,7 +243,7 @@ for test_size in test_size_set:
             docNo_label = {}  # key is the DocNo and the value is the label
             docIndex_DocNo = {} # key is the index used in my code value is the actual DocNo
             docNo_docIndex = {} # key is the DocNo and the value is the index assigned by my code
-            best_f1 = 0.0 # best f1 considering per iteraton of active learning
+            best_f1 = 0.0  # best f1 considering per iteraton of active learning
             print('Reading the relevance label')
             # file open
             f = open(RELEVANCE_DATA_DIR)
@@ -352,11 +360,18 @@ for test_size in test_size_set:
 
             #This stratify parameter makes a split so that the proportion of values in the sample produced will be the same as the proportion of values provided to parameter stratify.
             #For example, if variable y is a binary categorical variable with values 0 and 1 and there are 25% of zeros and 75% of ones, stratify=y will make sure that your random split has 25% of 0's and 75% of 1's.
-            X_train, X_test, y_train, y_test = \
-                train_test_split(X, y, test_size=test_size, stratify=y)
+            #X_train, X_test, y_train, y_test = \
+            #    train_test_split(X, y, test_size=test_size, stratify=y)
+
+            #SEED = 2000
+            X_train, x_validation_and_test, y_train, y_validation_and_test = train_test_split(X, y, test_size=test_size, stratify=y,
+                                                                                              random_state=seed)
+            x_validation, X_test, y_validation, y_test = train_test_split(x_validation_and_test, y_validation_and_test, stratify=y_validation_and_test,
+                                                                          test_size=.5, random_state=seed)
 
             train_index_list = X_train.index.values
-            test_index_list = X_test.index.values
+            #test_index_list = X_test.index.values
+            test_index_list = x_validation_and_test.index.values
 
             #print train_index_list
             #print y_train[1354]
@@ -391,11 +406,11 @@ for test_size in test_size_set:
 
             if protocol == 'Basic':
                 print '----Started Training----'
-                model = svm.SVC(probability=True)
+                model = LogisticRegression()
                 model.fit(X_train, y_train)
             else:
                 print '----Started Training----'
-                model = svm.SVC(probability=True)
+                model = LogisticRegression()
                 size = len(X_train) - n_labeled
 
                 if size<0:
@@ -504,6 +519,9 @@ for test_size in test_size_set:
                 if sampling == True:
                     print "Oversampling in the seed list"
                     ros = RandomOverSampler()
+                    #ros = RandomUnderSampler()
+                    #ros = SMOTE(random_state=42)
+                    #ros = ADASYN()
                     initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
                     initial_X_train = initial_X_train_sampled
                     initial_y_train = initial_y_train_sampled
@@ -522,11 +540,13 @@ for test_size in test_size_set:
                 isPredictable = [1] * predictableSize  # initially we will predict all
 
                 loopCounter = 0
+                best_model = 0
                 while loopCounter<numberofloop:
                     print "Loop:", loopCounter
+                    loopDocList = []
 
                     if protocol == 'SPL':
-                        model = svm.SVC(probability=True)
+                        model = LogisticRegression()
                     model.fit(initial_X_train, initial_y_train)
 
                     # here is queueSize is the number of predictable element
@@ -555,9 +575,12 @@ for test_size in test_size_set:
                             item = queue.get()
                             #print len(item)
                             #print item.priority, item.index
+
                             isPredictable[item.index] = 0 # not predictable
                             initial_X_train.append(initial_X_test[item.index])
                             initial_y_train.append(initial_y_test[item.index])
+                            #print "Docs:", initial_X_test[item.index]
+                            loopDocList.append(int(initial_y_test[item.index]))
                             batch_counter = batch_counter + 1
                             #print X_train.append(X_test.pop(item.priority))
 
@@ -586,6 +609,7 @@ for test_size in test_size_set:
                             isPredictable[item.index] = 0 # not predictable
                             initial_X_train.append(initial_X_test[item.index])
                             initial_y_train.append(initial_y_test[item.index])
+                            loopDocList.append(int(initial_y_test[item.index]))
                             batch_counter = batch_counter + 1
                             #print X_train.append(X_test.pop(item.priority))
 
@@ -608,27 +632,44 @@ for test_size in test_size_set:
                             isPredictable[itemIndex] = 0
                             initial_X_train.append(initial_X_test[itemIndex])
                             initial_y_train.append(initial_y_test[itemIndex])
+                            loopDocList.append(int(initial_y_test[itemIndex]))
 
 
 
-                    print "Inside Loop Lenght:", len(initial_X_train) #len(initial_y_train)
                     loopCounter = loopCounter + 1
-                    y_pred = model.predict(X_test)
-                    f1score = f1_score(y_test, y_pred, average='binary')
-                    print "f-1 score:", f1score
+                    y_pred_validation = model.predict(x_validation)
+                    f1score = f1_score(y_validation, y_pred_validation, average='binary')
+                    precision = precision_score(y_validation, y_pred_validation, average='binary')
+                    recall = recall_score(y_validation, y_pred_validation, average='binary')
+                    print "f-1 score:", f1score, "precision:", precision, "recall:", recall, "Number of predicted (1): ", np.count_nonzero(y_pred_validation), "Number of predicted (0):", np.prod(y_pred_validation.shape) - np.count_nonzero(y_pred_validation)
+                    '''
+                    precision = TP/(TP+FP) as you've just said if predictor doesn't predicts positive class at all - precision is 0.
+
+                    recall = TP/(TP+FN), in case if predictor doesn't predict positive class - TP is 0 - recall is 0.
+
+                    So now you are dividing 0/0.'''
                     if f1score > best_f1:
                         best_f1 = f1score
+                        best_model = model
+                    print "Iteration: ", loopCounter," Added # of Relevant Docs:", loopDocList.count(1), " Added # of Non-relevant Docs:", loopDocList.count(0)
+                    print "New Train Length:", len(initial_X_train)  # len(initial_y_train)
 
+            # using the best model using validation set
+
+            if protocol != 'Basic':
+                model = best_model
+
+                if best_model == 0:
+                    model = LogisticRegression()
+                    model.fit(initial_X_train, initial_y_train)
 
             y_pred = model.predict(X_test)
 
             precision = precision_score(y_test, y_pred, average='binary')
             recall = recall_score(y_test, y_pred, average='binary')
             f1score = f1_score(y_test, y_pred, average='binary')
-
             if f1score > best_f1:
                 best_f1 = f1score
-
             index=0
             #for y in y_pred:
                 #print 'real:', y_test[index], 'pred:', y
@@ -647,6 +688,8 @@ for test_size in test_size_set:
 
 
             counter = 0
+            # doing predcition again for all documents in the validation and test set for writing the prediction files
+            y_pred = model.predict(x_validation_and_test)
             for docIndex in test_index_list:
                 docNo = docIndex_DocNo[docIndex]
                 pred_str = pred_str + str(topic) + " "+str(docNo) + " " + str(y_pred[counter]) + "\n"
