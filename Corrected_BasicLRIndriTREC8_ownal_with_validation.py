@@ -42,17 +42,18 @@ docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
 test_size = 0    # the percentage of samples in the dataset that will be
 #test_size_set = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
-test_size_set = [0.3]
+test_size_set = [0.2]
 ranker_location = {}
 ranker_location["WT2013"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2013/input.ICTNET13RSR2"
 ranker_location["WT2014"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2014/input.Protoss"
 ranker_location["gov2"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/gov2/input.indri06AdmD"
+ranker_location["TREC8"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/TREC8/input.ibmg99b"
 
 
-datasource = 'gov2' # can be  dataset = ['TREC8', 'gov2', 'WT']
+datasource = 'WT2014' # can be  dataset = ['TREC8', 'gov2', 'WT']
 n_labeled =  20 #50      # number of samples that are initially labeled
 batch_size = 25 #50
-protocol = 'Basic' #'SAL' can be ['SAL', 'CAL', 'SPL']
+protocol = 'CAL' #'SAL' can be ['SAL', 'CAL', 'SPL']
 preloaded = True
 
 topicSkipList = [202, 212, 225, 255, 278, 805]
@@ -65,7 +66,7 @@ if datasource=='TREC8':
     processed_file_location = '/home/nahid/UT_research/TREC/TREC8/processed.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
     start_topic = 401
-    end_topic = 402
+    end_topic = 451
 elif datasource=='gov2':
     processed_file_location = '/home/nahid/UT_research/TREC/gov2/processed.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/qrels.tb06.top50.txt'
@@ -144,6 +145,7 @@ def run(trn_ds, tst_ds, lbr, model, qs, quota, batch_size):
 
 
 all_reviews = {}
+learning_curve = {} # per batch value for  validation set
 
 if preloaded==False:
     for name in sorted(os.listdir(TEXT_DATA_DIR)):
@@ -224,10 +226,14 @@ for test_size in test_size_set:
     for fold in xrange(1,2):
         np.random.seed(seed)
         seed = seed + fold
-        result_location = '/home/nahid/UT_research/clueweb12/result4/' + str(
+        result_location = '/home/nahid/UT_research/clueweb12/result_'+str(datasource)+'/' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+  '_oversampling:'+str(sampling)+ '.txt'
-        predicted_location = '/home/nahid/UT_research/clueweb12/result4/prediction' + str(
+        predicted_location = '/home/nahid/UT_research/clueweb12/result_'+str(datasource)+'/prediction' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_oversampling:'+str(sampling)+ '.txt'
+
+        learning_curve_location = '/home/nahid/UT_research/clueweb12/result_'+str(datasource)+'/learning_curve' + str(
+            test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(
+            n_labeled) + '_fold' + str(fold) + '_oversampling:' + str(sampling) + '.txt'
 
         s = "";
         pred_str = ""
@@ -516,6 +522,9 @@ for test_size in test_size_set:
                 print "Number of human labels:", ask_for_label, "# non-relevant document in seed set", seed_zero_counter
                 #print type(initial_X_train)
 
+                unmodified_train_X = copy.deepcopy(initial_X_train)
+                unmodified_train_y = copy.deepcopy(initial_y_train)
+
                 if sampling == True:
                     print "Oversampling in the seed list"
                     ros = RandomOverSampler()
@@ -541,6 +550,7 @@ for test_size in test_size_set:
 
                 loopCounter = 0
                 best_model = 0
+                learning_batch_size = n_labeled # starts with the seed size
                 while loopCounter<numberofloop:
                     print "Loop:", loopCounter
                     loopDocList = []
@@ -577,8 +587,12 @@ for test_size in test_size_set:
                             #print item.priority, item.index
 
                             isPredictable[item.index] = 0 # not predictable
-                            initial_X_train.append(initial_X_test[item.index])
-                            initial_y_train.append(initial_y_test[item.index])
+                            #initial_X_train.append(initial_X_test[item.index])
+                            #initial_y_train.append(initial_y_test[item.index])
+
+                            unmodified_train_X.append(initial_X_test[item.index])
+                            unmodified_train_y.append(initial_y_test[item.index])
+
                             #print "Docs:", initial_X_test[item.index]
                             loopDocList.append(int(initial_y_test[item.index]))
                             batch_counter = batch_counter + 1
@@ -607,8 +621,9 @@ for test_size in test_size_set:
                             #print len(item)
                             #print item.priority, item.index
                             isPredictable[item.index] = 0 # not predictable
-                            initial_X_train.append(initial_X_test[item.index])
-                            initial_y_train.append(initial_y_test[item.index])
+                            unmodified_train_X.append(initial_X_test[item.index])
+                            unmodified_train_y.append(initial_y_test[item.index])
+
                             loopDocList.append(int(initial_y_test[item.index]))
                             batch_counter = batch_counter + 1
                             #print X_train.append(X_test.pop(item.priority))
@@ -630,15 +645,35 @@ for test_size in test_size_set:
                         for batch_counter in xrange(0,batch_size):
                             itemIndex = randomArray[batch_counter]
                             isPredictable[itemIndex] = 0
-                            initial_X_train.append(initial_X_test[itemIndex])
-                            initial_y_train.append(initial_y_test[itemIndex])
+                            unmodified_train_X.append(initial_X_test[itemIndex])
+                            unmodified_train_y.append(initial_y_test[itemIndex])
+
                             loopDocList.append(int(initial_y_test[itemIndex]))
+
+
+                    if sampling == True:
+                        print "Oversampling in the active iteration list"
+                        ros = RandomOverSampler()
+                        initial_X_train = None
+                        initial_y_train = None
+                        initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
 
 
 
                     loopCounter = loopCounter + 1
                     y_pred_validation = model.predict(x_validation)
                     f1score = f1_score(y_validation, y_pred_validation, average='binary')
+
+                    if (learning_curve.has_key(learning_batch_size)):
+                        tmplist = learning_curve.get(learning_batch_size)
+                        tmplist.append(f1score)
+                        learning_curve[learning_batch_size] = tmplist
+                    else:
+                        tmplist = []
+                        tmplist.append(f1score)
+                        learning_curve[learning_batch_size] = tmplist
+
+                    learning_batch_size = learning_batch_size + batch_size
                     precision = precision_score(y_validation, y_pred_validation, average='binary')
                     recall = recall_score(y_validation, y_pred_validation, average='binary')
                     print "f-1 score:", f1score, "precision:", precision, "recall:", recall, "Number of predicted (1): ", np.count_nonzero(y_pred_validation), "Number of predicted (0):", np.prod(y_pred_validation.shape) - np.count_nonzero(y_pred_validation)
@@ -648,6 +683,9 @@ for test_size in test_size_set:
                     recall = TP/(TP+FN), in case if predictor doesn't predict positive class - TP is 0 - recall is 0.
 
                     So now you are dividing 0/0.'''
+
+
+
                     if f1score > best_f1:
                         best_f1 = f1score
                         best_model = model
@@ -704,5 +742,16 @@ for test_size in test_size_set:
         text_file.close()
 
 
+s=""
+for (key, valueList) in sorted(learning_curve.items()):
+    size = len(valueList)
+    sum = 0
+    for value in valueList:
+        sum = sum + value
+    #print "value", sum/size
+    s = s + str(sum/size) + ","
 
+text_file = open(learning_curve_location, "w")
+text_file.write(s)
+text_file.close()
 

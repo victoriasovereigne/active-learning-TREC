@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0535bd4-8300-4b90-97dc-682304dbc22d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Corrected_Basic_SVM_IndriTREC8_ownal_ver_1.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_ver_1.py" afterPath="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_ver_1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py" afterPath="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py" />
     </list>
     <ignored path="parser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,14 +43,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Corrected_BasicLRIndriTREC8_ownal_with_validation.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Corrected_BasicLRIndriTREC8_ownal_with_validation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6390">
-              <caret line="51" column="18" lean-forward="false" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+            <state relative-caret-position="304">
+              <caret line="716" column="39" lean-forward="true" selection-start-line="714" selection-start-column="11" selection-end-line="716" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="finite_pool.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/finite_pool.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
               <folding>
                 <element signature="e#126#135#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fileUnzipper.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fileUnzipper.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="12" column="40" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="12" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="f-1collector.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/f-1collector.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="840">
+              <caret line="58" column="69" lean-forward="false" selection-start-line="58" selection-start-column="69" selection-end-line="58" selection-end-column="69" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -116,6 +145,7 @@
         <option value="$PROJECT_DIR$/Corrected_Basic_SVM_IndriTREC8_ownal_ver_1.py" />
         <option value="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_ver_1.py" />
         <option value="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py" />
+        <option value="$PROJECT_DIR$/finite_pool.py" />
       </list>
     </option>
   </component>
@@ -146,6 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -175,7 +206,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -184,33 +214,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/data" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.Corrected_BasicLRIndriTREC8_ownal_with_validation">
-    <configuration default="false" name="shellCommandRunner" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="parser" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/shellCommandRunner.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.finite_pool">
     <configuration default="false" name="Corrected_BasicLRIndriTREC8_ownal" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -279,6 +291,24 @@
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="finite_pool" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="parser" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/finite_pool.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -425,19 +455,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.shellCommandRunner" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_ver_1" />
-      <item index="3" class="java.lang.String" itemvalue="Python.Corrected_Basic_SVM_IndriTREC8_ownal_ver_1" />
-      <item index="4" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_with_validation" />
+      <item index="0" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_ver_1" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Corrected_Basic_SVM_IndriTREC8_ownal_ver_1" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_with_validation" />
+      <item index="4" class="java.lang.String" itemvalue="Python.finite_pool" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_with_validation" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_ver_1" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Corrected_Basic_SVM_IndriTREC8_ownal_ver_1" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal" />
-        <item index="4" class="java.lang.String" itemvalue="Python.shellCommandRunner" />
+        <item index="0" class="java.lang.String" itemvalue="Python.finite_pool" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_with_validation" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_ver_1" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Corrected_Basic_SVM_IndriTREC8_ownal_ver_1" />
+        <item index="4" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal" />
       </list>
     </recent_temporary>
   </component>
@@ -458,12 +488,12 @@
     <frame x="65" y="24" width="1535" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2859935" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09706841" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37203497" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23970038" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -477,6 +507,24 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -502,13 +550,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/al.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/al.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -734,13 +775,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/f-1collector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="69" lean-forward="false" selection-start-line="58" selection-start-column="69" selection-end-line="58" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/predictionChecker.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -752,13 +786,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="30" column="33" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="30" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fileUnzipper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="40" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="12" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -839,27 +866,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Corrected_Basic_SVM_IndriTREC8_ownal_ver_1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="219" column="164" lean-forward="true" selection-start-line="219" selection-start-column="125" selection-end-line="219" selection-end-column="164" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Corrected_Basic_SVM_IndriTREC8_ownal_ver_1.py" />
     <entry file="file://$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_ver_1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1646">
           <caret line="231" column="75" lean-forward="false" selection-start-line="231" selection-start-column="75" selection-end-line="231" selection-end-column="75" />
-          <folding>
-            <element signature="e#126#135#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/f-1collector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="58" column="69" lean-forward="false" selection-start-line="58" selection-start-column="69" selection-end-line="58" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fileUnzipper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="12" column="40" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="12" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6390">
-          <caret line="51" column="18" lean-forward="false" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+        <state relative-caret-position="304">
+          <caret line="716" column="39" lean-forward="true" selection-start-line="714" selection-start-column="11" selection-end-line="716" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finite_pool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
           <folding>
             <element signature="e#126#135#0" expanded="true" />
           </folding>
