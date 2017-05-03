@@ -41,9 +41,9 @@ logging.basicConfig()
 TEXT_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/IndriData/'
 RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
-sampling=True # can be True or False
+sampling=False # can be True or False
 iter_sampling=True
-correction = True
+correction = False
 if correction == True:
     sampling = False  # can be True or False
     iter_sampling = False
@@ -61,7 +61,7 @@ ranker_location["TREC8"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/TREC8
 datasource = 'TREC8' # can be  dataset = ['TREC8', 'gov2', 'WT']
 n_labeled =  10 #50      # number of samples that are initially labeled
 batch_size = 25 #50
-protocol = 'SAL' #'SAL' can be ['SAL', 'CAL', 'SPL']
+protocol = 'SPL' #'SAL' can be ['SAL', 'CAL', 'SPL']
 preloaded = True
 
 topicSkipList = [202,225,255, 278, 805]
@@ -235,12 +235,12 @@ for test_size in test_size_set:
     for fold in xrange(1,2):
         np.random.seed(seed)
         seed = seed + fold
-        result_location = '/home/nahid/UT_research/clueweb12/result_correction_'+str(datasource)+'/' + str(
+        result_location = '/home/nahid/UT_research/clueweb12/result_over_'+str(datasource)+'/' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+  '_oversampling:'+str(sampling)+ '_correction:'+str(correction)+  '_iter_sampling:'+str(iter_sampling)+ '.txt'
-        predicted_location = '/home/nahid/UT_research/clueweb12/result_correction_'+str(datasource)+'/prediction' + str(
+        predicted_location = '/home/nahid/UT_research/clueweb12/result_over_'+str(datasource)+'/prediction' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_oversampling:'+str(sampling)+ '_correction:'+str(correction)+ '_iter_sampling:'+str(iter_sampling)+'.txt'
 
-        learning_curve_location = '/home/nahid/UT_research/clueweb12/result_correction_'+str(datasource)+'/learning_curve' + str(
+        learning_curve_location = '/home/nahid/UT_research/clueweb12/result_over_'+str(datasource)+'/learning_curve' + str(
             test_size) + '_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(
             n_labeled) + '_fold' + str(fold) + '_oversampling:' + str(sampling) + '_correction:'+str(correction)+ '_iter_sampling:'+str(iter_sampling)+ '.txt'
 
@@ -500,7 +500,10 @@ for test_size in test_size_set:
                     model = LogisticRegression()
 
                 print len(initial_X_train)
-                model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
+                if correction == True:
+                    model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
+                else:
+                    model.fit(initial_X_train, initial_y_train)
 
                 y_pred_all = {}
 
@@ -667,18 +670,17 @@ for test_size in test_size_set:
                         loopDocList.append(int(initial_y_test[itemIndex]))
 
 
-                initial_X_train[:] = []
-                initial_y_train[:] = []
-                initial_X_train = copy.deepcopy(unmodified_train_X)
-                initial_y_train = copy.deepcopy(unmodified_train_y)
                 if iter_sampling == True:
                     print "Oversampling in the active iteration list"
                     ros = RandomOverSampler()
                     initial_X_train = None
                     initial_y_train = None
                     initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
-
-
+                else:
+                    initial_X_train[:] = []
+                    initial_y_train[:] = []
+                    initial_X_train = copy.deepcopy(unmodified_train_X)
+                    initial_y_train = copy.deepcopy(unmodified_train_y)
 
                 loopCounter = loopCounter + 1
 

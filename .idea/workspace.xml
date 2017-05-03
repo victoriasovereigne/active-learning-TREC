@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0535bd4-8300-4b90-97dc-682304dbc22d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/new_f-1collector.py" afterPath="$PROJECT_DIR$/data/new_f-1collector.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finite_pool_correction_no_ranker.py" afterPath="$PROJECT_DIR$/finite_pool_correction_no_ranker.py" />
     </list>
     <ignored path="parser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,21 +43,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="new_f-1collector.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="new_f-1collector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/new_f-1collector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="95" column="88" lean-forward="false" selection-start-line="95" selection-start-column="88" selection-end-line="95" selection-end-column="88" />
+            <state relative-caret-position="660">
+              <caret line="103" column="17" lean-forward="false" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="finite_pool_correction_no_ranker.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="new_f-1collector_oversample.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/new_f-1collector_oversample.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="finite_pool_correction_no_ranker.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="63" column="13" lean-forward="false" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
+            <state relative-caret-position="180">
+              <caret line="63" column="14" lean-forward="false" selection-start-line="63" selection-start-column="14" selection-end-line="63" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -134,8 +145,9 @@
         <option value="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py" />
         <option value="$PROJECT_DIR$/finite_pool.py" />
         <option value="$PROJECT_DIR$/finite_pool_correction.py" />
-        <option value="$PROJECT_DIR$/finite_pool_correction_no_ranker.py" />
         <option value="$PROJECT_DIR$/data/new_f-1collector.py" />
+        <option value="$PROJECT_DIR$/data/new_f-1collector_oversample.py" />
+        <option value="$PROJECT_DIR$/finite_pool_correction_no_ranker.py" />
       </list>
     </option>
   </component>
@@ -212,25 +224,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.new_f-1collector">
-    <configuration default="false" name="Corrected_BasicLRIndriTREC8_ownal_with_validation" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="parser" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.finite_pool_correction_no_ranker">
     <configuration default="false" name="finite_pool" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -299,6 +293,24 @@
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/new_f-1collector.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="new_f-1collector_oversample" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="parser" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/new_f-1collector_oversample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -445,19 +457,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_with_validation" />
-      <item index="1" class="java.lang.String" itemvalue="Python.finite_pool" />
-      <item index="2" class="java.lang.String" itemvalue="Python.finite_pool_correction" />
-      <item index="3" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker" />
-      <item index="4" class="java.lang.String" itemvalue="Python.new_f-1collector" />
+      <item index="0" class="java.lang.String" itemvalue="Python.finite_pool" />
+      <item index="1" class="java.lang.String" itemvalue="Python.finite_pool_correction" />
+      <item index="2" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker" />
+      <item index="3" class="java.lang.String" itemvalue="Python.new_f-1collector" />
+      <item index="4" class="java.lang.String" itemvalue="Python.new_f-1collector_oversample" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.new_f-1collector" />
-        <item index="1" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker" />
-        <item index="2" class="java.lang.String" itemvalue="Python.finite_pool_correction" />
-        <item index="3" class="java.lang.String" itemvalue="Python.finite_pool" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Corrected_BasicLRIndriTREC8_ownal_with_validation" />
+        <item index="0" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker" />
+        <item index="1" class="java.lang.String" itemvalue="Python.new_f-1collector_oversample" />
+        <item index="2" class="java.lang.String" itemvalue="Python.new_f-1collector" />
+        <item index="3" class="java.lang.String" itemvalue="Python.finite_pool_correction" />
+        <item index="4" class="java.lang.String" itemvalue="Python.finite_pool" />
       </list>
     </recent_temporary>
   </component>
@@ -475,7 +487,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1535" height="876" extended-state="6" />
+    <frame x="65" y="24" width="1535" height="876" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23713355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -540,13 +552,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/al.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/al.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -885,14 +890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="63" column="13" lean-forward="false" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/f-1collector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="409">
@@ -903,8 +900,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/new_f-1collector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="95" column="88" lean-forward="false" selection-start-line="95" selection-start-column="88" selection-end-line="95" selection-end-column="88" />
+        <state relative-caret-position="660">
+          <caret line="103" column="17" lean-forward="false" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/new_f-1collector_oversample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="63" column="14" lean-forward="false" selection-start-line="63" selection-start-column="14" selection-end-line="63" selection-end-column="14" />
           <folding />
         </state>
       </provider>

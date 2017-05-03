@@ -6,13 +6,13 @@ gs = gridspec.GridSpec(5, 2)
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 plotAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/plots/"
 #dataset =['TREC8', 'gov2','WT2013', 'WT2014']
-dataset = ['WT2013', 'WT2014', 'gov2', 'TREC8']
+dataset = ['WT2013', 'WT2014']
 protocol_list = ['SAL', 'CAL', 'SPL']
 n_labeled =  10 #50      # number of samples that are initially labeled
 batch_size = 25 #50
-sampling=True # can be True or False
+sampling=False # can be True or False
 iter_sampling=True
-correction = True
+correction = False
 if correction == True:
     sampling = False  # can be True or False
     iter_sampling = False
@@ -45,20 +45,20 @@ for datasource in dataset: # 1
                     for test_size in test_size_set:
 
                         for fold in xrange(1, 2):
-                            result_location = '/home/nahid/UT_research/clueweb12/result_correction_' + str(
+                            result_location = '/home/nahid/UT_research/clueweb12/result_over_' + str(
                                 datasource) + '/' + str(
                                 test_size) + '_protocol:' + protocol + '_batch:' + str(batch) + '_seed:' + str(
                                 seed) + '_fold' + str(fold) + '_oversampling:' + str(
                                 sampling) + '_correction:' + str(correction) + '_iter_sampling:' + str(
                                 iter_sampling) + '.txt'
-                            predicted_location = '/home/nahid/UT_research/clueweb12/result_correction_' + str(
+                            predicted_location = '/home/nahid/UT_research/clueweb12/result_over_' + str(
                                 datasource) + '/prediction' + str(
                                 test_size) + '_protocol:' + protocol + '_batch:' + str(batch) + '_seed:' + str(
                                 seed) + '_fold' + str(fold) + '_oversampling:' + str(
                                 sampling) + '_correction:' + str(correction) + '_iter_sampling:' + str(
                                 iter_sampling) + '.txt'
 
-                            learning_curve_location = '/home/nahid/UT_research/clueweb12/result_correction_' + str(
+                            learning_curve_location = '/home/nahid/UT_research/clueweb12/result_over_' + str(
                                 datasource) + '/learning_curve' + str(
                                 test_size) + '_protocol:' + protocol + '_batch:' + str(batch) + '_seed:' + str(
                                 seed) + '_fold' + str(fold) + '_oversampling:' + str(
