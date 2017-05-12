@@ -5,15 +5,15 @@ gs = gridspec.GridSpec(5, 2)
 
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
-base_address1 = "/home/nahid/UT_research/clueweb12/complete_result/"
-plotAddress =  "/home/nahid/UT_research/clueweb12/complete_result/plots/f1/"
+base_address1 = "/home/nahid/UT_research/clueweb12/vary_result/"
+plotAddress =  "/home/nahid/UT_research/clueweb12/vary_result/plots/f1/"
 
 
-protocol_list = ['SAL', 'CAL', 'SPL']
-#dataset_list = ['WT2013','WT2014']
+protocol_list = ['CAL']
+#dataset_list = ['WT2013','WT2014', 'gov2']
 dataset_list = ['WT2013', 'WT2014', 'gov2','TREC8']
-ranker_list = ['True', 'False']
-sampling_list = ['True','False']
+ranker_list = ['False']
+sampling_list = ['True']
 train_per_centage_flag = 'True'
 seed_size =  [10] #50      # number of samples that are initially labeled
 batch_size = [25] #50
@@ -62,32 +62,30 @@ for use_ranker in ranker_list:
                             s = "Dataset:"+ str(datasource)+", Seed:" + str(seed) + ", Batch:"+ str(batch)
 
                             for fold in xrange(1, 2):
-                                learning_curve_location = base_address4 + 'learning_curve_protocol:' + protocol + '_batch:' + str(
-                                    batch) + '_seed:' + str(seed) + '_fold' + str(fold) + '.txt'
+                                for bucket in xrange(1,6):
+                                    if datasource == 'TREC8' and bucket == 4:
+                                        break
+                                    learning_curve_location = base_address4 + str(bucket) +'/' + 'learning_curve_protocol:' + protocol + '_batch:' + str(
+                                        batch) + '_seed:' + str(seed) + '_fold' + str(fold) + '.txt'
 
-                            list = []
+                                    list = []
 
-                            f = open(learning_curve_location)
-                            length = 0
-                            for lines in f:
-                                values = lines.split(",")
-                                for val in values:
-                                    if val == '':
-                                        continue
-                                    list.append(float(val))
-                                    length = length + 1
-                                break
-                            print list
-                            list1 = list[1:len(list)]
-                            print length
-                            counter = 0
-                            protocol_result[protocol] = list1
-                            if protocol == 'SAL':
-                                start = 10
-                                end = start + (length - 1)*25
-                                while start <= end:
-                                    training_variation.append(start)
-                                    start = start + 25
+                                    f = open(learning_curve_location)
+                                    length = 0
+                                    for lines in f:
+                                        values = lines.split(",")
+                                        for val in values:
+                                            if val == '':
+                                                continue
+                                            list.append(float(val))
+                                            length = length + 1
+                                        break
+                                    print list
+                                    list1 = list[1:len(list)]
+                                    print length
+                                    counter = 0
+                                    protocol_result[bucket] = list1
+
 
 
             #plt.figure(var)
@@ -101,11 +99,16 @@ for use_ranker in ranker_list:
             plt.plot(x_labels_set, protocol_result['CAL'],  marker = '^',color = 'black',label='CAL', linewidth=1.0)
             plt.plot(x_labels_set, protocol_result['SPL'],  marker = 's',color = 'black', label='SPL', linewidth=1.0)
 '''
-
-            plt.plot(x_labels_set, protocol_result['SAL'],  '-r', marker='o',  label='SAL', linewidth=1.0)
-            plt.plot(x_labels_set, protocol_result['CAL'],  '-b', marker = '^', label='CAL', linewidth=1.0)
-            plt.plot(x_labels_set, protocol_result['SPL'],  '-g', marker = 's',  label='SPL', linewidth=1.0)
-
+            if datasource != 'TREC8':
+                plt.plot(x_labels_set, protocol_result[1], marker='o',  label='prevalance <= 10%', linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[2], marker = '^', label='prevalance between >= 11% & <= 20%', linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[3], marker = 's',  label='prevalance between >= 21% & <= 30%', linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[4], marker='v', label='prevalance between >= 31% & <= 40%', linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[5], marker='p', label='prevalance > 40%', linewidth=1.0)
+            else:
+                plt.plot(x_labels_set, protocol_result[1], marker='o', label='prevalance <= 10%', linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[2], marker='^', label='prevalance between >= 11% & <= 20%', linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[3], marker='s', label='prevalance between >= 21% & <= 30%', linewidth=1.0)
 
             plt.xlabel('Percentage of human judgements', size = 8)
 
