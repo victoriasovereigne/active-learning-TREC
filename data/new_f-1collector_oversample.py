@@ -6,7 +6,7 @@ gs = gridspec.GridSpec(5, 2)
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 plotAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/plots/"
 #dataset =['TREC8', 'gov2','WT2013', 'WT2014']
-dataset = ['WT2013', 'WT2014']
+dataset = ['WT2013', 'WT2014', 'gov2','TREC8']
 protocol_list = ['SAL', 'CAL', 'SPL']
 n_labeled =  10 #50      # number of samples that are initially labeled
 batch_size = 25 #50
@@ -97,8 +97,7 @@ for datasource in dataset: # 1
     plt.plot(training_variation, protocol_result['CAL'], '-b', label = 'SAL',linewidth=2.0)
     plt.plot(training_variation, protocol_result['SPL'], '-g', label= 'SPL',linewidth=2.0)
 
-    if(var==9 or var==7 or var==8):
-        plt.xlabel('Training Set Size')
+    plt.xlabel('Number of human judgements')
 
     plt.ylabel('F-1 measure')
     plt.ylim([0.2,1])

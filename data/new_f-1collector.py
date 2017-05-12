@@ -96,9 +96,7 @@ for datasource in dataset: # 1
     plt.plot(training_variation, protocol_result['SAL'], '-r', label='CAL',linewidth=2.0)
     plt.plot(training_variation, protocol_result['CAL'], '-b', label = 'SAL',linewidth=2.0)
     plt.plot(training_variation, protocol_result['SPL'], '-g', label= 'SPL',linewidth=2.0)
-
-    if(var==9 or var==7 or var==8):
-        plt.xlabel('Training Set Size')
+    plt.xlabel('Number of human judgements')
 
     plt.ylabel('F-1 measure')
     plt.ylim([0.2,1])

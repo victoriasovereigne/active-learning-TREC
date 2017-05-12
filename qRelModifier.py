@@ -1,6 +1,7 @@
 
-
-datasource = 'WT2014' # can be  dataset = ['TREC8', 'gov2', 'WT']
+#topicSkipList = [202,225,255, 278, 805]
+topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
+datasource = 'WT2013' # can be  dataset = ['TREC8', 'gov2', 'WT']
 if datasource=='TREC8':
     processed_file_location = '/home/nahid/UT_research/TREC/TREC8/processed.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
@@ -9,6 +10,8 @@ if datasource=='TREC8':
 elif datasource=='gov2':
     processed_file_location = '/home/nahid/UT_research/TREC/gov2/processed.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/qrels.tb06.top50.txt'
+    realFile = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/realnumberofdocsgov2.txt'
+    destinationAddress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/modified_qreldocsgov2.txt'
     start_topic = 801
     end_topic = 851
 elif datasource=='WT2013':
@@ -52,7 +55,7 @@ for lines in f:
     lineCounter = lineCounter + 1
     topicNo = int(values[0])
     #print topicNo
-    if topicNo == 202:
+    if topicNo in topicSkipList:
         continue
     docNo = values[2]
     if docNo not in realqrel:
