@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0535bd4-8300-4b90-97dc-682304dbc22d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/commandgenerator_bpref.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shellCommandRunner_bpref1.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shellCommandRunner_new_map.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vary_complete_f-1collector.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/f_beta_collector.py" afterPath="$PROJECT_DIR$/f_beta_collector.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage.py" afterPath="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/vary_final_f-1collector.py" afterPath="$PROJECT_DIR$/data/vary_final_f-1collector.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" afterPath="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qRelModifier.py" afterPath="$PROJECT_DIR$/qRelModifier.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shellCommandRunner1.py" afterPath="$PROJECT_DIR$/shellCommandRunner1.py" />
     </list>
     <ignored path="parser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,18 +45,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="vary_complete_f-1collector.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vary_complete_f-1collector.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="165" column="19" lean-forward="true" selection-start-line="164" selection-start-column="12" selection-end-line="165" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="pearson_Correlation_collector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pearson_Correlation_collector.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -74,22 +57,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="finite_pool_correction_no_ranker_percentage_bucket.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py">
+      <file leaf-file-name="vary_final_f-1collector.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data/vary_final_f-1collector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="58" column="20" lean-forward="false" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="387">
+              <caret line="131" column="31" lean-forward="false" selection-start-line="131" selection-start-column="31" selection-end-line="131" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="f_beta_collector.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/f_beta_collector.py">
+      <file leaf-file-name="shellCommandRunner_new_map1.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="64" column="31" lean-forward="true" selection-start-line="63" selection-start-column="16" selection-end-line="64" selection-end-column="31" />
-              <folding />
+            <state relative-caret-position="60">
+              <caret line="226" column="111" lean-forward="false" selection-start-line="226" selection-start-column="87" selection-end-line="226" selection-end-column="111" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -170,7 +157,6 @@
         <option value="$PROJECT_DIR$/testttt.py" />
         <option value="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_topic_bucket.py" />
         <option value="$PROJECT_DIR$/data/final_f-1collector.py" />
-        <option value="$PROJECT_DIR$/data/vary_final_f-1collector.py" />
         <option value="$PROJECT_DIR$/shellCommandRunner2.py" />
         <option value="$PROJECT_DIR$/f_beta_collector.py" />
         <option value="$PROJECT_DIR$/shellCommandRunner1.py" />
@@ -185,9 +171,10 @@
         <option value="$PROJECT_DIR$/shellCommandRunner_bpref1.py" />
         <option value="$PROJECT_DIR$/qRelModifier.py" />
         <option value="$PROJECT_DIR$/vary_complete_f-1collector.py" />
-        <option value="$PROJECT_DIR$/shellCommandRunner_new_map1.py" />
         <option value="$PROJECT_DIR$/pearson_Correlation_collector.py" />
         <option value="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" />
+        <option value="$PROJECT_DIR$/shellCommandRunner_new_map1.py" />
+        <option value="$PROJECT_DIR$/data/vary_final_f-1collector.py" />
       </list>
     </option>
   </component>
@@ -264,25 +251,7 @@
       <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.finite_pool_correction_no_ranker_percentage_bucket">
-    <configuration default="false" name="shellCommandRunner_new_map1" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="parser" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/shellCommandRunner_new_map1.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.vary_final_f-1collector">
     <configuration default="false" name="vary_complete_f-1collector" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -351,6 +320,24 @@
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="vary_final_f-1collector" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="parser" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/vary_final_f-1collector.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -497,19 +484,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.shellCommandRunner_new_map1" />
-      <item index="1" class="java.lang.String" itemvalue="Python.vary_complete_f-1collector" />
-      <item index="2" class="java.lang.String" itemvalue="Python.pearson_Correlation_collector" />
-      <item index="3" class="java.lang.String" itemvalue="Python.f_beta_collector" />
-      <item index="4" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker_percentage_bucket" />
+      <item index="0" class="java.lang.String" itemvalue="Python.vary_complete_f-1collector" />
+      <item index="1" class="java.lang.String" itemvalue="Python.pearson_Correlation_collector" />
+      <item index="2" class="java.lang.String" itemvalue="Python.f_beta_collector" />
+      <item index="3" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker_percentage_bucket" />
+      <item index="4" class="java.lang.String" itemvalue="Python.vary_final_f-1collector" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker_percentage_bucket" />
-        <item index="1" class="java.lang.String" itemvalue="Python.pearson_Correlation_collector" />
-        <item index="2" class="java.lang.String" itemvalue="Python.f_beta_collector" />
-        <item index="3" class="java.lang.String" itemvalue="Python.vary_complete_f-1collector" />
-        <item index="4" class="java.lang.String" itemvalue="Python.shellCommandRunner_new_map1" />
+        <item index="0" class="java.lang.String" itemvalue="Python.vary_final_f-1collector" />
+        <item index="1" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker_percentage_bucket" />
+        <item index="2" class="java.lang.String" itemvalue="Python.pearson_Correlation_collector" />
+        <item index="3" class="java.lang.String" itemvalue="Python.f_beta_collector" />
+        <item index="4" class="java.lang.String" itemvalue="Python.vary_complete_f-1collector" />
       </list>
     </recent_temporary>
   </component>
@@ -908,24 +895,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/vary_final_f-1collector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1620">
-          <caret line="110" column="92" lean-forward="false" selection-start-line="110" selection-start-column="92" selection-end-line="110" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="76" column="17" lean-forward="true" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qRelModifier.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -938,16 +907,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="165" column="19" lean-forward="true" selection-start-line="164" selection-start-column="12" selection-end-line="165" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/f_beta_collector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="64" column="31" lean-forward="true" selection-start-line="63" selection-start-column="16" selection-end-line="64" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -965,8 +924,36 @@
     <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="58" column="20" lean-forward="false" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+          <caret line="58" column="19" lean-forward="false" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f_beta_collector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-75">
+          <caret line="64" column="31" lean-forward="true" selection-start-line="63" selection-start-column="16" selection-end-line="64" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="226" column="111" lean-forward="false" selection-start-line="226" selection-start-column="87" selection-end-line="226" selection-end-column="111" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/vary_final_f-1collector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="131" column="31" lean-forward="false" selection-start-line="131" selection-start-column="31" selection-end-line="131" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

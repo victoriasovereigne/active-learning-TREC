@@ -1,12 +1,13 @@
 import os
+from numpy import trapz
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 gs = gridspec.GridSpec(5, 2)
 
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
-base_address1 = "/home/nahid/UT_research/clueweb12/vary_result/"
-plotAddress =  "/home/nahid/UT_research/clueweb12/vary_result/plots/f1/"
+base_address1 = "/home/nahid/UT_research/clueweb12/vary_result_1/"
+plotAddress =  "/home/nahid/UT_research/clueweb12/vary_result_1/plots/f1/"
 
 
 protocol_list = ['CAL']
@@ -99,26 +100,36 @@ for use_ranker in ranker_list:
             plt.plot(x_labels_set, protocol_result['CAL'],  marker = '^',color = 'black',label='CAL', linewidth=1.0)
             plt.plot(x_labels_set, protocol_result['SPL'],  marker = 's',color = 'black', label='SPL', linewidth=1.0)
 '''
+
+            auc_1 = trapz(protocol_result[1], dx=10)
+            auc_2 = trapz(protocol_result[2], dx=10)
+            auc_3 = trapz(protocol_result[3], dx=10)
+
             if datasource != 'TREC8':
-                plt.plot(x_labels_set, protocol_result[1], marker='o',  label='prevalance <= 10%', linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[2], marker = '^', label='prevalance between >= 11% & <= 20%', linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[3], marker = 's',  label='prevalance between >= 21% & <= 30%', linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[4], marker='v', label='prevalance between >= 31% & <= 40%', linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[5], marker='p', label='prevalance > 40%', linewidth=1.0)
+
+                auc_4 = trapz(protocol_result[4], dx=10)
+                auc_5 = trapz(protocol_result[5], dx=10)
+
+                plt.plot(x_labels_set, protocol_result[1], marker='o',  label='prevalance (p) <= 10%, AUC:'+str(auc_1)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[2], marker = '^', label='11% <= p <= 20%, AUC:'+str(auc_2)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[3], marker = 's',  label='21% <= p <= 30%, AUC:'+str(auc_3)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[4], marker='v', label='31% <= p <= 40%, AUC:'+str(auc_4)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[5], marker='p', label='p > 40%, AUC:'+str(auc_5)[:4], linewidth=1.0)
             else:
-                plt.plot(x_labels_set, protocol_result[1], marker='o', label='prevalance <= 10%', linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[2], marker='^', label='prevalance between >= 11% & <= 20%', linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[3], marker='s', label='prevalance between >= 21% & <= 30%', linewidth=1.0)
+
+                plt.plot(x_labels_set, protocol_result[1], marker='o', label='prevalance (p) <= 10%, AUC:'+str(auc_1)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[2], marker='^', label='11% <= p <= 20%, AUC:'+str(auc_2)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[3], marker='s', label='21% <= p <= 30%, AUC:'+str(auc_3)[:4], linewidth=1.0)
 
             plt.xlabel('Percentage of human judgements', size = 8)
 
             plt.ylabel('F-1 measure', size = 8)
             plt.ylim([0.5,1])
-            plt.legend(loc=4, fontsize = 6)
+            plt.legend(loc=4, fontsize = 8)
             plt.title(datasource, size= 8)
             plt.grid()
             var = var + 1
-        plt.suptitle(s1, size=10)
+        plt.suptitle(s1, size=8)
         plt.tight_layout()
         #plt.show()
         plt.savefig(plotAddress+s1+'.pdf', format='pdf')

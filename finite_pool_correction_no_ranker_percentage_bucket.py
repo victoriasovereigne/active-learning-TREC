@@ -56,7 +56,7 @@ train_per_centage_flag = sys.argv[6]
 
 '''
 #parameter set
-datasource = 'WT2013'  # can be  dataset = ['TREC8', 'gov2', 'WT']
+datasource = 'TREC8'  # can be  dataset = ['TREC8', 'gov2', 'WT']
 protocol = 'CAL'  # 'SAL' can be ['SAL', 'CAL', 'SPL']
 use_ranker = 'False'
 iter_sampling = 'True'
