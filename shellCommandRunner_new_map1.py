@@ -1,10 +1,5 @@
-import subprocess
-import os
-from scipy.stats.stats import pearsonr
 from scipy.stats.stats import kendalltau
-import seaborn
-import matplotlib.pyplot as plt
-import pandas as pd
+from numpy import trapz
 import os
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -12,16 +7,16 @@ gs = gridspec.GridSpec(5, 2)
 
 os.chdir('/home/nahid/Downloads/trec_eval.9.0/')
 
-base_address1 = "/home/nahid/UT_research/clueweb12/complete_result/"
-plotAddress = "/home/nahid/UT_research/clueweb12/complete_result/plots/tau/"
+base_address1 = "/home/nahid/UT_research/clueweb12/bpref_result/"
+plotAddress = "/home/nahid/UT_research/clueweb12/bpref_result/plots/tau/map1/"
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
 
 protocol_list = ['SAL','CAL', 'SPL']
 #dataset_list = ['WT2013']
-dataset_list = ['WT2013', 'WT2014', 'gov2', 'TREC8']
-ranker_list = ['True', 'False']
-sampling_list = ['True','False']
+dataset_list = ['WT2013','WT2014', 'gov2', 'TREC8']
+ranker_list = ['False']
+sampling_list = ['True']
 train_per_centage_flag = 'True'
 seed_size =  [10] #50      # number of samples that are initially labeled
 batch_size = [25] #50
@@ -47,7 +42,7 @@ subplot_loc = [221,222,223,224]
 
 for use_ranker in ranker_list:
     for iter_sampling in sampling_list:
-        plt.subplots(nrows=2, ncols=2)
+        fig, ax =  plt.subplots(nrows=2, ncols=2)
         var = 0
         s = ""
         s1 = ""
@@ -60,18 +55,21 @@ for use_ranker in ranker_list:
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 #qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/qrels.tb06.top50.txt'
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/modified_qreldocsgov2.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/modifiedprediction/"
             elif datasource == 'TREC8':
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/relevance.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/modifiedprediction/"
             elif datasource == 'WT2013':
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modifiedprediction/"
@@ -79,16 +77,18 @@ for use_ranker in ranker_list:
             else:
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modified_qreldocs2014.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modifiedprediction/"
 
             print "Original Part"
+            '''
             fileList = os.listdir(originAdress)
             for fileName in fileList:
                 system = originAdress + fileName
                 #shellCommand = './trec_eval -m map ' + qrelAdress + ' ' + system
-                shellCommand = './trec_eval -m bpref ' + qrelAdress + ' ' + system
+                shellCommand = './trec_eval -m map ' + qrelAdress + ' ' + system
 
                 print shellCommand
                 p = subprocess.Popen(shellCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -99,6 +99,32 @@ for use_ranker in ranker_list:
                     originalqrelMap.append(map)
 
                 retval = p.wait()
+
+
+            originalMapResult = originalMapResult + 'map.txt'
+            tmp = ""
+
+            for val in originalqrelMap:
+                tmp = tmp + str(val) + ","
+            text_file = open(originalMapResult, "w")
+            text_file.write(tmp)
+            text_file.close()
+            '''
+            originalMapResult = originalMapResult + 'map.txt'
+            f = open(originalMapResult)
+            length = 0
+            tmplist = []
+            for lines in f:
+                values = lines.split(",")
+                for val in values:
+                    if val == '':
+                        continue
+                    tmplist.append(float(val))
+                    length = length + 1
+                break
+            originalqrelMap = tmplist
+
+
 
             base_address2 = base_address1 + str(datasource) + "/"
             if use_ranker == 'True':
@@ -125,6 +151,7 @@ for use_ranker in ranker_list:
                             predicted_location_base = base_address4 + 'prediction_protocol:' + protocol + '_batch:' + str(
                                 batch) + '_seed:' + str(seed) + '_fold' + str(fold) + '_'
                             for percentage in train_per_centage:
+                                '''
                                 predictionqrel = predicted_location_base + str(percentage) + '.txt'
 
                                 f = open(predictionqrel)
@@ -165,22 +192,41 @@ for use_ranker in ranker_list:
                                 text_file.close()
                                 #exit(0)
 
+                                '''
+                                predictionMapResult = predicted_location_base + str(percentage) + '_map.txt'
+                                f = open(predictionMapResult)
+                                length = 0
+                                tmplist = []
+                                for lines in f:
+                                    values = lines.split(",")
+                                    for val in values:
+                                        if val == '':
+                                            continue
+                                        tmplist.append(float(val))
+                                        length = length + 1
+                                    break
+                                predictedqrelMap = tmplist
+                                print len(predictedqrelMap)
                                 tau, p_value = kendalltau(originalqrelMap, predictedqrelMap)
-                                predictedqrelMap = [] # cleaning it for next trains_percenatge
+                                predictedqrelMap = []  # cleaning it for next trains_percenatge
                                 list.append(tau)
+
+
                         protocol_result[protocol] = list
 
-            #print len(training_variation)
-            plt.subplot(subplot_loc[var])
-            '''plt.plot(x_labels_set, protocol_result['SAL'], '-r', label='SAL', linewidth=2.0)
-            #print protocol_result['SAL']
-            plt.plot(x_labels_set, protocol_result['CAL'], '-b', label='CAL', linewidth=2.0)
-            plt.plot(x_labels_set, protocol_result['SPL'], '-g', label='SPL', linewidth=2.0)
-            '''
+            print len(training_variation)
 
-            plt.plot(x_labels_set, protocol_result['SAL'], '-r', marker='o', label='SAL', linewidth=1.0)
-            plt.plot(x_labels_set, protocol_result['CAL'], '-b', marker='^', label='CAL', linewidth=1.0)
-            plt.plot(x_labels_set, protocol_result['SPL'], '-g', marker='s', label='SPL', linewidth=1.0)
+            auc_SAL = trapz(protocol_result['SAL'], dx=10)
+            auc_CAL = trapz(protocol_result['CAL'], dx=10)
+            auc_SPL = trapz(protocol_result['SPL'], dx=10)
+
+            print auc_SAL, auc_CAL, auc_SPL
+
+            plt.subplot(subplot_loc[var])
+
+            plt.plot(x_labels_set, protocol_result['SAL'], '-r', marker='o', label='SAL, AUC:'+str(auc_SAL)[:4], linewidth=1.0)
+            plt.plot(x_labels_set, protocol_result['CAL'], '-b', marker='^', label='CAL, AUC:'+str(auc_CAL)[:4], linewidth=1.0)
+            plt.plot(x_labels_set, protocol_result['SPL'], '-g', marker='s', label='SPL, AUC:'+str(auc_SPL)[:4], linewidth=1.0)
 
             plt.xlabel('Percentage of human judgements',size = 8)
 
@@ -190,13 +236,11 @@ for use_ranker in ranker_list:
             plt.title(datasource,size = 8)
             plt.grid()
             var = var + 1
-            #plt.tight_layout()
-            #plt.show()
 
         plt.suptitle(s1, size=8)
         plt.tight_layout()
         #plt.show()
-        plt.savefig(plotAddress + s1 + '.pdf', format='pdf')
+        plt.savefig(plotAddress + s1 + 'map1.pdf', format='pdf')
 
 
 

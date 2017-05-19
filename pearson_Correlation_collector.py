@@ -1,4 +1,6 @@
 from sklearn.metrics import fbeta_score
+from scipy.stats.stats import kendalltau
+from scipy.stats.stats import pearsonr
 import os
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -6,25 +8,21 @@ gs = gridspec.GridSpec(5, 2)
 
 os.chdir('/home/nahid/Downloads/trec_eval.9.0/')
 
-base_address1 = "/home/nahid/UT_research/clueweb12/complete_result/"
-plotAddress = "/home/nahid/UT_research/clueweb12/complete_result/plots/varyf1/"
+base_address1 = "/home/nahid/UT_research/clueweb12/bpref_result/"
+plotAddress = "/home/nahid/UT_research/clueweb12/bpref_result/plots/varyf1/"
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
-#protocol_list = ['SAL','CAL', 'SPL']
 protocol_list = ['CAL']
-#dataset_list = ['WT2013']
 dataset_list = ['WT2013', 'WT2014', 'gov2', 'TREC8']
-ranker_list = ['True', 'False']
-sampling_list = ['True','False']
+ranker_list = ['False']
+sampling_list = ['True']
 train_per_centage_flag = 'True'
 seed_size =  [10] #50      # number of samples that are initially labeled
 batch_size = [25] #50
 train_per_centage = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1] # skiping seed part which is named as 0.1
-#train_per_centage = [0.2, 0.3] # skiping seed part which is named as 0.1
 x_labels_set_name = ['0%','10%','20%','30%','40%','50%','60%','70%','80%','90%','100%']
-#x_labels_set =[0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 x_labels_set =[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-#x_labels_set =[10,20]
+
 
 
 result_location = ''
@@ -37,8 +35,8 @@ protocol_result = {}
 subplot_loc = [221,222,223,224]
 start_topic = 0
 end_topic = 0
-topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
-
+#topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
+topicSkipList = [202,225,255, 278, 805]
 #f_beta_0.5 =
 
 
@@ -58,6 +56,7 @@ for use_ranker in ranker_list:
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 #qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/qrels.tb06.top50.txt'
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/modified_qreldocsgov2.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/gov2/modifiedprediction/"
@@ -66,6 +65,7 @@ for use_ranker in ranker_list:
             elif datasource == 'TREC8':
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/relevance.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/modifiedprediction/"
@@ -74,6 +74,7 @@ for use_ranker in ranker_list:
             elif datasource == 'WT2013':
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modifiedprediction/"
@@ -83,13 +84,14 @@ for use_ranker in ranker_list:
             else:
                 originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
                 qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modified_qreldocs2014.txt'
+                originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/'
                 destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                 predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/prediction/"
                 predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modifiedprediction/"
                 start_topic = 251
                 end_topic = 301
 
-            print "Original Part"
+            #print "Original Part"
 
             originalLabel = {}
             file = open(qrelAdress)
@@ -105,8 +107,21 @@ for use_ranker in ranker_list:
                 key = topicNo +":"+docNo
                 originalLabel[key] = label
             file.close()
-
-
+            #print originalLabel
+            originalMapResult = originalMapResult + 'map.txt'
+            f = open(originalMapResult)
+            length = 0
+            tmplist = []
+            for lines in f:
+                values = lines.split(",")
+                for val in values:
+                    if val == '':
+                        continue
+                    tmplist.append(float(val))
+                    length = length + 1
+                break
+            originalqrelMap = tmplist
+            #f.close()
 
             base_address2 = base_address1 + str(datasource) + "/"
             if use_ranker == 'True':
@@ -126,7 +141,7 @@ for use_ranker in ranker_list:
             for seed in seed_size:  # 2
                 for batch in batch_size:  # 3
                     for protocol in protocol_list:  # 4
-                        print "Dataset", datasource, "Protocol", protocol, "Seed", seed, "Batch", batch
+                        #print "Dataset", datasource, "Protocol", protocol, "Seed", seed, "Batch", batch
                         s = "Dataset:" + str(datasource) + ", Seed:" + str(seed) + ", Batch:" + str(batch)
                         list = []
                         for fold in xrange(1, 2):
@@ -140,6 +155,7 @@ for use_ranker in ranker_list:
 
                             for percentage in train_per_centage:
                                 predictionqrel = predicted_location_base + str(percentage) + '.txt'
+                                #print predictionqrel
                                 fbeta_point_twofive = []
                                 fbeta_point_five = []
                                 fbeta_one = []
@@ -151,8 +167,9 @@ for use_ranker in ranker_list:
                                         #print "Skipping Topic :", topic
                                         continue
                                     topic = str(topic)
-
+                                    #print topic
                                     f = open(predictionqrel)
+                                    #print f
                                     s=""
 
                                     y_original = []
@@ -161,6 +178,7 @@ for use_ranker in ranker_list:
 
                                     for lines in f:
                                         values = lines.split()
+                                        #print len(values)
                                         topicNo = values[0]
                                         if topicNo != topic:
                                             continue
@@ -170,7 +188,7 @@ for use_ranker in ranker_list:
                                         if keys in originalLabel:
                                             y_original.append(originalLabel[keys])
                                             y_pred.append(label)
-
+                                    #print len(y_original)
                                     fbeta_point_twofive.append(fbeta_score(y_original, y_pred, average='binary', beta=0.25))
                                     fbeta_point_five.append(fbeta_score(y_original, y_pred, average='binary', beta=0.50))
                                     fbeta_one.append(fbeta_score(y_original, y_pred, average='binary', beta=1.0))
@@ -184,37 +202,26 @@ for use_ranker in ranker_list:
                                 f_beta_d.append(sum(fbeta_three) / float(len(fbeta_three)))
                                 f_beta_e.append(sum(fbeta_five) / float(len(fbeta_five)))
 
+                                predictionMapResult = predicted_location_base + str(percentage) + '_map.txt'
+                                f = open(predictionMapResult)
+                                length = 0
+                                tmplist = []
+                                for lines in f:
+                                    values = lines.split(",")
+                                    for val in values:
+                                        if val == '':
+                                            continue
+                                        tmplist.append(float(val))
+                                        length = length + 1
+                                    break
+                                predictedqrelMap = tmplist
+                                #print len(predictedqrelMap)
+                                tau, p_value = kendalltau(originalqrelMap, predictedqrelMap)
+                                predictedqrelMap = []  # cleaning it for next trains_percenatge
+                                list.append(tau)
+                        protocol_result[protocol] = list
 
-
-            print len(f_beta_a), len(x_labels_set)
-            plt.subplot(subplot_loc[var])
-            '''plt.plot(x_labels_set, protocol_result['SAL'], '-r', label='SAL', linewidth=2.0)
-            #print protocol_result['SAL']
-            plt.plot(x_labels_set, protocol_result['CAL'], '-b', label='CAL', linewidth=2.0)
-            plt.plot(x_labels_set, protocol_result['SPL'], '-g', label='SPL', linewidth=2.0)
-            '''
-
-            plt.plot(x_labels_set, f_beta_a,  marker='o', label='beta = 0.25', linewidth=1.0)
-            plt.plot(x_labels_set, f_beta_b,  marker='^', label='beta = 0.50', linewidth=1.0)
-            plt.plot(x_labels_set, f_beta_c,  marker='s', label='beta = 1.0', linewidth=1.0)
-            plt.plot(x_labels_set, f_beta_d,  marker='v', label='beta = 3.0', linewidth=1.0)
-            plt.plot(x_labels_set, f_beta_e,  marker='p', label='beta = 5.0', linewidth=1.0)
-
-            plt.xlabel('Percentage of human judgements',size = 8)
-
-            plt.ylabel('F-beta measure',size = 8)
-            plt.ylim([0.5, 1])
-            plt.legend(loc=4, fontsize = 6)
-            plt.title(datasource,size = 8)
-            plt.grid()
-            var = var + 1
-
-
-        plt.suptitle(s1, size=8)
-        plt.tight_layout()
-
-        plt.savefig(plotAddress + s1 + '.pdf', format='pdf')
-
+            print datasource, '&', str(pearsonr(protocol_result['CAL'], f_beta_a)[0])[:5], '&', str(pearsonr(protocol_result['CAL'], f_beta_b)[0])[:5], '&', str(pearsonr(protocol_result['CAL'], f_beta_c)[0])[:5],'&', str(pearsonr(protocol_result['CAL'], f_beta_d)[0])[:5],'&', str(pearsonr(protocol_result['CAL'], f_beta_e)[0])[:5]
 
 
 '''fig = plt.figure(figsize=(17,5))

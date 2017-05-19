@@ -82,9 +82,8 @@ ranker_location["TREC8"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/TREC8
 n_labeled =  10 #50      # number of samples that are initially labeled
 batch_size = 25 #50
 preloaded = True
-#topicSkipList = [202,225,255, 278, 805]
-
-topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
+topicSkipList = [202,225,255, 278, 805]
+#topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
 
 skipList = []
 topicBucketList = []
@@ -92,7 +91,7 @@ processed_file_location = ''
 start_topic = 0
 end_topic = 0
 
-base_address = "/home/nahid/UT_research/clueweb12/complete_result/"
+base_address = "/home/nahid/UT_research/clueweb12/bpref_result/"
 base_address = base_address +str(datasource)+"/"
 if use_ranker == 'True':
     base_address = base_address + "ranker/"
@@ -295,6 +294,8 @@ for test_size in test_size_set:
         result_location = base_address + 'result_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
         predicted_location = base_address + 'prediction_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
         predicted_location_base = base_address + 'prediction_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_'
+        human_label_location = base_address + 'prediction_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_'
+
         learning_curve_location = base_address + 'learning_curve_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
         s = "";
         pred_str = ""
@@ -800,8 +801,16 @@ for test_size in test_size_set:
 
                         y_pred_all = {}
 
+                        human_label_str = ""
+
                         for train_index in train_index_list:
                             y_pred_all[train_index] = y[train_index]
+                            docNo = docIndex_DocNo[train_index]
+                            human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
+                        human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
+                        text_file = open(human_label_location_final, "a")
+                        text_file.write(human_label_str)
+                        text_file.close()
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
@@ -991,8 +1000,17 @@ for test_size in test_size_set:
 
                 y_pred_all = {}
 
+                human_label_str = ""
+
                 for train_index in train_index_list:
                     y_pred_all[train_index] = y[train_index]
+                    docNo = docIndex_DocNo[train_index]
+                    human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
+                        y_pred_all[train_index]) + "\n"
+                human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
+                text_file = open(human_label_location_final, "a")
+                text_file.write(human_label_str)
+                text_file.close()
 
                 for train_index in xrange(0, len(X)):
                     if train_index not in train_index_list:
@@ -1371,8 +1389,17 @@ for test_size in test_size_set:
 
                         y_pred_all = {}
 
+                        human_label_str = ""
+
                         for train_index in train_index_list:
                             y_pred_all[train_index] = y[train_index]
+                            docNo = docIndex_DocNo[train_index]
+                            human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
+                            #print y_pred_all[train_index]
+                        human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
+                        text_file = open(human_label_location_final, "a")
+                        text_file.write(human_label_str)
+                        text_file.close()
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
@@ -1560,8 +1587,18 @@ for test_size in test_size_set:
                 print "Fininshed loop", len(initial_X_train)
                 y_pred_all = {}
 
+                human_label_str = ""
+
                 for train_index in train_index_list:
                     y_pred_all[train_index] = y[train_index]
+                    docNo = docIndex_DocNo[train_index]
+                    human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
+                        y_pred_all[train_index]) + "\n"
+                human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
+                text_file = open(human_label_location_final, "a")
+                text_file.write(human_label_str)
+                text_file.close()
+
 
                 for train_index in xrange(0, len(X)):
                     if train_index not in train_index_list:

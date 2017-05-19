@@ -1,7 +1,9 @@
 
 #topicSkipList = [202,225,255, 278, 805]
-topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
-datasource = 'WT2013' # can be  dataset = ['TREC8', 'gov2', 'WT']
+#topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
+topicSkipList = [202,225,255, 278, 805]
+#topicSkipList = []
+datasource = 'WT2014' # can be  dataset = ['TREC8', 'gov2', 'WT']
 if datasource=='TREC8':
     processed_file_location = '/home/nahid/UT_research/TREC/TREC8/processed.txt'
     RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
