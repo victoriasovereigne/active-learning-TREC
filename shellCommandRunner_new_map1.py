@@ -14,7 +14,7 @@ baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
 protocol_list = ['SAL','CAL', 'SPL']
 #dataset_list = ['WT2013']
-dataset_list = ['WT2013','WT2014', 'gov2', 'TREC8']
+dataset_list = ['WT2014','WT2013', 'gov2', 'TREC8']
 ranker_list = ['False']
 sampling_list = ['True']
 train_per_centage_flag = 'True'

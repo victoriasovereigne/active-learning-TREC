@@ -32,13 +32,13 @@ list = []
 protocol_result = {}
 #subplot_loc = [521, 522, 523, 524,525, 526, 527, 528, 529]
 #subplot_loc = [331, 332, 333, 334,335, 336, 337, 338, 339]
-subplot_loc = [221,222,223,224]
+subplot_loc = [11,12,13,14]
 
-
+var = 1
 for use_ranker in ranker_list:
     for iter_sampling in sampling_list:
-        fig, ax = plt.subplots(nrows=2, ncols=2)
-        var = 0
+        fig, ax = plt.subplots(nrows=1, ncols=4, figsize = (20, 5.5))
+
         s=""
         for datasource in dataset_list: # 1
             base_address2 = base_address1 + str(datasource) + "/"
@@ -91,7 +91,7 @@ for use_ranker in ranker_list:
 
             #plt.figure(var)
             print len(training_variation)
-            plt.subplot(subplot_loc[var])
+            plt.subplot(1,4,var)
             '''plt.plot(x_labels_set, protocol_result['SAL'], '-r', label='SAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['CAL'], '-b', label = 'CAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['SPL'], '-g', label= 'SPL',linewidth=2.0)
@@ -110,26 +110,27 @@ for use_ranker in ranker_list:
                 auc_4 = trapz(protocol_result[4], dx=10)
                 auc_5 = trapz(protocol_result[5], dx=10)
 
-                plt.plot(x_labels_set, protocol_result[1], marker='o',  label='prevalance (p) <= 10%, AUC:'+str(auc_1)[:4], linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[2], marker = '^', label='11% <= p <= 20%, AUC:'+str(auc_2)[:4], linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[3], marker = 's',  label='21% <= p <= 30%, AUC:'+str(auc_3)[:4], linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[4], marker='v', label='31% <= p <= 40%, AUC:'+str(auc_4)[:4], linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[5], marker='p', label='p > 40%, AUC:'+str(auc_5)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[1], marker='o',  label='1% to 10%, AUC:'+str(auc_1)[:4], linewidth=2.0)
+                plt.plot(x_labels_set, protocol_result[2], marker = '^', label='11% to 20%, AUC:'+str(auc_2)[:4], linewidth=2.0)
+                plt.plot(x_labels_set, protocol_result[3], marker = 's',  label='21% to 30%, AUC:'+str(auc_3)[:4], linewidth=2.0)
+                plt.plot(x_labels_set, protocol_result[4], marker='v', label='31% to 40%, AUC:'+str(auc_4)[:4], linewidth=2.0)
+                plt.plot(x_labels_set, protocol_result[5], marker='p', label='> 40%, AUC:'+str(auc_5)[:4], linewidth=1.0)
             else:
 
-                plt.plot(x_labels_set, protocol_result[1], marker='o', label='prevalance (p) <= 10%, AUC:'+str(auc_1)[:4], linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[2], marker='^', label='11% <= p <= 20%, AUC:'+str(auc_2)[:4], linewidth=1.0)
-                plt.plot(x_labels_set, protocol_result[3], marker='s', label='21% <= p <= 30%, AUC:'+str(auc_3)[:4], linewidth=1.0)
+                plt.plot(x_labels_set, protocol_result[1], marker='o', label='1% to 10%, AUC:'+str(auc_1)[:4], linewidth=2.0)
+                plt.plot(x_labels_set, protocol_result[2], marker='^', label='11% to 20%, AUC:'+str(auc_2)[:4], linewidth=2.0)
+                plt.plot(x_labels_set, protocol_result[3], marker='s', label='21% to 30%, AUC:'+str(auc_3)[:4], linewidth=2.0)
 
-            plt.xlabel('Percentage of human judgements', size = 8)
+            plt.xlabel('Percentage of human judgements', size = 16)
 
-            plt.ylabel('F-1 measure', size = 8)
+            if var == 1:
+                plt.ylabel('F-1 measure', size = 16)
             plt.ylim([0.5,1])
-            plt.legend(loc=4, fontsize = 8)
-            plt.title(datasource, size= 8)
+            plt.legend(loc=4, fontsize = 16)
+            plt.title(datasource, size= 16)
             plt.grid()
             var = var + 1
-        plt.suptitle(s1, size=8)
+        #plt.suptitle(s1, size=16)
         plt.tight_layout()
         #plt.show()
         plt.savefig(plotAddress+s1+'.pdf', format='pdf')

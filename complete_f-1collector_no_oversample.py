@@ -7,15 +7,15 @@ gs = gridspec.GridSpec(5, 2)
 
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
-base_address1 = "/home/nahid/UT_research/clueweb12/new_result/"
-plotAddress =  "/home/nahid/UT_research/clueweb12/new_result/plots/f1/"
+base_address1 = "/home/nahid/UT_research/clueweb12/nooversample_result1/"
+plotAddress =  "/home/nahid/UT_research/clueweb12/nooversample_result1/plots/f1/"
 
 
 protocol_list = ['SAL', 'CAL', 'SPL']
 #dataset_list = ['WT2013','WT2014']
 dataset_list = ['WT2014', 'WT2013', 'gov2','TREC8']
-ranker_list = ['True', 'False']
-sampling_list = ['True','False']
+ranker_list = ['False']
+sampling_list = ['True']
 train_per_centage_flag = 'True'
 seed_size =  [10] #50      # number of samples that are initially labeled
 batch_size = [25] #50
@@ -34,18 +34,14 @@ protocol_result = {}
 #subplot_loc = [521, 522, 523, 524,525, 526, 527, 528, 529]
 #subplot_loc = [331, 332, 333, 334,335, 336, 337, 338, 339]
 #subplot_loc = [411,412,413,414, 421,422,423,424, 431, 432, 433, 434, 441, 442, 443, 444]
-subplot_loc = [441, 442, 443, 444, 445, 446, 447, 448, 449, 4410, 4411, 4412, 4413, 4414, 4415, 4416]
+subplot_loc = [221, 222, 223, 224]
 
 
-fig, ax = plt.subplots(nrows=4, ncols=4, figsize=(20,20))
+fig, ax = plt.subplots(nrows=2, ncols=2)
 var = 1
 for use_ranker in ranker_list:
     for iter_sampling in sampling_list:
         s=""
-        if use_ranker == "True":
-            base_address1 = "/home/nahid/UT_research/clueweb12/new_result/"
-        else:
-            base_address1 = "/home/nahid/UT_research/clueweb12/complete_result/"
 
         for datasource in dataset_list: # 1
             base_address2 = base_address1 + str(datasource) + "/"
@@ -57,7 +53,7 @@ for use_ranker in ranker_list:
                 s1 = "Interactive Search and "
             if iter_sampling == 'True':
                 base_address4 = base_address3 + "oversample/"
-                s1 = s1+"oversampling"
+                s1 = s1+"no oversampling"
             else:
                 base_address4 = base_address3 + "htcorrection/"
                 s1 = s1+"HT correction"
@@ -72,6 +68,7 @@ for use_ranker in ranker_list:
                             for fold in xrange(1, 2):
                                 learning_curve_location = base_address4 + 'learning_curve_protocol:' + protocol + '_batch:' + str(
                                     batch) + '_seed:' + str(seed) + '_fold' + str(fold) + '.txt'
+                                print learning_curve_location
 
                             list = []
 
@@ -87,26 +84,23 @@ for use_ranker in ranker_list:
                                 break
                             print list
                             #list1 = list[1:len(list)]
-                            if use_ranker == "True":
-                                list1 = list[0:len(list)-2]
-                                list1.append(list[len(list)-1])
-                            else:
-                                list1 = list[1:len(list)]
+
+                            list1 = list[1:len(list)]
                             print length
                             counter = 0
                             protocol_result[protocol] = list1
-                            if protocol == 'SAL':
+                            '''if protocol == 'SAL':
                                 start = 10
                                 end = start + (length - 1)*25
                                 while start <= end:
                                     training_variation.append(start)
                                     start = start + 25
-
+                            '''
 
             #plt.figure(var)
             print len(training_variation)
             #plt.subplot(subplot_loc[var])
-            plt.subplot(4,4, var)
+            plt.subplot(2,2, var)
             '''plt.plot(x_labels_set, protocol_result['SAL'], '-r', label='SAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['CAL'], '-b', label = 'CAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['SPL'], '-g', label= 'SPL',linewidth=2.0)
@@ -124,35 +118,25 @@ for use_ranker in ranker_list:
             #exit(0)
 
 
-            plt.plot(x_labels_set, protocol_result['SAL'],  '-r', marker='o',  label='SAL, AUC:'+str(auc_SAL)[:4], linewidth=2.0)
-            plt.plot(x_labels_set, protocol_result['CAL'],  '-b', marker = '^', label='CAL, AUC:'+str(auc_CAL)[:4], linewidth=2.0)
-            plt.plot(x_labels_set, protocol_result['SPL'],  '-g', marker = 's',  label='SPL, AUC:'+str(auc_SPL)[:4], linewidth=2.0)
+            plt.plot(x_labels_set, protocol_result['SAL'],  '-r', marker='o',  label='SAL, AUC:'+str(auc_SAL)[:4], linewidth=1.0)
+            plt.plot(x_labels_set, protocol_result['CAL'],  '-b', marker = '^', label='CAL, AUC:'+str(auc_CAL)[:4], linewidth=1.0)
+            plt.plot(x_labels_set, protocol_result['SPL'],  '-g', marker = 's',  label='SPL, AUC:'+str(auc_SPL)[:4], linewidth=1.0)
 
-            if var > 12:
-                plt.xlabel('Percentage of human judgements', size = 16)
+            if var > 2:
+                plt.xlabel('Percentage of human judgements', size = 8)
 
-            if var == 1 or var == 5 or var == 9 or var == 13:
-                plt.ylabel(s1+'\n F1 measure', size = 16)
+            if var == 1 or var == 3:
+                plt.ylabel('F1 measure', size = 8)
                 #plt.yticks(True)
             plt.ylim([0.5,1])
-            #plt.tick_params(axis='x',          # changes apply to the x-axis
-            #which='both',      # both major and minor ticks are affected
-            #bottom='off',      # ticks along the bottom edge are off
-            #top='off',         # ticks along the top edge are off
-            #labelbottom='off') # labels along the bottom edge are off)
-            #if var == 1:
-            #if var == 7 or var == 8:
-            #    plt.legend(loc=2, fontsize = 16)
-            #else:
-            plt.legend(loc=4, fontsize=16)
-            plt.title(datasource, size= 16)
+
+            plt.legend(loc=4)
+            plt.title(datasource, size= 8)
             plt.grid()
             var = var + 1
 
-#plt.suptitle(s1, size=10)
+plt.suptitle(s1, size=10)
 plt.tight_layout()
-
-#plt.show()
 plt.savefig(plotAddress+s1+'new_.pdf', format='pdf')
 
     #exit(0)

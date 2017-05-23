@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0535bd4-8300-4b90-97dc-682304dbc22d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vary_complete_f-1collector.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shellCommandRunner_new_map1_and_bpref1.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/batch_command.sh" afterPath="$PROJECT_DIR$/batch_command.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boxplots.py" afterPath="$PROJECT_DIR$/boxplots.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/commandgenerator3.py" afterPath="$PROJECT_DIR$/commandgenerator3.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/complete_f-1collector.py" afterPath="$PROJECT_DIR$/data/complete_f-1collector.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/vary_final_f-1collector.py" afterPath="$PROJECT_DIR$/data/vary_final_f-1collector.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" afterPath="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shellCommandRunner_bpref1.py" afterPath="$PROJECT_DIR$/shellCommandRunner_bpref1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shellCommandRunner_new_map1.py" afterPath="$PROJECT_DIR$/shellCommandRunner_new_map1.py" />
     </list>
     <ignored path="parser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,26 +51,62 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pearson_Correlation_collector.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pearson_Correlation_collector.py">
+      <file leaf-file-name="complete_f-1collector_no_oversample.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/complete_f-1collector_no_oversample.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1395">
-              <caret line="93" column="13" lean-forward="false" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="73" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vary_final_f-1collector.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="complete_f-1collector.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/complete_f-1collector.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="660">
+              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="complete_f-1collector_with_no_oversample.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/complete_f-1collector_with_no_oversample.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="39" column="56" lean-forward="false" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shellCommandRunner_new_map1_and_bpref1.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map1_and_bpref1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="709">
+              <caret line="200" column="51" lean-forward="false" selection-start-line="200" selection-start-column="51" selection-end-line="200" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vary_final_f-1collector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/vary_final_f-1collector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="131" column="31" lean-forward="false" selection-start-line="131" selection-start-column="31" selection-end-line="131" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="165">
+              <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vary_final_f-1collector_one_row.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/vary_final_f-1collector_one_row.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="532">
+              <caret line="128" column="43" lean-forward="false" selection-start-line="128" selection-start-column="43" selection-end-line="128" selection-end-column="43" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -72,10 +114,30 @@
       <file leaf-file-name="shellCommandRunner_new_map1.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="226" column="111" lean-forward="false" selection-start-line="226" selection-start-column="87" selection-end-line="226" selection-end-column="111" />
+            <state relative-caret-position="180">
+              <caret line="16" column="32" lean-forward="false" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shellCommandRunner_bpref1.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shellCommandRunner_bpref1.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="finite_pool_correction_new_ranker_percentage.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/finite_pool_correction_new_ranker_percentage.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="990">
+              <caret line="93" column="70" lean-forward="false" selection-start-line="93" selection-start-column="70" selection-end-line="93" selection-end-column="70" />
               <folding>
-                <element signature="e#0#40#0" expanded="true" />
+                <element signature="e#26857#37507#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -113,6 +175,8 @@
       <find>human_lable_str</find>
       <find>human_label_str</find>
       <find>map.txt</find>
+      <find>0.9</find>
+      <find>sampling</find>
     </findStrings>
     <replaceStrings>
       <replace>train_per_centage_flag == 'True'</replace>
@@ -124,14 +188,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/BasicKNNIndriTREC8.py" />
-        <option value="$PROJECT_DIR$/BasicLRIndriClueWeb12.py" />
-        <option value="$PROJECT_DIR$/BasicLRIndriTREC8.py" />
-        <option value="$PROJECT_DIR$/data/BasicLRIndriTREC8_new.py" />
-        <option value="$PROJECT_DIR$/BasicLRIndriClueWeb12_new.py" />
-        <option value="$PROJECT_DIR$/spluk.py" />
-        <option value="$PROJECT_DIR$/spluk_analysis.py" />
-        <option value="$PROJECT_DIR$/data/commandgenerator.py" />
         <option value="$PROJECT_DIR$/data/predictionChecker.py" />
         <option value="$PROJECT_DIR$/activeCode.py" />
         <option value="$PROJECT_DIR$/activeCode1.py" />
@@ -160,21 +216,29 @@
         <option value="$PROJECT_DIR$/shellCommandRunner2.py" />
         <option value="$PROJECT_DIR$/f_beta_collector.py" />
         <option value="$PROJECT_DIR$/shellCommandRunner1.py" />
-        <option value="$PROJECT_DIR$/commandgenerator3.py" />
         <option value="$PROJECT_DIR$/commandgenerator_bpref.py" />
         <option value="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage.py" />
         <option value="$PROJECT_DIR$/grid8.py" />
-        <option value="$PROJECT_DIR$/data/complete_f-1collector.py" />
-        <option value="$PROJECT_DIR$/boxplots.py" />
         <option value="$PROJECT_DIR$/shellCommandRunner_new_map.py" />
         <option value="$PROJECT_DIR$/shellCommandRunner_bpref.py" />
-        <option value="$PROJECT_DIR$/shellCommandRunner_bpref1.py" />
         <option value="$PROJECT_DIR$/qRelModifier.py" />
         <option value="$PROJECT_DIR$/vary_complete_f-1collector.py" />
         <option value="$PROJECT_DIR$/pearson_Correlation_collector.py" />
         <option value="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" />
         <option value="$PROJECT_DIR$/shellCommandRunner_new_map1.py" />
+        <option value="$PROJECT_DIR$/shellCommandRunner_bpref1.py" />
         <option value="$PROJECT_DIR$/data/vary_final_f-1collector.py" />
+        <option value="$PROJECT_DIR$/boxplots.py" />
+        <option value="$PROJECT_DIR$/shellCommandRunner_new_map_for_systems.py" />
+        <option value="$PROJECT_DIR$/map_boxplot.py" />
+        <option value="$PROJECT_DIR$/data/complete_f-1collector.py" />
+        <option value="$PROJECT_DIR$/commandgenerator3.py" />
+        <option value="$PROJECT_DIR$/finite_pool_correction_new_ranker_percentage.py" />
+        <option value="$PROJECT_DIR$/complete_f-1collector_remove.py" />
+        <option value="$PROJECT_DIR$/complete_f-1collector_no_oversample.py" />
+        <option value="$PROJECT_DIR$/complete_f-1collector_with_no_oversample.py" />
+        <option value="$PROJECT_DIR$/shellCommandRunner_new_map1_and_bpref1.py" />
+        <option value="$PROJECT_DIR$/vary_final_f-1collector_one_row.py" />
       </list>
     </option>
   </component>
@@ -205,7 +269,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -235,6 +298,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -243,16 +307,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/data" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.vary_final_f-1collector">
-    <configuration default="false" name="vary_complete_f-1collector" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.vary_final_f-1collector_one_row">
+    <configuration default="false" name="complete_f-1collector_no_oversample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -265,12 +329,12 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vary_complete_f-1collector.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/complete_f-1collector_no_oversample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="pearson_Correlation_collector" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="complete_f-1collector_remove" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -283,12 +347,12 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pearson_Correlation_collector.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/complete_f-1collector_remove.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="f_beta_collector" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="complete_f-1collector_with_no_oversample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -301,12 +365,12 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/f_beta_collector.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/complete_f-1collector_with_no_oversample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="finite_pool_correction_no_ranker_percentage_bucket" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="shellCommandRunner_new_map1_and_bpref1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -319,25 +383,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/shellCommandRunner_new_map1_and_bpref1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="vary_final_f-1collector" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="vary_final_f-1collector_one_row" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="parser" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/vary_final_f-1collector.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vary_final_f-1collector_one_row.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -484,19 +548,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.vary_complete_f-1collector" />
-      <item index="1" class="java.lang.String" itemvalue="Python.pearson_Correlation_collector" />
-      <item index="2" class="java.lang.String" itemvalue="Python.f_beta_collector" />
-      <item index="3" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker_percentage_bucket" />
-      <item index="4" class="java.lang.String" itemvalue="Python.vary_final_f-1collector" />
+      <item index="0" class="java.lang.String" itemvalue="Python.complete_f-1collector_no_oversample" />
+      <item index="1" class="java.lang.String" itemvalue="Python.complete_f-1collector_remove" />
+      <item index="2" class="java.lang.String" itemvalue="Python.complete_f-1collector_with_no_oversample" />
+      <item index="3" class="java.lang.String" itemvalue="Python.shellCommandRunner_new_map1_and_bpref1" />
+      <item index="4" class="java.lang.String" itemvalue="Python.vary_final_f-1collector_one_row" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.vary_final_f-1collector" />
-        <item index="1" class="java.lang.String" itemvalue="Python.finite_pool_correction_no_ranker_percentage_bucket" />
-        <item index="2" class="java.lang.String" itemvalue="Python.pearson_Correlation_collector" />
-        <item index="3" class="java.lang.String" itemvalue="Python.f_beta_collector" />
-        <item index="4" class="java.lang.String" itemvalue="Python.vary_complete_f-1collector" />
+        <item index="0" class="java.lang.String" itemvalue="Python.vary_final_f-1collector_one_row" />
+        <item index="1" class="java.lang.String" itemvalue="Python.shellCommandRunner_new_map1_and_bpref1" />
+        <item index="2" class="java.lang.String" itemvalue="Python.complete_f-1collector_with_no_oversample" />
+        <item index="3" class="java.lang.String" itemvalue="Python.complete_f-1collector_no_oversample" />
+        <item index="4" class="java.lang.String" itemvalue="Python.complete_f-1collector_remove" />
       </list>
     </recent_temporary>
   </component>
@@ -515,14 +579,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1535" height="876" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23973942" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27361563" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3108614" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4332085" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -594,77 +658,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BasicLRIndriTREC8_ownal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2670">
-          <caret line="200" column="133" lean-forward="false" selection-start-line="199" selection-start-column="84" selection-end-line="200" selection-end-column="133" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/sklearn/utils/validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5745">
-          <caret line="394" column="0" lean-forward="false" selection-start-line="394" selection-start-column="0" selection-end-line="394" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1875">
-          <caret line="245" column="12" lean-forward="false" selection-start-line="217" selection-start-column="12" selection-end-line="245" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Corrected_Basic_SVM_IndriTREC8_ownal_ver_1.py" />
-    <entry file="file://$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_ver_1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1646">
-          <caret line="231" column="75" lean-forward="false" selection-start-line="231" selection-start-column="75" selection-end-line="231" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fileUnzipper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="40" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="12" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Corrected_BasicLRIndriTREC8_ownal_with_validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10365">
-          <caret line="716" column="39" lean-forward="false" selection-start-line="714" selection-start-column="11" selection-end-line="716" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finite_pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sgml.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="23" column="33" lean-forward="false" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renamer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="44" lean-forward="false" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IndriTREC8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-735">
-          <caret line="31" column="50" lean-forward="false" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2067">
@@ -707,20 +700,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/urlCollector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SystemRankingModifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="9" lean-forward="false" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spluk_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3660">
@@ -742,13 +721,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shellCommandRunner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-581">
-          <caret line="2" column="38" lean-forward="false" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/matplotlib/pyplot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20055">
@@ -760,13 +732,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
           <caret line="1753" column="0" lean-forward="false" selection-start-line="1753" selection-start-column="0" selection-end-line="1753" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testttt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -785,13 +750,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/commandgenerator3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="61" lean-forward="false" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/commandgenerator2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
@@ -799,25 +757,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/new_f-1collector_oversample.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/new_f-1collector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="93" column="33" lean-forward="true" selection-start-line="93" selection-start-column="33" selection-end-line="93" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/final_f-1collector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="113" column="42" lean-forward="false" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -835,20 +778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boxplots.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="62" lean-forward="false" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shellCommandRunner1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1245">
-          <caret line="60" column="51" lean-forward="false" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shellCommandRunner2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1038">
@@ -856,42 +785,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/complete_f-1collector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="116" column="114" lean-forward="false" selection-start-line="116" selection-start-column="89" selection-end-line="116" selection-end-column="114" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shellCommandRunner_bpref.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="15" column="77" lean-forward="false" selection-start-line="15" selection-start-column="77" selection-end-line="15" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shellCommandRunner_bpref1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -899,33 +796,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vary_complete_f-1collector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="165" column="19" lean-forward="true" selection-start-line="164" selection-start-column="12" selection-end-line="165" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vary_complete_f-1collector.py" />
     <entry file="file://$PROJECT_DIR$/pearson_Correlation_collector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1395">
+        <state relative-caret-position="1320">
           <caret line="93" column="13" lean-forward="false" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="58" column="19" lean-forward="false" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -937,23 +815,205 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fileUnzipper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="26" lean-forward="true" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renamer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="44" lean-forward="false" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sgml.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="33" lean-forward="false" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shellCommandRunner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="38" lean-forward="false" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testttt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/urlCollector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="13" column="89" lean-forward="false" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SystemRankingModifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="9" lean-forward="false" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shellCommandRunner1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="60" column="51" lean-forward="false" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/boxplots.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage_bucket.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="82" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map_for_systems.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="113" column="73" lean-forward="false" selection-start-line="113" selection-start-column="73" selection-end-line="113" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/map_boxplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="116" column="128" lean-forward="false" selection-start-line="116" selection-start-column="128" selection-end-line="116" selection-end-column="128" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/commandgenerator3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="69" lean-forward="false" selection-start-line="28" selection-start-column="69" selection-end-line="28" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finite_pool_correction_no_ranker_percentage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="84" column="39" lean-forward="false" selection-start-line="84" selection-start-column="39" selection-end-line="84" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/complete_f-1collector_remove.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="39" column="51" lean-forward="false" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finite_pool_correction_new_ranker_percentage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="93" column="70" lean-forward="false" selection-start-line="93" selection-start-column="70" selection-end-line="93" selection-end-column="70" />
+          <folding>
+            <element signature="e#26857#37507#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/final_f-1collector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="113" column="42" lean-forward="false" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/new_f-1collector_oversample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/complete_f-1collector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/complete_f-1collector_no_oversample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shellCommandRunner_bpref1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="226" column="111" lean-forward="false" selection-start-line="226" selection-start-column="87" selection-end-line="226" selection-end-column="111" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="16" column="32" lean-forward="false" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/complete_f-1collector_with_no_oversample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="39" column="56" lean-forward="false" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shellCommandRunner_new_map1_and_bpref1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="709">
+          <caret line="200" column="51" lean-forward="false" selection-start-line="200" selection-start-column="51" selection-end-line="200" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/vary_final_f-1collector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="131" column="31" lean-forward="false" selection-start-line="131" selection-start-column="31" selection-end-line="131" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="165">
+          <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vary_final_f-1collector_one_row.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="128" column="43" lean-forward="false" selection-start-line="128" selection-start-column="43" selection-end-line="128" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>

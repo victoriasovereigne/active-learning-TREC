@@ -8,14 +8,14 @@ gs = gridspec.GridSpec(5, 2)
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
 base_address1 = "/home/nahid/UT_research/clueweb12/new_result/"
-plotAddress =  "/home/nahid/UT_research/clueweb12/new_result/plots/f1/"
+plotAddress =  "/home/nahid/UT_research/clueweb12/new_result/plots/f1new/"
 
 
 protocol_list = ['SAL', 'CAL', 'SPL']
 #dataset_list = ['WT2013','WT2014']
 dataset_list = ['WT2014', 'WT2013', 'gov2','TREC8']
 ranker_list = ['True', 'False']
-sampling_list = ['True','False']
+sampling_list = ['True']
 train_per_centage_flag = 'True'
 seed_size =  [10] #50      # number of samples that are initially labeled
 batch_size = [25] #50
@@ -37,7 +37,7 @@ protocol_result = {}
 subplot_loc = [441, 442, 443, 444, 445, 446, 447, 448, 449, 4410, 4411, 4412, 4413, 4414, 4415, 4416]
 
 
-fig, ax = plt.subplots(nrows=4, ncols=4, figsize=(20,20))
+fig, ax = plt.subplots(nrows=2, ncols=4, figsize=(20,10))
 var = 1
 for use_ranker in ranker_list:
     for iter_sampling in sampling_list:
@@ -106,7 +106,7 @@ for use_ranker in ranker_list:
             #plt.figure(var)
             print len(training_variation)
             #plt.subplot(subplot_loc[var])
-            plt.subplot(4,4, var)
+            plt.subplot(2,4, var)
             '''plt.plot(x_labels_set, protocol_result['SAL'], '-r', label='SAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['CAL'], '-b', label = 'CAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['SPL'], '-g', label= 'SPL',linewidth=2.0)

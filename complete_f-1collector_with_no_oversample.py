@@ -8,7 +8,7 @@ gs = gridspec.GridSpec(5, 2)
 baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
 
 base_address1 = "/home/nahid/UT_research/clueweb12/new_result/"
-plotAddress =  "/home/nahid/UT_research/clueweb12/new_result/plots/f1/"
+plotAddress =  "/home/nahid/UT_research/clueweb12/new_result/plots/f13col/"
 
 
 protocol_list = ['SAL', 'CAL', 'SPL']
@@ -37,16 +37,19 @@ protocol_result = {}
 subplot_loc = [441, 442, 443, 444, 445, 446, 447, 448, 449, 4410, 4411, 4412, 4413, 4414, 4415, 4416]
 
 
-fig, ax = plt.subplots(nrows=4, ncols=4, figsize=(20,20))
+fig, ax = plt.subplots(nrows=3, ncols=4, figsize=(20,15))
 var = 1
 for use_ranker in ranker_list:
     for iter_sampling in sampling_list:
         s=""
-        if use_ranker == "True":
+        if use_ranker == "True" and iter_sampling == "True":
             base_address1 = "/home/nahid/UT_research/clueweb12/new_result/"
-        else:
+        elif use_ranker == "False" and iter_sampling == "True":
             base_address1 = "/home/nahid/UT_research/clueweb12/complete_result/"
-
+        elif use_ranker=="False" and iter_sampling == "False":
+            base_address1 = "/home/nahid/UT_research/clueweb12/nooversample_result/"
+        else:
+            continue
         for datasource in dataset_list: # 1
             base_address2 = base_address1 + str(datasource) + "/"
             if use_ranker == 'True':
@@ -59,8 +62,8 @@ for use_ranker in ranker_list:
                 base_address4 = base_address3 + "oversample/"
                 s1 = s1+"oversampling"
             else:
-                base_address4 = base_address3 + "htcorrection/"
-                s1 = s1+"HT correction"
+                base_address4 = base_address3 + "oversample/"
+                s1 = s1+"no oversample"
 
             training_variation = []
             for seed in seed_size: # 2
@@ -106,7 +109,7 @@ for use_ranker in ranker_list:
             #plt.figure(var)
             print len(training_variation)
             #plt.subplot(subplot_loc[var])
-            plt.subplot(4,4, var)
+            plt.subplot(3,4, var)
             '''plt.plot(x_labels_set, protocol_result['SAL'], '-r', label='SAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['CAL'], '-b', label = 'CAL',linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['SPL'], '-g', label= 'SPL',linewidth=2.0)
@@ -128,7 +131,7 @@ for use_ranker in ranker_list:
             plt.plot(x_labels_set, protocol_result['CAL'],  '-b', marker = '^', label='CAL, AUC:'+str(auc_CAL)[:4], linewidth=2.0)
             plt.plot(x_labels_set, protocol_result['SPL'],  '-g', marker = 's',  label='SPL, AUC:'+str(auc_SPL)[:4], linewidth=2.0)
 
-            if var > 12:
+            if var > 6:
                 plt.xlabel('Percentage of human judgements', size = 16)
 
             if var == 1 or var == 5 or var == 9 or var == 13:

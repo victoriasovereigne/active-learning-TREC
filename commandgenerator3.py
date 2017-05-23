@@ -3,8 +3,10 @@ import sys
 
 protocol_list = ['SAL', 'CAL', 'SPL']
 dataset_list = ['WT2013', 'WT2014', 'gov2', 'TREC8']
-ranker_list = ['True', 'False']
-sampling_list = ['True', 'False']
+ranker_list = ['False']
+#sampling_list = ['True', 'False']
+sampling_list = ['False']
+
 train_per_centage_flag = 'True'
 
 shellcommand = '#!/bin/sh\n'
@@ -17,14 +19,14 @@ for datasource in dataset_list: # 1
                 if iter_sampling == 'True':
                     correction = 'False'
                 else:
-                    correction = 'True'
-                print "python "+ "finite_pool_correction_no_ranker_percentage.py " + datasource +" "+ protocol+" "+str(use_ranker)+" "+str(iter_sampling)+" "+ str(correction)+  " "+ str(train_per_centage_flag)
-                s = s + "python "+ "finite_pool_correction_no_ranker_percentage.py " + datasource +" "+ protocol+" "+str(use_ranker)+" "+str(iter_sampling)+" "+ str(correction)+  " "+ str(train_per_centage_flag)+ "\n"
+                    correction = 'False'
+                print "python "+ "finite_pool_correction_new_ranker_percentage.py " + datasource +" "+ protocol+" "+str(use_ranker)+" "+str(iter_sampling)+" "+ str(correction)+  " "+ str(train_per_centage_flag)
+                s = s + "python "+ "finite_pool_correction_new_ranker_percentage.py " + datasource +" "+ protocol+" "+str(use_ranker)+" "+str(iter_sampling)+" "+ str(correction)+  " "+ str(train_per_centage_flag)+ "\n"
                 variation = variation + 1
 
 
 print "number of variations:", variation
-filename1 = '/home/nahid/PycharmProjects/parser/batch_command.sh'
+filename1 = '/home/nahid/PycharmProjects/parser/batch_command_no_over.sh'
 print shellcommand
 text_file = open(filename1, "w")
 text_file.write(shellcommand+s)
