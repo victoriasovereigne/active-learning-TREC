@@ -21,6 +21,7 @@ from libact.query_strategies import *
 from libact.labelers import IdealLabeler
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.under_sampling import RandomUnderSampler
+from imblearn.ensemble import EasyEnsemble
 from imblearn.over_sampling import SMOTE
 from imblearn.over_sampling import ADASYN
 from sklearn.metrics import f1_score
@@ -32,26 +33,104 @@ import collections
 compare = lambda x, y: collections.Counter(x) == collections.Counter(y)
 import pickle
 from math import log
-import pandas as pd
+# import pandas as pd
 import Queue
 
 import logging
 logging.basicConfig()
 
-TEXT_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/IndriData/'
-RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
+from undersampler import *
+# from protocol import *
+
+def empty_queue(queue, mycounter, limit, isPredictable, correction, unmodified_train_X, unmodified_train_y, 
+    initial_X_test, initial_y_test, sampling_weight, train_index_list, test_index_list, loopDocList):
+    while not queue.empty():
+        if mycounter == limit:
+            break
+        item = queue.get()
+        isPredictable[item.index] = 0  # not predictable
+
+        if correction == True:
+            correctionWeight = item.priority / sumForCorrection
+            unmodified_train_X.append(initial_X_test[item.index])
+            sampling_weight.append(correctionWeight)
+        else:
+            unmodified_train_X.append(initial_X_test[item.index])
+            sampling_weight.append(1.0)
+
+        unmodified_train_y.append(initial_y_test[item.index])
+        train_index_list.append(test_index_list[item.index])
+        loopDocList.append(int(initial_y_test[item.index]))
+        mycounter = mycounter + 1
+
+    return mycounter
+
+def CAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test):
+    print "####CAL#### this method works"
+    queue = Queue.PriorityQueue(queueSize)
+    y_prob = []
+    counter = 0
+    sumForCorrection = 0.0
+    for counter in xrange(0, predictableSize):
+        if isPredictable[counter] == 1:
+            # reshapping reshape(1,-1) because it does not take one emelemt array
+            # list does not contain reshape so we are using np,array
+            # model. predit returns two value in index [0] of the list
+            if under_sampling == True:
+                y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+            else:
+                y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+            
+            queue.put(relevance(y_prob[1], counter))
+            sumForCorrection = sumForCorrection + y_prob[1]
+
+    return queue
+
+
+def SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test):
+    print "####SAL####"
+    queue = Queue.PriorityQueue(queueSize)
+    y_prob = []
+    counter = 0
+    sumForCorrection = 0.0
+    for counter in xrange(0, predictableSize):
+        if isPredictable[counter] == 1:
+            # reshapping reshape(1,-1) because it does not take one emelemt array
+            # list does not contain reshape so we are using np,array
+            # model. predit returns two value in index [0] of the list
+            if under_sampling == True:
+                y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+            else:
+                y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+            entropy = (-1) * (y_prob[0] * log(y_prob[0], 2) + y_prob[1] * log(y_prob[1], 2))
+            queue.put(relevance(entropy, counter))
+            sumForCorrection = sumForCorrection + entropy
+
+    return queue
+
+
+TEXT_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/'
+RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=False # can be True or False
 command_prompt_use = True
 
 #if command_prompt_use == True:
-datasource = sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
-protocol = sys.argv[2]
-use_ranker = sys.argv[3]
-iter_sampling = sys.argv[4]
-correction = sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
-train_per_centage_flag = sys.argv[6]
+# datasource = sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
+# protocol = sys.argv[2]
+# use_ranker = sys.argv[3]
+# iter_sampling = sys.argv[4]
+# correction = sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
+# train_per_centage_flag = sys.argv[6]
+# under_sampling = sys.argv[7]
 
+datasource = 'TREC8' #sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
+protocol = 'CAL' #sys.argv[2]
+use_ranker = 'False' #sys.argv[3]
+iter_sampling = 'True' #sys.argv[4]
+correction = 'False' #sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
+train_per_centage_flag = 'False' #sys.argv[6]
+under_sampling = 'False' #sys.argv[7]
 
 #parameter set # all FLAGS must be string
 '''
@@ -66,6 +145,7 @@ print "Ranker_use", use_ranker
 print "iter_sampling", iter_sampling
 print "correction", correction
 print "train_percenetae", train_per_centage_flag
+print "under sampling", under_sampling
 
 
 test_size = 0    # the percentage of samples in the dataset that will be
@@ -74,10 +154,15 @@ test_size_set = [0.2]
 train_per_centage = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 ranker_location = {}
-ranker_location["WT2013"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2013/input.ICTNET13RSR2"
-ranker_location["WT2014"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2014/input.Protoss"
-ranker_location["gov2"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/gov2/input.indri06AdmD"
-ranker_location["TREC8"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/TREC8/input.ibmg99b"
+# ranker_location["WT2013"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2013/input.ICTNET13RSR2"
+# ranker_location["WT2014"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/WT2014/input.Protoss"
+# ranker_location["gov2"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/gov2/input.indri06AdmD"
+# ranker_location["TREC8"] = "/media/nahid/Windows8_OS/unzippedsystemRanking/TREC8/input.ibmg99b"
+ranker_location["WT2013"] = "/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/systemRanking/WT2013/input.ICTNET13RSR2"
+ranker_location["WT2014"] = "/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/systemRanking/WT2014/input.Protoss"
+ranker_location["gov2"] = "/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/systemRanking/gov2/input.indri06AdmD"
+ranker_location["TREC8"] = "/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/systemRanking/TREC8/input.ibmg99b"
+# ranker_location["robust"] = "/v/filer4b/v41q001/mlease/datasets/robust04/collection-unzipped/fr94"
 
 n_labeled =  10 #50      # number of samples that are initially labeled
 batch_size = 25 #50
@@ -91,7 +176,10 @@ processed_file_location = ''
 start_topic = 0
 end_topic = 0
 
-base_address = "/home/nahid/UT_research/clueweb12/nooversample_result1/"
+base_address = "/u/vlestari/Documents/Summer/IR/result/"
+
+# base_address = "/home/nahid/UT_research/clueweb12/nooversample_result1/"
+
 base_address = base_address +str(datasource)+"/"
 if use_ranker == 'True':
     base_address = base_address + "ranker/"
@@ -110,6 +198,14 @@ if correction == 'True':
 if correction == 'False':
     correction = False
 
+# --------------------------------
+if under_sampling == 'True':
+    base_address = base_address + "undersample/"
+    under_sampling = True
+if under_sampling == 'False':
+    under_sampling = False
+# --------------------------------
+
 if train_per_centage_flag == 'True':
     train_per_centage_flag = True
 else:
@@ -121,6 +217,10 @@ print "base address:", base_address
 if iter_sampling == True and correction == True:
     print "Over sampling and HT correction cannot be done together"
     exit(-1)
+# --------------------------------
+if iter_sampling == True and under_sampling == True:
+    print "Over sampling and under sampling cannot be done together"
+    exit(-1)
 
 #if iter_sampling == False and correction == False:
 #    print "Over sampling and HT correction cannot be both false together"
@@ -128,23 +228,23 @@ if iter_sampling == True and correction == True:
 
 
 if datasource=='TREC8':
-    processed_file_location = '/home/nahid/UT_research/TREC/TREC8/processed.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
+    processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/processed.txt'
+    RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt'
     start_topic = 401
     end_topic = 451
 elif datasource=='gov2':
-    processed_file_location = '/home/nahid/UT_research/TREC/gov2/processed.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/qrels.tb06.top50.txt'
+    processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/gov2/processed.txt'
+    RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/gov2/qrels.tb06.top50.txt'
     start_topic = 801
     end_topic = 851
 elif datasource=='WT2013':
-    processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
+    processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/WT2013/processed_new.txt'
+    RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/WT2013/qrelsadhoc2013.txt'
     start_topic = 201
     end_topic = 251
 else:
-    processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2014.txt'
+    processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/WT2014/processed_new.txt'
+    RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/WT2014/qrelsadhoc2014.txt'
     start_topic = 251
     end_topic = 301
 
@@ -185,29 +285,25 @@ def review_to_words( raw_review ):
     return( " ".join( meaningful_words ))
 
 
-def run(trn_ds, tst_ds, lbr, model, qs, quota, batch_size):
-    E_in, E_out = [], []
+# def run(trn_ds, tst_ds, lbr, model, qs, quota, batch_size):
+#     E_in, E_out = [], []
 
-    for _ in range(quota):
-
-
-        # Standard usage of libact objects
-        ask_id = qs.make_query()
-        #print  ask_id
-        X, _ = zip(*trn_ds.data)
-        lb = lbr.label(X[ask_id])
-        trn_ds.update(ask_id, lb)
+#     for _ in range(quota):
 
 
-        model.train(trn_ds)
-        #model.predict(tst_ds)
-        E_in = np.append(E_in, 1 - model.score(trn_ds))
-        E_out = np.append(E_out, 1 - model.score(tst_ds))
+#         # Standard usage of libact objects
+#         ask_id = qs.make_query()
+#         #print  ask_id
+#         X, _ = zip(*trn_ds.data)
+#         lb = lbr.label(X[ask_id])
+#         trn_ds.update(ask_id, lb)
 
-    return E_in, E_out, model
 
+#         model.train(trn_ds)
+#         E_in = np.append(E_in, 1 - model.score(trn_ds))
+#         E_out = np.append(E_out, 1 - model.score(tst_ds))
 
-
+#     return E_in, E_out, model
 
 all_reviews = {}
 learning_curve = {} # per batch value for  validation set
@@ -220,9 +316,6 @@ if preloaded==False:
         print path
 
         f = open(path)
-
-
-
         docNo = name[0:name.index('.')]
         #print docNo
 
@@ -286,17 +379,24 @@ for lines in f:
 f.close()
 # print len(topic_to_doclist)
 
+# ------------------------------------------------------------------------------------------
+
+num_subsets = 11
+ens = EnsembleClassifier(num_subsets)
+
+# ------------------------------------------------------------------------------------------
+
 for test_size in test_size_set:
     seed = 1335
     for fold in xrange(1,2):
         np.random.seed(seed)
         seed = seed + fold
-        result_location = base_address + 'result_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
-        predicted_location = base_address + 'prediction_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
-        predicted_location_base = base_address + 'prediction_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_'
-        human_label_location = base_address + 'prediction_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold) + '_'
+        result_location = base_address + 'result_' + protocol + '_batch-' + str(batch_size) + '_seed-' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
+        predicted_location = base_address + 'prediction_' + protocol + '_batch-' + str(batch_size) + '_seed-' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
+        predicted_location_base = base_address + 'prediction_' + protocol + '_batch-' + str(batch_size) + '_seed-' + str(n_labeled) +'_fold'+str(fold) + '_'
+        human_label_location = base_address + 'prediction_' + protocol + '_batch-' + str(batch_size) + '_seed-' + str(n_labeled) +'_fold'+str(fold) + '_'
 
-        learning_curve_location = base_address + 'learning_curve_protocol:' + protocol + '_batch:' + str(batch_size) + '_seed:' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
+        learning_curve_location = base_address + 'learning_curve_' + protocol + '_batch-' + str(batch_size) + '_seed-' + str(n_labeled) +'_fold'+str(fold)+ '.txt'
         s = "";
         pred_str = ""
         #for topic in sorted(topic_to_doclist.keys()):
@@ -507,6 +607,7 @@ for test_size in test_size_set:
                             docNo = docIndex_DocNo[train_index]
                             human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
                         human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
+                        print human_label_location_final
                         text_file = open(human_label_location_final, "a")
                         text_file.write(human_label_str)
                         text_file.close()
@@ -560,75 +661,6 @@ for test_size in test_size_set:
                         print "Requirement made at counter", loopCounter,  "(1:)", seed_one_counter, "(0):", seed_zero_counter
                         print "Seed Size Limit:", seed_size_limit, "Seed Explored so far:", seed_counter
                         break
-                #exit(0)
-                '''
-                if seed_one_counter == 0:
-                    print "No Relevant Document found in Seed set for topic", topic
-                    seed_counter = n_labeled
-                    while seed_one_counter < 1:
-
-                        documentNumber = seed_list[seed_counter]
-                        print "Seed Counter", seed_counter
-                        seed_counter = seed_counter + 1
-                        if documentNumber not in docNo_docIndex:
-                            continue
-                        index = docNo_docIndex[documentNumber]
-                        train_index_list.append(index)
-
-                        labelValue = int(docNo_label[documentNumber])
-                        ask_for_label = ask_for_label + 1
-                        # we are skipping label 0 because we do not need it
-                        # Sorry we need to add it if its 0 because we are costing too much
-                        #if labelValue == 0:
-                        #    continue
-                        # print "Found in List Index number", listIndex
-                        initial_X_train.append(X[index])
-                        initial_y_train.append(labelValue)
-                        if labelValue == 1:
-                            seed_one_counter = seed_one_counter + 1
-                        if labelValue == 0:
-                            seed_zero_counter = seed_zero_counter + 1
-
-                print "Number of human labels:", ask_for_label, "# relevant document in seed set", seed_one_counter
-
-                if seed_zero_counter == 0:
-                    print "No Non-Relevant Document found in Seed set for topic", topic
-                    seed_counter = n_labeled
-                    while seed_zero_counter < 1:
-                        documentNumber = seed_list[seed_counter]
-                        print "Seed Counter", seed_counter
-                        seed_counter = seed_counter + 1
-
-                        if documentNumber not in docNo_docIndex:
-                            continue
-                        index = docNo_docIndex[documentNumber]
-                        train_index_list.append(index)
-
-                        # we are making sure that this document doea not belong to test set
-                        labelValue = int(docNo_label[documentNumber])
-                        ask_for_label = ask_for_label + 1
-                        # we are skipping label 1 because we do not need it
-                        # Sorry we need to add it if its 1 because we are costing too much
-                        #if labelValue == 1:
-                        #    continue
-
-                        # print "Found in List Index number", listIndex
-                        initial_X_train.append(X[index])
-                        initial_y_train.append(labelValue)
-                        if labelValue == 1:
-                            seed_one_counter = seed_one_counter + 1
-                        if labelValue == 0:
-                            seed_zero_counter = seed_zero_counter + 1
-
-                print "Number of human labels:", ask_for_label, "# non-relevant document in seed set", seed_zero_counter
-                # print type(initial_X_train)
-
-                cost= ((ask_for_label*1.0)/datasize)*100
-                print "COST:", cost
-                if cost>=11:
-                    print "MORE COST", topic
-                    exit(0)
-                '''
 
                 unmodified_train_X = copy.deepcopy(initial_X_train)
                 unmodified_train_y = copy.deepcopy(initial_y_train)
@@ -639,17 +671,24 @@ for test_size in test_size_set:
 
                 # Ranker needs oversampling, but when HTCorrection true we cannot perform oversample
                 if use_ranker == True and correction == False:
-                    print "Oversampling in the seed list"
-                    ros = RandomOverSampler()
-                    # ros = RandomUnderSampler()
-                    # ros = SMOTE(random_state=42)
-                    # ros = ADASYN()
-                    initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
+                    if under_sampling == True:
+                        print "Undersampling in the seed list"
+                        # rus = RandomUnderSampler(return_indices=True, replacement=True)
+                        rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
+                        initial_X_train_sampled, initial_y_train_sampled, indices = rus.fit_sample(initial_X_train, initial_y_train)
+                    else:    
+                        print "Oversampling in the seed list"
+                        ros = RandomOverSampler()
+                        initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
                     initial_X_train = initial_X_train_sampled
                     initial_y_train = initial_y_train_sampled
 
                     initial_X_train = initial_X_train.tolist()
                     initial_y_train = initial_y_train.tolist()
+
+                    # print(np.array(unmodified_train_X).shape)
+                    # print(np.array(initial_X_train).shape)
+                    # break
 
                 initial_X_test = []
                 initial_y_test = []
@@ -692,7 +731,11 @@ for test_size in test_size_set:
                             model = LogisticRegression()
 
                         print len(initial_X_train), len(sampling_weight)
-                        model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
+
+                        if under_sampling == True:
+                            ens.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
+                        else:
+                            model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
 
                         y_pred_all = {}
 
@@ -701,7 +744,11 @@ for test_size in test_size_set:
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
-                                y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+                                if under_sampling == True:
+                                    y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                                    print("y_predict", y_pred_all[train_index])
+                                else:
+                                    y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
@@ -754,10 +801,13 @@ for test_size in test_size_set:
                                 if isPredictable[counter] == 1:
                                     # reshapping reshape(1,-1) because it does not take one emelemt array
                                     # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
-                                    # y_prob = model.predict(initial_X_test[counter])
-                                    # print y_prob
+                                    # model. predit returns two value in index [0] of the list
+                                    if under_sampling == True:
+                                        y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+                                        print("y_prob", y_prob)
+                                    else:
+                                        y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+                                    
                                     queue.put(relevance(y_prob[1], counter))
                                     sumForCorrection = sumForCorrection + y_prob[1]
 
@@ -800,8 +850,11 @@ for test_size in test_size_set:
                                 if isPredictable[counter] == 1:
                                     # reshapping reshape(1,-1) because it does not take one emelemt array
                                     # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+                                    # model. predit returns two value in index [0] of the list
+                                    if under_sampling == True:
+                                        y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+                                    else:
+                                        y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
                                     entropy = (-1) * (y_prob[0] * log(y_prob[0], 2) + y_prob[1] * log(y_prob[1], 2))
                                     queue.put(relevance(entropy, counter))
                                     sumForCorrection = sumForCorrection + entropy
@@ -811,12 +864,9 @@ for test_size in test_size_set:
                                 if batch_counter == batch_size:
                                     break
                                 item = queue.get()
-                                # print len(item)
-                                # print item.priority, item.index
                                 isPredictable[item.index] = 0  # not predictable
                                 if correction == True:
                                     correctionWeight = item.priority / sumForCorrection
-                                    # correctedList = [x / correctionWeight for x in initial_X_test[item.index]]
                                     unmodified_train_X.append(initial_X_test[item.index])
                                     sampling_weight.append(correctionWeight)
                                 else:
@@ -825,10 +875,8 @@ for test_size in test_size_set:
 
                                 unmodified_train_y.append(initial_y_test[item.index])
                                 train_index_list.append(test_index_list[item.index])
-
                                 loopDocList.append(int(initial_y_test[item.index]))
                                 batch_counter = batch_counter + 1
-                                # print X_train.append(X_test.pop(item.priority))
 
                         if protocol == 'SPL':
                             print "####SPL####"
@@ -865,6 +913,15 @@ for test_size in test_size_set:
                             initial_y_train = None
                             initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
 
+                        # --------------------------------
+                        if under_sampling == True:
+                            print("Under sampling in the active iteration list")
+                            # rus = RandomUnderSampler(return_indices=True, replacement=True)
+                            rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
+                            initial_X_train = None
+                            initial_y_train = None
+                            initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
+
                         loopCounter = loopCounter + 1
 
                 else:
@@ -887,7 +944,10 @@ for test_size in test_size_set:
                         if correction == True:
                             model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
                         else:
-                            model.fit(initial_X_train, initial_y_train)
+                            if under_sampling == True:
+                                ens.fit(initial_X_train, initial_y_train)
+                            else:
+                                model.fit(initial_X_train, initial_y_train)
 
                         y_pred_all = {}
 
@@ -904,7 +964,10 @@ for test_size in test_size_set:
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
-                                y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+                                if under_sampling == True:
+                                    y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                                else:
+                                    y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
@@ -970,9 +1033,12 @@ for test_size in test_size_set:
                                 if isPredictable[counter] == 1:
                                     # reshapping reshape(1,-1) because it does not take one emelemt array
                                     # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
-                                    # y_prob = model.predict(initial_X_test[counter])
+                                    # model. predit returns two value in index [0] of the list
+                                    if under_sampling == True:
+                                        y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+                                    else:
+                                        y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+                                    
                                     # print y_prob
                                     queue.put(relevance(y_prob[1], counter))
                                     sumForCorrection = sumForCorrection + y_prob[1]
@@ -1007,44 +1073,47 @@ for test_size in test_size_set:
                                 # print X_train.append(X_test.pop(item.priority))
 
                         if protocol == 'SAL':
-                            print "####SAL####"
-                            queue = Queue.PriorityQueue(queueSize)
-                            y_prob = []
-                            counter = 0
-                            sumForCorrection = 0.0
-                            for counter in xrange(0, predictableSize):
-                                if isPredictable[counter] == 1:
-                                    # reshapping reshape(1,-1) because it does not take one emelemt array
-                                    # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
-                                    entropy = (-1) * (y_prob[0] * log(y_prob[0], 2) + y_prob[1] * log(y_prob[1], 2))
-                                    queue.put(relevance(entropy, counter))
-                                    sumForCorrection = sumForCorrection + entropy
+                            print("not used")
+                            queue = SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
+                            empty_queue(queue, train_size_controller, size_limit, isPredictable, correction, 
+                                        unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
+                                        sampling_weight, train_index_list, test_index_list, loopDocList)
+                            # print "####SAL####"
+                            # queue = Queue.PriorityQueue(queueSize)
+                            # y_prob = []
+                            # counter = 0
+                            # sumForCorrection = 0.0
+                            # for counter in xrange(0, predictableSize):
+                            #     if isPredictable[counter] == 1:
+                            #         # reshapping reshape(1,-1) because it does not take one emelemt array
+                            #         # list does not contain reshape so we are using np,array
+                            #         # model. predit returns two value in index [0] of the list
+                            #         if under_sampling == True:
+                            #             y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+                            #         else:
+                            #             y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+                            #         entropy = (-1) * (y_prob[0] * log(y_prob[0], 2) + y_prob[1] * log(y_prob[1], 2))
+                            #         queue.put(relevance(entropy, counter))
+                            #         sumForCorrection = sumForCorrection + entropy
 
-                            batch_counter = 0
-                            while not queue.empty():
-                                if train_size_controller == size_limit:
-                                    break
-                                item = queue.get()
-                                # print len(item)
-                                # print item.priority, item.index
-                                isPredictable[item.index] = 0  # not predictable
-                                if correction == True:
-                                    correctionWeight = item.priority / sumForCorrection
-                                    # correctedList = [x / correctionWeight for x in initial_X_test[item.index]]
-                                    unmodified_train_X.append(initial_X_test[item.index])
-                                    sampling_weight.append(correctionWeight)
-                                else:
-                                    unmodified_train_X.append(initial_X_test[item.index])
-                                    sampling_weight.append(1.0)
+                            # batch_counter = 0
+                            # while not queue.empty():
+                            #     if train_size_controller == size_limit:
+                            #         break
+                            #     item = queue.get()
+                            #     isPredictable[item.index] = 0  # not predictable
+                            #     if correction == True:
+                            #         correctionWeight = item.priority / sumForCorrection
+                            #         unmodified_train_X.append(initial_X_test[item.index])
+                            #         sampling_weight.append(correctionWeight)
+                            #     else:
+                            #         unmodified_train_X.append(initial_X_test[item.index])
+                            #         sampling_weight.append(1.0)
 
-                                unmodified_train_y.append(initial_y_test[item.index])
-                                train_index_list.append(test_index_list[item.index])
-
-                                loopDocList.append(int(initial_y_test[item.index]))
-                                train_size_controller = train_size_controller + 1
-                                # print X_train.append(X_test.pop(item.priority))
+                            #     unmodified_train_y.append(initial_y_test[item.index])
+                            #     train_index_list.append(test_index_list[item.index])
+                            #     loopDocList.append(int(initial_y_test[item.index]))
+                            #     train_size_controller = train_size_controller + 1
 
                         if protocol == 'SPL':
                             print "####SPL####"
@@ -1081,10 +1150,19 @@ for test_size in test_size_set:
                             initial_y_train = None
                             initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
                         else:
-                            initial_X_train[:] = []
-                            initial_y_train[:] = []
-                            initial_X_train = copy.deepcopy(unmodified_train_X)
-                            initial_y_train = copy.deepcopy(unmodified_train_y)
+                            if under_sampling == True:
+                                # rus = RandomUnderSampler(return_indices=True, replacement=True)
+                                rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
+                                initial_X_train = None
+                                initial_y_train = None
+                                initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
+                                print(indices)
+                                print(initial_y_train)
+                            else:
+                                initial_X_train[:] = []
+                                initial_y_train[:] = []
+                                initial_X_train = copy.deepcopy(unmodified_train_X)
+                                initial_y_train = copy.deepcopy(unmodified_train_y)
 
                         loopCounter = loopCounter + 1
 
@@ -1104,7 +1182,10 @@ for test_size in test_size_set:
 
                 for train_index in xrange(0, len(X)):
                     if train_index not in train_index_list:
-                        y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+                        if under_sampling == True:
+                            y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                        else:
+                            y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                 y_pred = []
                 for key, value in y_pred_all.iteritems():
@@ -1160,7 +1241,7 @@ for test_size in test_size_set:
 
                 counter = 0
                 # doing predcition again for all documents in the validation and test set for writing the prediction files
-                # y_pred = model.predict(x_validation_and_test)
+                
                 for docIndex in xrange(0, len(X)):
                     docNo = docIndex_DocNo[docIndex]
                     pred_str = pred_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[docIndex]) + "\n"
@@ -1221,12 +1302,15 @@ for test_size in test_size_set:
 
 
                 if sampling == True:
-                    print "Oversampling in the seed list"
-                    ros = RandomOverSampler()
-                    #ros = RandomUnderSampler()
-                    #ros = SMOTE(random_state=42)
-                    #ros = ADASYN()
-                    initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
+                    if under_sampling == True:
+                        print "Undersampling in the seed list"
+                        # rus = RandomUnderSampler(return_indices=True, replacement=True)
+                        rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
+                        initial_X_train_sampled, initial_y_train_sampled, indices = rus.fit_sample(initial_X_train, initial_y_train)
+                    else:
+                        print "Oversampling in the seed list"
+                        ros = RandomOverSampler()
+                        initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
                     initial_X_train = initial_X_train_sampled
                     initial_y_train = initial_y_train_sampled
 
@@ -1277,7 +1361,10 @@ for test_size in test_size_set:
                         if correction == True:
                             model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
                         else:
-                            model.fit(initial_X_train, initial_y_train)
+                            if under_sampling == True:
+                                ens.fit(initial_X_train, initial_y_train)
+                            else:
+                                model.fit(initial_X_train, initial_y_train)
 
                         y_pred_all = {}
 
@@ -1286,7 +1373,10 @@ for test_size in test_size_set:
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
-                                y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+                                if under_sampling == True:
+                                    y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                                else:
+                                    y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
@@ -1339,9 +1429,11 @@ for test_size in test_size_set:
                                 if isPredictable[counter] == 1:
                                     # reshapping reshape(1,-1) because it does not take one emelemt array
                                     # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1,-1))[0]
-                                    #y_prob = model.predict(initial_X_test[counter])
+                                    # model. predit returns two value in index [0] of the list
+                                    if under_sampling == True:
+                                        y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1,-1))
+                                    else:
+                                        y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1,-1))[0]
                                     #print y_prob
                                     queue.put(relevance(y_prob[1], counter))
                                     sumForCorrection = sumForCorrection + y_prob[1]
@@ -1386,24 +1478,23 @@ for test_size in test_size_set:
                                 if isPredictable[counter] == 1:
                                     # reshapping reshape(1,-1) because it does not take one emelemt array
                                     # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1,-1))[0]
+                                    # model. predit returns two value in index [0] of the list
+                                    if under_sampling == True:
+                                        y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1,-1))
+                                    else:
+                                        y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1,-1))[0]
                                     entropy = (-1)*(y_prob[0]*log(y_prob[0],2)+y_prob[1]*log(y_prob[1],2))
                                     queue.put(relevance(entropy, counter))
                                     sumForCorrection = sumForCorrection + entropy
-
 
                             batch_counter = 0
                             while not queue.empty():
                                 if batch_counter == batch_size:
                                     break
                                 item = queue.get()
-                                #print len(item)
-                                #print item.priority, item.index
                                 isPredictable[item.index] = 0 # not predictable
                                 if correction == True:
                                     correctionWeight = item.priority/sumForCorrection
-                                    #correctedList = [x / correctionWeight for x in initial_X_test[item.index]]
                                     unmodified_train_X.append(initial_X_test[item.index])
                                     sampling_weight.append(correctionWeight)
                                 else:
@@ -1412,10 +1503,8 @@ for test_size in test_size_set:
 
                                 unmodified_train_y.append(initial_y_test[item.index])
                                 train_index_list.append(test_index_list[item.index])
-
                                 loopDocList.append(int(initial_y_test[item.index]))
                                 batch_counter = batch_counter + 1
-                                #print X_train.append(X_test.pop(item.priority))
 
 
 
@@ -1451,10 +1540,17 @@ for test_size in test_size_set:
                             initial_y_train = None
                             initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
                         else:
-                            initial_X_train[:] = []
-                            initial_y_train[:] = []
-                            initial_X_train = copy.deepcopy(unmodified_train_X)
-                            initial_y_train = copy.deepcopy(unmodified_train_y)
+                            if under_sampling == True:
+                                # rus = RandomUnderSampler(return_indices=True, replacement=True)
+                                rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
+                                initial_X_train = None
+                                initial_y_train = None
+                                initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
+                            else:
+                                initial_X_train[:] = []
+                                initial_y_train[:] = []
+                                initial_X_train = copy.deepcopy(unmodified_train_X)
+                                initial_y_train = copy.deepcopy(unmodified_train_y)
 
                         loopCounter = loopCounter + 1
                 else:
@@ -1471,11 +1567,18 @@ for test_size in test_size_set:
                         if protocol == 'SPL':
                             model = LogisticRegression()
 
-                        print len(initial_X_train)
+                        print "length of initial X train:", len(initial_X_train)
+                        print initial_y_train
+
                         if correction == True:
                             model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
                         else:
-                            model.fit(initial_X_train, initial_y_train)
+                            if under_sampling == True:
+                                # print(initial_X_train)
+                                # print(initial_y_train)
+                                ens.fit(initial_X_train, initial_y_train)
+                            else:
+                                model.fit(initial_X_train, initial_y_train)
 
                         y_pred_all = {}
 
@@ -1493,7 +1596,10 @@ for test_size in test_size_set:
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
-                                y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+                                if under_sampling == True:
+                                    y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                                else:
+                                    y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
@@ -1555,9 +1661,11 @@ for test_size in test_size_set:
                                 if isPredictable[counter] == 1:
                                     # reshapping reshape(1,-1) because it does not take one emelemt array
                                     # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
-                                    # y_prob = model.predict(initial_X_test[counter])
+                                    # model. predit returns two value in index [0] of the list
+                                    if under_sampling == True:
+                                        y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+                                    else:
+                                        y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
                                     # print y_prob
                                     queue.put(relevance(y_prob[1], counter))
                                     sumForCorrection = sumForCorrection + y_prob[1]
@@ -1592,44 +1700,48 @@ for test_size in test_size_set:
                                 # print X_train.append(X_test.pop(item.priority))
 
                         if protocol == 'SAL':
-                            print "####SAL####"
-                            queue = Queue.PriorityQueue(queueSize)
-                            y_prob = []
-                            counter = 0
-                            sumForCorrection = 0.0
-                            for counter in xrange(0, predictableSize):
-                                if isPredictable[counter] == 1:
-                                    # reshapping reshape(1,-1) because it does not take one emelemt array
-                                    # list does not contain reshape so we are using np,array
-                                    # model.predit returns two value in index [0] of the list
-                                    y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
-                                    entropy = (-1) * (y_prob[0] * log(y_prob[0], 2) + y_prob[1] * log(y_prob[1], 2))
-                                    queue.put(relevance(entropy, counter))
-                                    sumForCorrection = sumForCorrection + entropy
+                            queue = SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
+                            train_size_controller = empty_queue(queue, train_size_controller, size_limit, isPredictable, correction, 
+                                        unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
+                                        sampling_weight, train_index_list, test_index_list, loopDocList)
+                            # print "####SAL####"
+                            # queue = Queue.PriorityQueue(queueSize)
+                            # y_prob = []
+                            # counter = 0
+                            # sumForCorrection = 0.0
+                            # for counter in xrange(0, predictableSize):
+                            #     if isPredictable[counter] == 1:
+                            #         # reshapping reshape(1,-1) because it does not take one emelemt array
+                            #         # list does not contain reshape so we are using np,array
+                            #         # model. predit returns two value in index [0] of the list
+                            #         if under_sampling == True:
+                            #             y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
+                            #         else:
+                            #             y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+                            #         entropy = (-1) * (y_prob[0] * log(y_prob[0], 2) + y_prob[1] * log(y_prob[1], 2))
+                            #         queue.put(relevance(entropy, counter))
+                            #         sumForCorrection = sumForCorrection + entropy
 
-                            batch_counter = 0
-                            while not queue.empty():
-                                if train_size_controller == size_limit:
-                                    break
-                                item = queue.get()
-                                # print len(item)
-                                # print item.priority, item.index
-                                isPredictable[item.index] = 0  # not predictable
-                                if correction == True:
-                                    correctionWeight = item.priority / sumForCorrection
-                                    # correctedList = [x / correctionWeight for x in initial_X_test[item.index]]
-                                    unmodified_train_X.append(initial_X_test[item.index])
-                                    sampling_weight.append(correctionWeight)
-                                else:
-                                    unmodified_train_X.append(initial_X_test[item.index])
-                                    sampling_weight.append(1.0)
+                            # batch_counter = 0
+                            # while not queue.empty():
+                            #     if train_size_controller == size_limit:
+                            #         break
+                            #     item = queue.get()
+                            #     isPredictable[item.index] = 0  # not predictable
+                                
+                            #     if correction == True:
+                            #         correctionWeight = item.priority / sumForCorrection
+                            #         unmodified_train_X.append(initial_X_test[item.index])
+                            #         sampling_weight.append(correctionWeight)
+                            #     else:
+                            #         unmodified_train_X.append(initial_X_test[item.index])
+                            #         sampling_weight.append(1.0)
 
-                                unmodified_train_y.append(initial_y_test[item.index])
-                                train_index_list.append(test_index_list[item.index])
+                            #     unmodified_train_y.append(initial_y_test[item.index])
+                            #     train_index_list.append(test_index_list[item.index])
 
-                                loopDocList.append(int(initial_y_test[item.index]))
-                                train_size_controller = train_size_controller + 1
-                                # print X_train.append(X_test.pop(item.priority))
+                            #     loopDocList.append(int(initial_y_test[item.index]))
+                            #     train_size_controller = train_size_controller + 1
 
                         if protocol == 'SPL':
                             print "####SPL####"
@@ -1666,10 +1778,19 @@ for test_size in test_size_set:
                             initial_y_train = None
                             initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
                         else:
-                            initial_X_train[:] = []
-                            initial_y_train[:] = []
-                            initial_X_train = copy.deepcopy(unmodified_train_X)
-                            initial_y_train = copy.deepcopy(unmodified_train_y)
+                            if under_sampling == True:
+                                # rus = RandomUnderSampler(return_indices=True, replacement=True)
+                                rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
+                                initial_X_train = None
+                                initial_y_train = None
+                                initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
+                                print(indices)
+                                print(initial_y_train)
+                            else:
+                                initial_X_train[:] = []
+                                initial_y_train[:] = []
+                                initial_X_train = copy.deepcopy(unmodified_train_X)
+                                initial_y_train = copy.deepcopy(unmodified_train_y)
 
                         loopCounter = loopCounter + 1
 
@@ -1692,7 +1813,10 @@ for test_size in test_size_set:
 
                 for train_index in xrange(0, len(X)):
                     if train_index not in train_index_list:
-                        y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+                        if under_sampling == True:
+                            y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                        else:    
+                            y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                 y_pred = []
                 for key, value in y_pred_all.iteritems():
@@ -1748,7 +1872,7 @@ for test_size in test_size_set:
 
                 counter = 0
                 # doing predcition again for all documents in the validation and test set for writing the prediction files
-                #y_pred = model.predict(x_validation_and_test)
+                
                 for docIndex in xrange(0, len(X)):
                     docNo = docIndex_DocNo[docIndex]
                     pred_str = pred_str + str(topic) + " "+str(docNo) + " " + str(y_pred_all[docIndex]) + "\n"

@@ -21,6 +21,7 @@ from imblearn.over_sampling import RandomOverSampler
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
+from pprint import pprint
 
 import pickle
 
@@ -28,15 +29,15 @@ import logging
 logging.basicConfig()
 
 np.random.seed(1335)
-TEXT_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/IndriData/'
-RELEVANCE_DATA_DIR = '/home/nahid/UT_research/TREC/TREC8/relevance.txt'
+TEXT_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv/'
+RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/newrel2.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
 test_size = 0.2    # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
-preloaded = True
-processed_file_location = '/home/nahid/UT_research/TREC/TREC8/processed.txt'
-result_location = '/home/nahid/UT_research/TREC/TREC8/results_80_percentage_train_LR_over_smapling.txt'
+preloaded = False #True
+processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/processed.txt'
+result_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/results_80_percentage_train_LR_over_smapling.txt'
 start_topic = 401
 end_topic = 451
 
@@ -101,6 +102,7 @@ print f
 tmplist = []
 for lines in f:
     values = lines.split()
+    # print values
     topic = values[0]
     docNo = values[2]
     label = int(values[3])
@@ -116,6 +118,9 @@ for lines in f:
 f.close()
 
 all_reviews = {}
+# print(docNo_label)
+# print(topic_to_doclist)
+
 
 if preloaded==False:
     for name in sorted(os.listdir(TEXT_DATA_DIR)):
@@ -126,9 +131,7 @@ if preloaded==False:
 
         f = open(path)
 
-
-
-        docNo = name[0:name.index('.')]
+        docNo = name[0:name.index('.txt')]
         #print docNo
 
         # counting the line number until '---Terms---'
@@ -152,11 +155,14 @@ if preloaded==False:
             c = c + 1
             #print values[0], values[1], values[2]
             tmpStr = tmpStr + " "+ str(values[2])
-        print tmpStr
+        # print tmpStr
         #exit(0)
 
         if docNo in docNo_label:
+            print("true")
             all_reviews[docNo] = (review_to_words(tmpStr))
+        else:
+            print(docNo, docNo_label)
 
         f.close()
 
@@ -171,13 +177,16 @@ else:
     all_reviews = pickle.load(input)
     print "pickle loaded"
 
+print('-------------all review----------------')
+pprint(all_reviews)
+
 s = "";
-#for topic in sorted(topic_to_doclist.keys()):
-for topic in xrange(start_topic,end_topic):
+for topic in sorted(topic_to_doclist.keys()):
+# for topic in xrange(start_topic,end_topic):
     print "Topic:", topic
     topic = str(topic)
     docList = topic_to_doclist[topic]
-    #print docList
+    print docList
     #print ('Processing news text for topic number')
     relevance_label = []
     judged_review = []
@@ -187,10 +196,12 @@ for topic in xrange(start_topic,end_topic):
             #print "in List", documentNo
             judged_review.append(all_reviews[documentNo])
             relevance_label.append(docNo_label[documentNo])
+    print('-------------judged_review----------------')
+    print(judged_review)
 
     if docrepresentation == "TF-IDF":
         print "Using TF-IDF"
-        vectorizer = TfidfVectorizer(min_df=5, \
+        vectorizer = TfidfVectorizer(min_df=1, \
                                  analyzer = "word",   \
                                  tokenizer = None,    \
                                  preprocessor = None, \

@@ -1,0 +1,4809 @@
+Ranker_use True
+iter_sampling False
+correction False
+train_percenetae True
+under sampling True
+base address: /u/vlestari/Documents/Summer/IR/result/TREC8/ranker/undersample/
+pickle loaded
+Reading the Ranker label Information
+Ranker: <open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/systemRanking/TREC8/input.ibmg99b', mode 'r' at 0x7eff47ddef60>
+Topic: 401
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 2739
+Using TF-IDF
+(2739, 15000)
+Bag of word completed
+Number of One 300
+Number of Zero 2439
+=========Before Sampling======
+Whole Dataset size:  2739
+Number of Relevant 300
+Number of non-relevant 2439
+prevelance ratio 10.9529025192
+----Started Training----
+INitial Seed Limit 274.0
+seed size limit: 274.0
+Requirement made at counter 0 (1:) 11 (0): 210
+Seed Size Limit: 274.0 Seed Explored so far: 274
+Undersampling in the seed list
+Before Loop Lenght: 22 22
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 221 limit: 274.0
+22
+precision score: 0.412420382166
+recall score: 0.863333333333
+f-1 score: 0.558189655172
+####SAL####
+Loop: 1
+Initial size: 274 limit: 548.0
+24
+precision score: 0.560465116279
+recall score: 0.803333333333
+f-1 score: 0.660273972603
+####SAL####
+Loop: 2
+Initial size: 548 limit: 822.0
+138
+precision score: 0.580121703854
+recall score: 0.953333333333
+f-1 score: 0.72131147541
+####SAL####
+Loop: 3
+Initial size: 822 limit: 1096.0
+186
+precision score: 0.727722772277
+recall score: 0.98
+f-1 score: 0.835227272727
+####SAL####
+Loop: 4
+Initial size: 1096 limit: 1370.0
+214
+precision score: 0.84375
+recall score: 0.99
+f-1 score: 0.911042944785
+####SAL####
+Loop: 5
+Initial size: 1370 limit: 1644.0
+240
+precision score: 0.85878962536
+recall score: 0.993333333333
+f-1 score: 0.921174652241
+####SAL####
+Loop: 6
+Initial size: 1644 limit: 1918.0
+280
+precision score: 0.914373088685
+recall score: 0.996666666667
+f-1 score: 0.95374800638
+####SAL####
+Loop: 7
+Initial size: 1918 limit: 2192.0
+300
+precision score: 0.940438871473
+recall score: 1.0
+f-1 score: 0.969305331179
+####SAL####
+Loop: 8
+Initial size: 2192 limit: 2466.0
+338
+precision score: 0.952380952381
+recall score: 1.0
+f-1 score: 0.975609756098
+####SAL####
+Loop: 9
+Initial size: 2466 limit: 2739.0
+378
+precision score: 0.961538461538
+recall score: 1.0
+f-1 score: 0.980392156863
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 402
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 1652
+Using TF-IDF
+(1652, 15000)
+Bag of word completed
+Number of One 80
+Number of Zero 1572
+=========Before Sampling======
+Whole Dataset size:  1652
+Number of Relevant 80
+Number of non-relevant 1572
+prevelance ratio 4.84261501211
+----Started Training----
+INitial Seed Limit 166.0
+seed size limit: 166.0
+Requirement made at counter 0 (1:) 31 (0): 125
+Seed Size Limit: 166.0 Seed Explored so far: 166
+Undersampling in the seed list
+Before Loop Lenght: 62 62
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 156 limit: 166.0
+62
+precision score: 0.179802955665
+recall score: 0.9125
+f-1 score: 0.300411522634
+####SAL####
+Loop: 1
+Initial size: 166 limit: 331.0
+62
+precision score: 0.215339233038
+recall score: 0.9125
+f-1 score: 0.348448687351
+####SAL####
+Loop: 2
+Initial size: 331 limit: 496.0
+72
+precision score: 0.318777292576
+recall score: 0.9125
+f-1 score: 0.472491909385
+####SAL####
+Loop: 3
+Initial size: 496 limit: 661.0
+92
+precision score: 0.443786982249
+recall score: 0.9375
+f-1 score: 0.602409638554
+####SAL####
+Loop: 4
+Initial size: 661 limit: 826.0
+114
+precision score: 0.629032258065
+recall score: 0.975
+f-1 score: 0.764705882353
+####SAL####
+Loop: 5
+Initial size: 826 limit: 992.0
+126
+precision score: 0.759615384615
+recall score: 0.9875
+f-1 score: 0.858695652174
+####SAL####
+Loop: 6
+Initial size: 992 limit: 1157.0
+126
+precision score: 0.782178217822
+recall score: 0.9875
+f-1 score: 0.872928176796
+####SAL####
+Loop: 7
+Initial size: 1157 limit: 1322.0
+126
+precision score: 0.79797979798
+recall score: 0.9875
+f-1 score: 0.882681564246
+####SAL####
+Loop: 8
+Initial size: 1322 limit: 1487.0
+130
+precision score: 0.808080808081
+recall score: 1.0
+f-1 score: 0.893854748603
+####SAL####
+Loop: 9
+Initial size: 1487 limit: 1652.0
+132
+precision score: 0.860215053763
+recall score: 1.0
+f-1 score: 0.924855491329
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 403
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 1046
+Using TF-IDF
+(1046, 15000)
+Bag of word completed
+Number of One 21
+Number of Zero 1025
+=========Before Sampling======
+Whole Dataset size:  1046
+Number of Relevant 21
+Number of non-relevant 1025
+prevelance ratio 2.00764818356
+----Started Training----
+INitial Seed Limit 105.0
+seed size limit: 105.0
+Requirement made at counter 0 (1:) 21 (0): 84
+Seed Size Limit: 105.0 Seed Explored so far: 105
+Undersampling in the seed list
+Before Loop Lenght: 42 42
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 105 limit: 105.0
+42
+precision score: 0.75
+recall score: 1.0
+f-1 score: 0.857142857143
+####SAL####
+Loop: 1
+Initial size: 105 limit: 210.0
+42
+precision score: 0.196261682243
+recall score: 1.0
+f-1 score: 0.328125
+####SAL####
+Loop: 2
+Initial size: 210 limit: 314.0
+42
+precision score: 0.677419354839
+recall score: 1.0
+f-1 score: 0.807692307692
+####SAL####
+Loop: 3
+Initial size: 314 limit: 419.0
+42
+precision score: 0.84
+recall score: 1.0
+f-1 score: 0.913043478261
+####SAL####
+Loop: 4
+Initial size: 419 limit: 523.0
+42
+precision score: 0.954545454545
+recall score: 1.0
+f-1 score: 0.976744186047
+####SAL####
+Loop: 5
+Initial size: 523 limit: 628.0
+42
+precision score: 0.954545454545
+recall score: 1.0
+f-1 score: 0.976744186047
+####SAL####
+Loop: 6
+Initial size: 628 limit: 733.0
+42
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+Loop: 7
+Initial size: 733 limit: 837.0
+42
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+Loop: 8
+Initial size: 837 limit: 942.0
+42
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+Loop: 9
+Initial size: 942 limit: 1046.0
+42
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 404
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1420>
+number of documents 1533
+Using TF-IDF
+(1533, 15000)
+Bag of word completed
+Number of One 142
+Number of Zero 1391
+=========Before Sampling======
+Whole Dataset size:  1533
+Number of Relevant 142
+Number of non-relevant 1391
+prevelance ratio 9.26288323549
+----Started Training----
+INitial Seed Limit 154.0
+seed size limit: 154.0
+Requirement made at counter 0 (1:) 25 (0): 118
+Seed Size Limit: 154.0 Seed Explored so far: 154
+Undersampling in the seed list
+Before Loop Lenght: 50 50
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 143 limit: 154.0
+50
+precision score: 0.380664652568
+recall score: 0.887323943662
+f-1 score: 0.532769556025
+####SAL####
+Loop: 1
+Initial size: 154 limit: 307.0
+54
+precision score: 0.33234421365
+recall score: 0.788732394366
+f-1 score: 0.46764091858
+####SAL####
+Loop: 2
+Initial size: 307 limit: 460.0
+120
+precision score: 0.148769574944
+recall score: 0.93661971831
+f-1 score: 0.256756756757
+####SAL####
+Loop: 3
+Initial size: 460 limit: 614.0
+128
+precision score: 0.503787878788
+recall score: 0.93661971831
+f-1 score: 0.655172413793
+####SAL####
+Loop: 4
+Initial size: 614 limit: 767.0
+152
+precision score: 0.686567164179
+recall score: 0.971830985915
+f-1 score: 0.804664723032
+####SAL####
+Loop: 5
+Initial size: 767 limit: 920.0
+178
+precision score: 0.849397590361
+recall score: 0.992957746479
+f-1 score: 0.915584415584
+####SAL####
+Loop: 6
+Initial size: 920 limit: 1074.0
+218
+precision score: 0.928104575163
+recall score: 1.0
+f-1 score: 0.962711864407
+####SAL####
+Loop: 7
+Initial size: 1074 limit: 1227.0
+238
+precision score: 0.972602739726
+recall score: 1.0
+f-1 score: 0.986111111111
+####SAL####
+Loop: 8
+Initial size: 1227 limit: 1380.0
+250
+precision score: 0.979310344828
+recall score: 1.0
+f-1 score: 0.989547038328
+####SAL####
+Loop: 9
+Initial size: 1380 limit: 1533.0
+254
+precision score: 0.979310344828
+recall score: 1.0
+f-1 score: 0.989547038328
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 405
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1539
+Using TF-IDF
+(1539, 15000)
+Bag of word completed
+Number of One 38
+Number of Zero 1501
+=========Before Sampling======
+Whole Dataset size:  1539
+Number of Relevant 38
+Number of non-relevant 1501
+prevelance ratio 2.46913580247
+----Started Training----
+INitial Seed Limit 154.0
+seed size limit: 154.0
+Requirement made at counter 0 (1:) 14 (0): 135
+Seed Size Limit: 154.0 Seed Explored so far: 154
+Undersampling in the seed list
+Before Loop Lenght: 28 28
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 149 limit: 154.0
+28
+precision score: 0.284482758621
+recall score: 0.868421052632
+f-1 score: 0.428571428571
+####SAL####
+Loop: 1
+Initial size: 154 limit: 308.0
+30
+precision score: 0.30701754386
+recall score: 0.921052631579
+f-1 score: 0.460526315789
+####SAL####
+Loop: 2
+Initial size: 308 limit: 462.0
+48
+precision score: 0.544117647059
+recall score: 0.973684210526
+f-1 score: 0.698113207547
+####SAL####
+Loop: 3
+Initial size: 462 limit: 616.0
+54
+precision score: 0.716981132075
+recall score: 1.0
+f-1 score: 0.835164835165
+####SAL####
+Loop: 4
+Initial size: 616 limit: 770.0
+56
+precision score: 0.791666666667
+recall score: 1.0
+f-1 score: 0.883720930233
+####SAL####
+Loop: 5
+Initial size: 770 limit: 924.0
+56
+precision score: 0.791666666667
+recall score: 1.0
+f-1 score: 0.883720930233
+####SAL####
+Loop: 6
+Initial size: 924 limit: 1078.0
+56
+precision score: 0.863636363636
+recall score: 1.0
+f-1 score: 0.926829268293
+####SAL####
+Loop: 7
+Initial size: 1078 limit: 1232.0
+62
+precision score: 0.926829268293
+recall score: 1.0
+f-1 score: 0.962025316456
+####SAL####
+Loop: 8
+Initial size: 1232 limit: 1386.0
+64
+precision score: 0.926829268293
+recall score: 1.0
+f-1 score: 0.962025316456
+####SAL####
+Loop: 9
+Initial size: 1386 limit: 1539.0
+64
+precision score: 0.926829268293
+recall score: 1.0
+f-1 score: 0.962025316456
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 406
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 1420
+Using TF-IDF
+(1420, 15000)
+Bag of word completed
+Number of One 13
+Number of Zero 1407
+=========Before Sampling======
+Whole Dataset size:  1420
+Number of Relevant 13
+Number of non-relevant 1407
+prevelance ratio 0.915492957746
+----Started Training----
+INitial Seed Limit 142.0
+seed size limit: 142.0
+Requirement made at counter 0 (1:) 12 (0): 129
+Seed Size Limit: 142.0 Seed Explored so far: 142
+Undersampling in the seed list
+Before Loop Lenght: 24 24
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 141 limit: 142.0
+24
+precision score: 0.288888888889
+recall score: 1.0
+f-1 score: 0.448275862069
+####SAL####
+Loop: 1
+Initial size: 142 limit: 284.0
+24
+precision score: 0.26
+recall score: 1.0
+f-1 score: 0.412698412698
+####SAL####
+Loop: 2
+Initial size: 284 limit: 426.0
+24
+precision score: 0.619047619048
+recall score: 1.0
+f-1 score: 0.764705882353
+####SAL####
+Loop: 3
+Initial size: 426 limit: 568.0
+24
+precision score: 0.722222222222
+recall score: 1.0
+f-1 score: 0.838709677419
+####SAL####
+Loop: 4
+Initial size: 568 limit: 710.0
+24
+precision score: 0.722222222222
+recall score: 1.0
+f-1 score: 0.838709677419
+####SAL####
+Loop: 5
+Initial size: 710 limit: 852.0
+24
+precision score: 0.8125
+recall score: 1.0
+f-1 score: 0.896551724138
+####SAL####
+Loop: 6
+Initial size: 852 limit: 994.0
+24
+precision score: 0.8125
+recall score: 1.0
+f-1 score: 0.896551724138
+####SAL####
+Loop: 7
+Initial size: 994 limit: 1136.0
+24
+precision score: 0.8125
+recall score: 1.0
+f-1 score: 0.896551724138
+####SAL####
+Loop: 8
+Initial size: 1136 limit: 1278.0
+24
+precision score: 0.8125
+recall score: 1.0
+f-1 score: 0.896551724138
+####SAL####
+Loop: 9
+Initial size: 1278 limit: 1420.0
+24
+precision score: 0.8125
+recall score: 1.0
+f-1 score: 0.896551724138
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 407
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff47ddef60>
+number of documents 1545
+Using TF-IDF
+(1545, 15000)
+Bag of word completed
+Number of One 68
+Number of Zero 1477
+=========Before Sampling======
+Whole Dataset size:  1545
+Number of Relevant 68
+Number of non-relevant 1477
+prevelance ratio 4.40129449838
+----Started Training----
+INitial Seed Limit 155.0
+seed size limit: 155.0
+Requirement made at counter 0 (1:) 26 (0): 121
+Seed Size Limit: 155.0 Seed Explored so far: 155
+Undersampling in the seed list
+Before Loop Lenght: 52 52
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 147 limit: 155.0
+52
+precision score: 0.171617161716
+recall score: 0.764705882353
+f-1 score: 0.280323450135
+####SAL####
+Loop: 1
+Initial size: 155 limit: 309.0
+52
+precision score: 0.167741935484
+recall score: 0.764705882353
+f-1 score: 0.275132275132
+####SAL####
+Loop: 2
+Initial size: 309 limit: 464.0
+64
+precision score: 0.228
+recall score: 0.838235294118
+f-1 score: 0.358490566038
+####SAL####
+Loop: 3
+Initial size: 464 limit: 618.0
+72
+precision score: 0.253164556962
+recall score: 0.882352941176
+f-1 score: 0.393442622951
+####SAL####
+Loop: 4
+Initial size: 618 limit: 773.0
+78
+precision score: 0.356725146199
+recall score: 0.897058823529
+f-1 score: 0.510460251046
+####SAL####
+Loop: 5
+Initial size: 773 limit: 927.0
+92
+precision score: 0.455172413793
+recall score: 0.970588235294
+f-1 score: 0.619718309859
+####SAL####
+Loop: 6
+Initial size: 927 limit: 1082.0
+94
+precision score: 0.540322580645
+recall score: 0.985294117647
+f-1 score: 0.697916666667
+####SAL####
+Loop: 7
+Initial size: 1082 limit: 1236.0
+100
+precision score: 0.626168224299
+recall score: 0.985294117647
+f-1 score: 0.765714285714
+####SAL####
+Loop: 8
+Initial size: 1236 limit: 1391.0
+114
+precision score: 0.76404494382
+recall score: 1.0
+f-1 score: 0.866242038217
+####SAL####
+Loop: 9
+Initial size: 1391 limit: 1545.0
+120
+precision score: 0.829268292683
+recall score: 1.0
+f-1 score: 0.906666666667
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 408
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1420>
+number of documents 1269
+Using TF-IDF
+(1269, 15000)
+Bag of word completed
+Number of One 118
+Number of Zero 1151
+=========Before Sampling======
+Whole Dataset size:  1269
+Number of Relevant 118
+Number of non-relevant 1151
+prevelance ratio 9.29866036249
+----Started Training----
+INitial Seed Limit 127.0
+seed size limit: 127.0
+Requirement made at counter 0 (1:) 48 (0): 79
+Seed Size Limit: 127.0 Seed Explored so far: 127
+Undersampling in the seed list
+Before Loop Lenght: 96 96
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 127 limit: 127.0
+96
+precision score: 0.370786516854
+recall score: 0.838983050847
+f-1 score: 0.514285714286
+####SAL####
+Loop: 1
+Initial size: 127 limit: 254.0
+96
+precision score: 0.4
+recall score: 0.745762711864
+f-1 score: 0.520710059172
+####SAL####
+Loop: 2
+Initial size: 254 limit: 381.0
+128
+precision score: 0.597701149425
+recall score: 0.881355932203
+f-1 score: 0.712328767123
+####SAL####
+Loop: 3
+Initial size: 381 limit: 508.0
+174
+precision score: 0.724358974359
+recall score: 0.957627118644
+f-1 score: 0.824817518248
+####SAL####
+Loop: 4
+Initial size: 508 limit: 635.0
+190
+precision score: 0.804195804196
+recall score: 0.974576271186
+f-1 score: 0.88122605364
+####SAL####
+Loop: 5
+Initial size: 635 limit: 762.0
+192
+precision score: 0.815602836879
+recall score: 0.974576271186
+f-1 score: 0.888030888031
+####SAL####
+Loop: 6
+Initial size: 762 limit: 889.0
+196
+precision score: 0.835714285714
+recall score: 0.991525423729
+f-1 score: 0.906976744186
+####SAL####
+Loop: 7
+Initial size: 889 limit: 1016.0
+196
+precision score: 0.841726618705
+recall score: 0.991525423729
+f-1 score: 0.910505836576
+####SAL####
+Loop: 8
+Initial size: 1016 limit: 1143.0
+200
+precision score: 0.841726618705
+recall score: 0.991525423729
+f-1 score: 0.910505836576
+####SAL####
+Loop: 9
+Initial size: 1143 limit: 1269.0
+202
+precision score: 0.848920863309
+recall score: 1.0
+f-1 score: 0.918287937743
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 409
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1476
+Using TF-IDF
+(1476, 15000)
+Bag of word completed
+Number of One 22
+Number of Zero 1454
+=========Before Sampling======
+Whole Dataset size:  1476
+Number of Relevant 22
+Number of non-relevant 1454
+prevelance ratio 1.49051490515
+----Started Training----
+INitial Seed Limit 148.0
+seed size limit: 148.0
+Requirement made at counter 0 (1:) 13 (0): 133
+Seed Size Limit: 148.0 Seed Explored so far: 148
+Undersampling in the seed list
+Before Loop Lenght: 26 26
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 146 limit: 148.0
+26
+precision score: 0.112994350282
+recall score: 0.909090909091
+f-1 score: 0.201005025126
+####SAL####
+Loop: 1
+Initial size: 148 limit: 296.0
+26
+precision score: 0.188118811881
+recall score: 0.863636363636
+f-1 score: 0.308943089431
+####SAL####
+Loop: 2
+Initial size: 296 limit: 443.0
+30
+precision score: 0.35
+recall score: 0.954545454545
+f-1 score: 0.512195121951
+####SAL####
+Loop: 3
+Initial size: 443 limit: 591.0
+32
+precision score: 0.392857142857
+recall score: 1.0
+f-1 score: 0.564102564103
+####SAL####
+Loop: 4
+Initial size: 591 limit: 738.0
+32
+precision score: 0.43137254902
+recall score: 1.0
+f-1 score: 0.602739726027
+####SAL####
+Loop: 5
+Initial size: 738 limit: 886.0
+34
+precision score: 0.5
+recall score: 1.0
+f-1 score: 0.666666666667
+####SAL####
+Loop: 6
+Initial size: 886 limit: 1034.0
+34
+precision score: 0.564102564103
+recall score: 1.0
+f-1 score: 0.72131147541
+####SAL####
+Loop: 7
+Initial size: 1034 limit: 1181.0
+34
+precision score: 0.564102564103
+recall score: 1.0
+f-1 score: 0.72131147541
+####SAL####
+Loop: 8
+Initial size: 1181 limit: 1329.0
+34
+precision score: 0.564102564103
+recall score: 1.0
+f-1 score: 0.72131147541
+####SAL####
+Loop: 9
+Initial size: 1329 limit: 1476.0
+34
+precision score: 0.564102564103
+recall score: 1.0
+f-1 score: 0.72131147541
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 410
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff47ddef60>
+number of documents 1524
+Using TF-IDF
+(1524, 15000)
+Bag of word completed
+Number of One 65
+Number of Zero 1459
+=========Before Sampling======
+Whole Dataset size:  1524
+Number of Relevant 65
+Number of non-relevant 1459
+prevelance ratio 4.26509186352
+----Started Training----
+INitial Seed Limit 153.0
+seed size limit: 153.0
+Requirement made at counter 0 (1:) 63 (0): 62
+Seed Size Limit: 153.0 Seed Explored so far: 153
+Undersampling in the seed list
+Before Loop Lenght: 124 124
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 125 limit: 153.0
+124
+precision score: 0.707865168539
+recall score: 0.969230769231
+f-1 score: 0.818181818182
+####SAL####
+Loop: 1
+Initial size: 153 limit: 305.0
+130
+precision score: 0.575221238938
+recall score: 1.0
+f-1 score: 0.730337078652
+####SAL####
+Loop: 2
+Initial size: 305 limit: 458.0
+130
+precision score: 0.915492957746
+recall score: 1.0
+f-1 score: 0.955882352941
+####SAL####
+Loop: 3
+Initial size: 458 limit: 610.0
+130
+precision score: 0.955882352941
+recall score: 1.0
+f-1 score: 0.977443609023
+####SAL####
+Loop: 4
+Initial size: 610 limit: 762.0
+130
+precision score: 0.970149253731
+recall score: 1.0
+f-1 score: 0.984848484848
+####SAL####
+Loop: 5
+Initial size: 762 limit: 915.0
+130
+precision score: 0.984848484848
+recall score: 1.0
+f-1 score: 0.992366412214
+####SAL####
+Loop: 6
+Initial size: 915 limit: 1067.0
+130
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+Loop: 7
+Initial size: 1067 limit: 1220.0
+130
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+Loop: 8
+Initial size: 1220 limit: 1372.0
+130
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+Loop: 9
+Initial size: 1372 limit: 1524.0
+130
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 411
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1420>
+number of documents 2056
+Using TF-IDF
+(2056, 15000)
+Bag of word completed
+Number of One 27
+Number of Zero 2029
+=========Before Sampling======
+Whole Dataset size:  2056
+Number of Relevant 27
+Number of non-relevant 2029
+prevelance ratio 1.31322957198
+----Started Training----
+INitial Seed Limit 206.0
+seed size limit: 206.0
+Requirement made at counter 0 (1:) 15 (0): 170
+Seed Size Limit: 206.0 Seed Explored so far: 206
+Undersampling in the seed list
+Before Loop Lenght: 30 30
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 185 limit: 206.0
+30
+precision score: 0.177966101695
+recall score: 0.777777777778
+f-1 score: 0.289655172414
+####SAL####
+Loop: 1
+Initial size: 206 limit: 412.0
+30
+precision score: 0.152671755725
+recall score: 0.740740740741
+f-1 score: 0.253164556962
+####SAL####
+Loop: 2
+Initial size: 412 limit: 617.0
+34
+precision score: 0.280487804878
+recall score: 0.851851851852
+f-1 score: 0.422018348624
+####SAL####
+Loop: 3
+Initial size: 617 limit: 823.0
+38
+precision score: 0.373134328358
+recall score: 0.925925925926
+f-1 score: 0.531914893617
+####SAL####
+Loop: 4
+Initial size: 823 limit: 1028.0
+44
+precision score: 0.4
+recall score: 0.962962962963
+f-1 score: 0.565217391304
+####SAL####
+Loop: 5
+Initial size: 1028 limit: 1234.0
+44
+precision score: 0.509803921569
+recall score: 0.962962962963
+f-1 score: 0.666666666667
+####SAL####
+Loop: 6
+Initial size: 1234 limit: 1440.0
+46
+precision score: 0.519230769231
+recall score: 1.0
+f-1 score: 0.683544303797
+####SAL####
+Loop: 7
+Initial size: 1440 limit: 1645.0
+46
+precision score: 0.574468085106
+recall score: 1.0
+f-1 score: 0.72972972973
+####SAL####
+Loop: 8
+Initial size: 1645 limit: 1851.0
+46
+precision score: 0.627906976744
+recall score: 1.0
+f-1 score: 0.771428571429
+####SAL####
+Loop: 9
+Initial size: 1851 limit: 2056.0
+48
+precision score: 0.675
+recall score: 1.0
+f-1 score: 0.805970149254
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 412
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 2113
+Using TF-IDF
+(2113, 15000)
+Bag of word completed
+Number of One 123
+Number of Zero 1990
+=========Before Sampling======
+Whole Dataset size:  2113
+Number of Relevant 123
+Number of non-relevant 1990
+prevelance ratio 5.82110743019
+----Started Training----
+INitial Seed Limit 212.0
+seed size limit: 212.0
+Requirement made at counter 0 (1:) 53 (0): 107
+Seed Size Limit: 212.0 Seed Explored so far: 212
+Undersampling in the seed list
+Before Loop Lenght: 106 106
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 160 limit: 212.0
+106
+precision score: 0.193495934959
+recall score: 0.967479674797
+f-1 score: 0.322493224932
+####SAL####
+Loop: 1
+Initial size: 212 limit: 423.0
+108
+precision score: 0.350318471338
+recall score: 0.894308943089
+f-1 score: 0.503432494279
+####SAL####
+Loop: 2
+Initial size: 423 limit: 634.0
+134
+precision score: 0.551020408163
+recall score: 0.878048780488
+f-1 score: 0.677115987461
+####SAL####
+Loop: 3
+Initial size: 634 limit: 846.0
+186
+precision score: 0.754838709677
+recall score: 0.951219512195
+f-1 score: 0.841726618705
+####SAL####
+Loop: 4
+Initial size: 846 limit: 1057.0
+194
+precision score: 0.827586206897
+recall score: 0.975609756098
+f-1 score: 0.89552238806
+####SAL####
+Loop: 5
+Initial size: 1057 limit: 1268.0
+200
+precision score: 0.883211678832
+recall score: 0.983739837398
+f-1 score: 0.930769230769
+####SAL####
+Loop: 6
+Initial size: 1268 limit: 1480.0
+206
+precision score: 0.897058823529
+recall score: 0.991869918699
+f-1 score: 0.942084942085
+####SAL####
+Loop: 7
+Initial size: 1480 limit: 1691.0
+210
+precision score: 0.897810218978
+recall score: 1.0
+f-1 score: 0.946153846154
+####SAL####
+Loop: 8
+Initial size: 1691 limit: 1902.0
+212
+precision score: 0.911111111111
+recall score: 1.0
+f-1 score: 0.953488372093
+####SAL####
+Loop: 9
+Initial size: 1902 limit: 2113.0
+218
+precision score: 0.931818181818
+recall score: 1.0
+f-1 score: 0.964705882353
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 413
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff47ddef60>
+number of documents 1662
+Using TF-IDF
+(1662, 15000)
+Bag of word completed
+Number of One 69
+Number of Zero 1593
+=========Before Sampling======
+Whole Dataset size:  1662
+Number of Relevant 69
+Number of non-relevant 1593
+prevelance ratio 4.15162454874
+----Started Training----
+INitial Seed Limit 167.0
+seed size limit: 167.0
+Requirement made at counter 0 (1:) 23 (0): 133
+Seed Size Limit: 167.0 Seed Explored so far: 167
+Undersampling in the seed list
+Before Loop Lenght: 46 46
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 156 limit: 167.0
+46
+precision score: 0.537313432836
+recall score: 0.521739130435
+f-1 score: 0.529411764706
+####SAL####
+Loop: 1
+Initial size: 167 limit: 333.0
+48
+precision score: 0.428571428571
+recall score: 0.608695652174
+f-1 score: 0.502994011976
+####SAL####
+Loop: 2
+Initial size: 333 limit: 499.0
+76
+precision score: 0.638888888889
+recall score: 0.666666666667
+f-1 score: 0.652482269504
+####SAL####
+Loop: 3
+Initial size: 499 limit: 665.0
+94
+precision score: 0.613636363636
+recall score: 0.782608695652
+f-1 score: 0.687898089172
+####SAL####
+Loop: 4
+Initial size: 665 limit: 831.0
+108
+precision score: 0.688888888889
+recall score: 0.898550724638
+f-1 score: 0.779874213836
+####SAL####
+Loop: 5
+Initial size: 831 limit: 998.0
+112
+precision score: 0.771084337349
+recall score: 0.927536231884
+f-1 score: 0.842105263158
+####SAL####
+Loop: 6
+Initial size: 998 limit: 1164.0
+122
+precision score: 0.893333333333
+recall score: 0.971014492754
+f-1 score: 0.930555555556
+####SAL####
+Loop: 7
+Initial size: 1164 limit: 1330.0
+124
+precision score: 0.931506849315
+recall score: 0.985507246377
+f-1 score: 0.957746478873
+####SAL####
+Loop: 8
+Initial size: 1330 limit: 1496.0
+124
+precision score: 0.918918918919
+recall score: 0.985507246377
+f-1 score: 0.951048951049
+####SAL####
+Loop: 9
+Initial size: 1496 limit: 1662.0
+126
+precision score: 0.958333333333
+recall score: 1.0
+f-1 score: 0.978723404255
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 414
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1420>
+number of documents 1306
+Using TF-IDF
+(1306, 15000)
+Bag of word completed
+Number of One 39
+Number of Zero 1267
+=========Before Sampling======
+Whole Dataset size:  1306
+Number of Relevant 39
+Number of non-relevant 1267
+prevelance ratio 2.98621745789
+----Started Training----
+INitial Seed Limit 131.0
+seed size limit: 131.0
+Requirement made at counter 0 (1:) 23 (0): 106
+Seed Size Limit: 131.0 Seed Explored so far: 131
+Undersampling in the seed list
+Before Loop Lenght: 46 46
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 129 limit: 131.0
+46
+precision score: 0.159420289855
+recall score: 0.846153846154
+f-1 score: 0.268292682927
+####SAL####
+Loop: 1
+Initial size: 131 limit: 262.0
+46
+precision score: 0.126865671642
+recall score: 0.871794871795
+f-1 score: 0.221498371336
+####SAL####
+Loop: 2
+Initial size: 262 limit: 392.0
+50
+precision score: 0.212121212121
+recall score: 0.897435897436
+f-1 score: 0.343137254902
+####SAL####
+Loop: 3
+Initial size: 392 limit: 523.0
+52
+precision score: 0.274809160305
+recall score: 0.923076923077
+f-1 score: 0.423529411765
+####SAL####
+Loop: 4
+Initial size: 523 limit: 653.0
+66
+precision score: 0.513513513514
+recall score: 0.974358974359
+f-1 score: 0.672566371681
+####SAL####
+Loop: 5
+Initial size: 653 limit: 784.0
+68
+precision score: 0.775510204082
+recall score: 0.974358974359
+f-1 score: 0.863636363636
+####SAL####
+Loop: 6
+Initial size: 784 limit: 915.0
+70
+precision score: 0.926829268293
+recall score: 0.974358974359
+f-1 score: 0.95
+####SAL####
+Loop: 7
+Initial size: 915 limit: 1045.0
+70
+precision score: 1.0
+recall score: 0.974358974359
+f-1 score: 0.987012987013
+####SAL####
+Loop: 8
+Initial size: 1045 limit: 1176.0
+72
+precision score: 1.0
+recall score: 0.974358974359
+f-1 score: 0.987012987013
+####SAL####
+Loop: 9
+Initial size: 1176 limit: 1306.0
+74
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 415
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1309
+Using TF-IDF
+(1309, 15000)
+Bag of word completed
+Number of One 136
+Number of Zero 1173
+=========Before Sampling======
+Whole Dataset size:  1309
+Number of Relevant 136
+Number of non-relevant 1173
+prevelance ratio 10.3896103896
+----Started Training----
+INitial Seed Limit 131.0
+seed size limit: 131.0
+Requirement made at counter 0 (1:) 55 (0): 74
+Seed Size Limit: 131.0 Seed Explored so far: 131
+Undersampling in the seed list
+Before Loop Lenght: 110 110
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 129 limit: 131.0
+110
+precision score: 0.567567567568
+recall score: 0.926470588235
+f-1 score: 0.703910614525
+####SAL####
+Loop: 1
+Initial size: 131 limit: 262.0
+110
+precision score: 0.583333333333
+recall score: 0.926470588235
+f-1 score: 0.715909090909
+####SAL####
+Loop: 2
+Initial size: 262 limit: 393.0
+136
+precision score: 0.788819875776
+recall score: 0.933823529412
+f-1 score: 0.855218855219
+####SAL####
+Loop: 3
+Initial size: 393 limit: 524.0
+172
+precision score: 0.918367346939
+recall score: 0.992647058824
+f-1 score: 0.95406360424
+####SAL####
+Loop: 4
+Initial size: 524 limit: 655.0
+198
+precision score: 0.951048951049
+recall score: 1.0
+f-1 score: 0.974910394265
+####SAL####
+Loop: 5
+Initial size: 655 limit: 786.0
+200
+precision score: 0.951048951049
+recall score: 1.0
+f-1 score: 0.974910394265
+####SAL####
+Loop: 6
+Initial size: 786 limit: 917.0
+200
+precision score: 0.957746478873
+recall score: 1.0
+f-1 score: 0.978417266187
+####SAL####
+Loop: 7
+Initial size: 917 limit: 1048.0
+204
+precision score: 0.957746478873
+recall score: 1.0
+f-1 score: 0.978417266187
+####SAL####
+Loop: 8
+Initial size: 1048 limit: 1179.0
+218
+precision score: 0.971428571429
+recall score: 1.0
+f-1 score: 0.985507246377
+####SAL####
+Loop: 9
+Initial size: 1179 limit: 1309.0
+230
+precision score: 0.992700729927
+recall score: 1.0
+f-1 score: 0.996336996337
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 416
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1235
+Using TF-IDF
+(1235, 15000)
+Bag of word completed
+Number of One 42
+Number of Zero 1193
+=========Before Sampling======
+Whole Dataset size:  1235
+Number of Relevant 42
+Number of non-relevant 1193
+prevelance ratio 3.4008097166
+----Started Training----
+INitial Seed Limit 124.0
+seed size limit: 124.0
+Requirement made at counter 0 (1:) 33 (0): 91
+Seed Size Limit: 124.0 Seed Explored so far: 124
+Undersampling in the seed list
+Before Loop Lenght: 66 66
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 124 limit: 124.0
+66
+precision score: 0.201058201058
+recall score: 0.904761904762
+f-1 score: 0.329004329004
+####SAL####
+Loop: 1
+Initial size: 124 limit: 247.0
+66
+precision score: 0.169811320755
+recall score: 0.857142857143
+f-1 score: 0.283464566929
+####SAL####
+Loop: 2
+Initial size: 247 limit: 371.0
+68
+precision score: 0.324786324786
+recall score: 0.904761904762
+f-1 score: 0.477987421384
+####SAL####
+Loop: 3
+Initial size: 371 limit: 494.0
+80
+precision score: 0.630769230769
+recall score: 0.97619047619
+f-1 score: 0.766355140187
+####SAL####
+Loop: 4
+Initial size: 494 limit: 618.0
+82
+precision score: 0.7
+recall score: 1.0
+f-1 score: 0.823529411765
+####SAL####
+Loop: 5
+Initial size: 618 limit: 741.0
+84
+precision score: 0.954545454545
+recall score: 1.0
+f-1 score: 0.976744186047
+####SAL####
+Loop: 6
+Initial size: 741 limit: 865.0
+84
+precision score: 0.954545454545
+recall score: 1.0
+f-1 score: 0.976744186047
+####SAL####
+Loop: 7
+Initial size: 865 limit: 988.0
+84
+precision score: 0.954545454545
+recall score: 1.0
+f-1 score: 0.976744186047
+####SAL####
+Loop: 8
+Initial size: 988 limit: 1112.0
+84
+precision score: 0.954545454545
+recall score: 1.0
+f-1 score: 0.976744186047
+####SAL####
+Loop: 9
+Initial size: 1112 limit: 1235.0
+84
+precision score: 0.954545454545
+recall score: 1.0
+f-1 score: 0.976744186047
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 417
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 2992
+Using TF-IDF
+(2992, 15000)
+Bag of word completed
+Number of One 75
+Number of Zero 2917
+=========Before Sampling======
+Whole Dataset size:  2992
+Number of Relevant 75
+Number of non-relevant 2917
+prevelance ratio 2.50668449198
+----Started Training----
+INitial Seed Limit 300.0
+seed size limit: 300.0
+Requirement made at counter 0 (1:) 42 (0): 181
+Seed Size Limit: 300.0 Seed Explored so far: 300
+Undersampling in the seed list
+Before Loop Lenght: 84 84
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 223 limit: 300.0
+84
+precision score: 0.0953038674033
+recall score: 0.92
+f-1 score: 0.172715894869
+####SAL####
+Loop: 1
+Initial size: 300 limit: 599.0
+84
+precision score: 0.17008797654
+recall score: 0.773333333333
+f-1 score: 0.278846153846
+####SAL####
+Loop: 2
+Initial size: 599 limit: 898.0
+94
+precision score: 0.183937823834
+recall score: 0.946666666667
+f-1 score: 0.308026030369
+####SAL####
+Loop: 3
+Initial size: 898 limit: 1197.0
+104
+precision score: 0.345177664975
+recall score: 0.906666666667
+f-1 score: 0.5
+####SAL####
+Loop: 4
+Initial size: 1197 limit: 1496.0
+122
+precision score: 0.545454545455
+recall score: 0.96
+f-1 score: 0.695652173913
+####SAL####
+Loop: 5
+Initial size: 1496 limit: 1796.0
+128
+precision score: 0.744897959184
+recall score: 0.973333333333
+f-1 score: 0.843930635838
+####SAL####
+Loop: 6
+Initial size: 1796 limit: 2095.0
+136
+precision score: 0.870588235294
+recall score: 0.986666666667
+f-1 score: 0.925
+####SAL####
+Loop: 7
+Initial size: 2095 limit: 2394.0
+138
+precision score: 0.925925925926
+recall score: 1.0
+f-1 score: 0.961538461538
+####SAL####
+Loop: 8
+Initial size: 2394 limit: 2693.0
+138
+precision score: 0.949367088608
+recall score: 1.0
+f-1 score: 0.974025974026
+####SAL####
+Loop: 9
+Initial size: 2693 limit: 2992.0
+142
+precision score: 0.986842105263
+recall score: 1.0
+f-1 score: 0.993377483444
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 418
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1748
+Using TF-IDF
+(1748, 15000)
+Bag of word completed
+Number of One 116
+Number of Zero 1632
+=========Before Sampling======
+Whole Dataset size:  1748
+Number of Relevant 116
+Number of non-relevant 1632
+prevelance ratio 6.63615560641
+----Started Training----
+INitial Seed Limit 175.0
+seed size limit: 175.0
+Requirement made at counter 0 (1:) 64 (0): 107
+Seed Size Limit: 175.0 Seed Explored so far: 175
+Undersampling in the seed list
+Before Loop Lenght: 128 128
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 171 limit: 175.0
+128
+precision score: 0.470046082949
+recall score: 0.879310344828
+f-1 score: 0.612612612613
+####SAL####
+Loop: 1
+Initial size: 175 limit: 350.0
+128
+precision score: 0.449339207048
+recall score: 0.879310344828
+f-1 score: 0.594752186589
+####SAL####
+Loop: 2
+Initial size: 350 limit: 525.0
+138
+precision score: 0.707482993197
+recall score: 0.896551724138
+f-1 score: 0.790874524715
+####SAL####
+Loop: 3
+Initial size: 525 limit: 700.0
+148
+precision score: 0.738255033557
+recall score: 0.948275862069
+f-1 score: 0.830188679245
+####SAL####
+Loop: 4
+Initial size: 700 limit: 874.0
+156
+precision score: 0.733766233766
+recall score: 0.974137931034
+f-1 score: 0.837037037037
+####SAL####
+Loop: 5
+Initial size: 874 limit: 1049.0
+172
+precision score: 0.78231292517
+recall score: 0.991379310345
+f-1 score: 0.874524714829
+####SAL####
+Loop: 6
+Initial size: 1049 limit: 1224.0
+172
+precision score: 0.787671232877
+recall score: 0.991379310345
+f-1 score: 0.87786259542
+####SAL####
+Loop: 7
+Initial size: 1224 limit: 1399.0
+178
+precision score: 0.793103448276
+recall score: 0.991379310345
+f-1 score: 0.88122605364
+####SAL####
+Loop: 8
+Initial size: 1399 limit: 1574.0
+192
+precision score: 0.822695035461
+recall score: 1.0
+f-1 score: 0.902723735409
+####SAL####
+Loop: 9
+Initial size: 1574 limit: 1748.0
+198
+precision score: 0.846715328467
+recall score: 1.0
+f-1 score: 0.916996047431
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 419
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1670
+Using TF-IDF
+(1670, 15000)
+Bag of word completed
+Number of One 16
+Number of Zero 1654
+=========Before Sampling======
+Whole Dataset size:  1670
+Number of Relevant 16
+Number of non-relevant 1654
+prevelance ratio 0.958083832335
+----Started Training----
+INitial Seed Limit 167.0
+seed size limit: 167.0
+Requirement made at counter 0 (1:) 10 (0): 132
+Seed Size Limit: 167.0 Seed Explored so far: 167
+Undersampling in the seed list
+Before Loop Lenght: 20 20
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 142 limit: 167.0
+20
+precision score: 0.0456273764259
+recall score: 0.75
+f-1 score: 0.0860215053763
+####SAL####
+Loop: 1
+Initial size: 167 limit: 334.0
+20
+precision score: 0.0491228070175
+recall score: 0.875
+f-1 score: 0.093023255814
+####SAL####
+Loop: 2
+Initial size: 334 limit: 501.0
+22
+precision score: 0.118644067797
+recall score: 0.875
+f-1 score: 0.208955223881
+####SAL####
+Loop: 3
+Initial size: 501 limit: 668.0
+22
+precision score: 0.260869565217
+recall score: 0.75
+f-1 score: 0.387096774194
+####SAL####
+Loop: 4
+Initial size: 668 limit: 835.0
+26
+precision score: 0.518518518519
+recall score: 0.875
+f-1 score: 0.651162790698
+####SAL####
+Loop: 5
+Initial size: 835 limit: 1002.0
+26
+precision score: 0.875
+recall score: 0.875
+f-1 score: 0.875
+####SAL####
+Loop: 6
+Initial size: 1002 limit: 1169.0
+26
+precision score: 0.875
+recall score: 0.875
+f-1 score: 0.875
+####SAL####
+Loop: 7
+Initial size: 1169 limit: 1336.0
+26
+precision score: 0.666666666667
+recall score: 0.875
+f-1 score: 0.756756756757
+####SAL####
+Loop: 8
+Initial size: 1336 limit: 1503.0
+30
+precision score: 0.9375
+recall score: 0.9375
+f-1 score: 0.9375
+####SAL####
+Loop: 9
+Initial size: 1503 limit: 1670.0
+32
+precision score: 0.941176470588
+recall score: 1.0
+f-1 score: 0.969696969697
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 420
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 1136
+Using TF-IDF
+(1136, 15000)
+Bag of word completed
+Number of One 33
+Number of Zero 1103
+=========Before Sampling======
+Whole Dataset size:  1136
+Number of Relevant 33
+Number of non-relevant 1103
+prevelance ratio 2.90492957746
+----Started Training----
+INitial Seed Limit 114.0
+seed size limit: 114.0
+Requirement made at counter 0 (1:) 21 (0): 93
+Seed Size Limit: 114.0 Seed Explored so far: 114
+Undersampling in the seed list
+Before Loop Lenght: 42 42
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 114 limit: 114.0
+42
+precision score: 0.204724409449
+recall score: 0.787878787879
+f-1 score: 0.325
+####SAL####
+Loop: 1
+Initial size: 114 limit: 228.0
+42
+precision score: 0.127450980392
+recall score: 0.787878787879
+f-1 score: 0.2194092827
+####SAL####
+Loop: 2
+Initial size: 228 limit: 341.0
+48
+precision score: 0.393939393939
+recall score: 0.787878787879
+f-1 score: 0.525252525253
+####SAL####
+Loop: 3
+Initial size: 341 limit: 455.0
+56
+precision score: 0.604166666667
+recall score: 0.878787878788
+f-1 score: 0.716049382716
+####SAL####
+Loop: 4
+Initial size: 455 limit: 568.0
+60
+precision score: 0.731707317073
+recall score: 0.909090909091
+f-1 score: 0.810810810811
+####SAL####
+Loop: 5
+Initial size: 568 limit: 682.0
+60
+precision score: 0.810810810811
+recall score: 0.909090909091
+f-1 score: 0.857142857143
+####SAL####
+Loop: 6
+Initial size: 682 limit: 796.0
+62
+precision score: 0.861111111111
+recall score: 0.939393939394
+f-1 score: 0.898550724638
+####SAL####
+Loop: 7
+Initial size: 796 limit: 909.0
+64
+precision score: 0.864864864865
+recall score: 0.969696969697
+f-1 score: 0.914285714286
+####SAL####
+Loop: 8
+Initial size: 909 limit: 1023.0
+66
+precision score: 0.868421052632
+recall score: 1.0
+f-1 score: 0.929577464789
+####SAL####
+Loop: 9
+Initial size: 1023 limit: 1136.0
+66
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 421
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1763
+Using TF-IDF
+(1763, 15000)
+Bag of word completed
+Number of One 83
+Number of Zero 1680
+=========Before Sampling======
+Whole Dataset size:  1763
+Number of Relevant 83
+Number of non-relevant 1680
+prevelance ratio 4.70788428815
+----Started Training----
+INitial Seed Limit 177.0
+seed size limit: 177.0
+Requirement made at counter 0 (1:) 19 (0): 150
+Seed Size Limit: 177.0 Seed Explored so far: 177
+Undersampling in the seed list
+Before Loop Lenght: 38 38
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 169 limit: 177.0
+38
+precision score: 0.0819112627986
+recall score: 0.867469879518
+f-1 score: 0.149688149688
+####SAL####
+Loop: 1
+Initial size: 177 limit: 353.0
+38
+precision score: 0.0896656534954
+recall score: 0.710843373494
+f-1 score: 0.159244264507
+####SAL####
+Loop: 2
+Initial size: 353 limit: 529.0
+64
+precision score: 0.118421052632
+recall score: 0.867469879518
+f-1 score: 0.208393632417
+####SAL####
+Loop: 3
+Initial size: 529 limit: 706.0
+70
+precision score: 0.167865707434
+recall score: 0.843373493976
+f-1 score: 0.28
+####SAL####
+Loop: 4
+Initial size: 706 limit: 882.0
+84
+precision score: 0.202099737533
+recall score: 0.927710843373
+f-1 score: 0.331896551724
+####SAL####
+Loop: 5
+Initial size: 882 limit: 1058.0
+100
+precision score: 0.261290322581
+recall score: 0.975903614458
+f-1 score: 0.412213740458
+####SAL####
+Loop: 6
+Initial size: 1058 limit: 1235.0
+110
+precision score: 0.371559633028
+recall score: 0.975903614458
+f-1 score: 0.538205980066
+####SAL####
+Loop: 7
+Initial size: 1235 limit: 1411.0
+116
+precision score: 0.419191919192
+recall score: 1.0
+f-1 score: 0.590747330961
+####SAL####
+Loop: 8
+Initial size: 1411 limit: 1587.0
+122
+precision score: 0.5
+recall score: 1.0
+f-1 score: 0.666666666667
+####SAL####
+Loop: 9
+Initial size: 1587 limit: 1763.0
+148
+precision score: 0.721739130435
+recall score: 1.0
+f-1 score: 0.838383838384
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 422
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 2121
+Using TF-IDF
+(2121, 15000)
+Bag of word completed
+Number of One 152
+Number of Zero 1969
+=========Before Sampling======
+Whole Dataset size:  2121
+Number of Relevant 152
+Number of non-relevant 1969
+prevelance ratio 7.16643092881
+----Started Training----
+INitial Seed Limit 213.0
+seed size limit: 213.0
+Requirement made at counter 0 (1:) 70 (0): 116
+Seed Size Limit: 213.0 Seed Explored so far: 213
+Undersampling in the seed list
+Before Loop Lenght: 140 140
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 186 limit: 213.0
+140
+precision score: 0.263829787234
+recall score: 0.815789473684
+f-1 score: 0.398713826367
+####SAL####
+Loop: 1
+Initial size: 213 limit: 425.0
+144
+precision score: 0.321336760925
+recall score: 0.822368421053
+f-1 score: 0.462107208872
+####SAL####
+Loop: 2
+Initial size: 425 limit: 637.0
+174
+precision score: 0.507518796992
+recall score: 0.888157894737
+f-1 score: 0.645933014354
+####SAL####
+Loop: 3
+Initial size: 637 limit: 849.0
+202
+precision score: 0.701492537313
+recall score: 0.927631578947
+f-1 score: 0.798866855524
+####SAL####
+Loop: 4
+Initial size: 849 limit: 1061.0
+232
+precision score: 0.857142857143
+recall score: 0.947368421053
+f-1 score: 0.9
+####SAL####
+Loop: 5
+Initial size: 1061 limit: 1273.0
+248
+precision score: 0.925925925926
+recall score: 0.986842105263
+f-1 score: 0.955414012739
+####SAL####
+Loop: 6
+Initial size: 1273 limit: 1485.0
+256
+precision score: 0.955696202532
+recall score: 0.993421052632
+f-1 score: 0.974193548387
+####SAL####
+Loop: 7
+Initial size: 1485 limit: 1697.0
+260
+precision score: 0.962025316456
+recall score: 1.0
+f-1 score: 0.98064516129
+####SAL####
+Loop: 8
+Initial size: 1697 limit: 1909.0
+260
+precision score: 0.962025316456
+recall score: 1.0
+f-1 score: 0.98064516129
+####SAL####
+Loop: 9
+Initial size: 1909 limit: 2121.0
+262
+precision score: 0.968152866242
+recall score: 1.0
+f-1 score: 0.983818770227
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 423
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 1308
+Using TF-IDF
+(1308, 15000)
+Bag of word completed
+Number of One 21
+Number of Zero 1287
+=========Before Sampling======
+Whole Dataset size:  1308
+Number of Relevant 21
+Number of non-relevant 1287
+prevelance ratio 1.60550458716
+----Started Training----
+INitial Seed Limit 131.0
+seed size limit: 131.0
+Requirement made at counter 0 (1:) 19 (0): 110
+Seed Size Limit: 131.0 Seed Explored so far: 131
+Undersampling in the seed list
+Before Loop Lenght: 38 38
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 129 limit: 131.0
+38
+precision score: 0.0913461538462
+recall score: 0.904761904762
+f-1 score: 0.165938864629
+####SAL####
+Loop: 1
+Initial size: 131 limit: 262.0
+38
+precision score: 0.0636942675159
+recall score: 0.952380952381
+f-1 score: 0.119402985075
+####SAL####
+Loop: 2
+Initial size: 262 limit: 393.0
+40
+precision score: 0.112903225806
+recall score: 1.0
+f-1 score: 0.202898550725
+####SAL####
+Loop: 3
+Initial size: 393 limit: 524.0
+42
+precision score: 0.140939597315
+recall score: 1.0
+f-1 score: 0.247058823529
+####SAL####
+Loop: 4
+Initial size: 524 limit: 654.0
+42
+precision score: 0.201923076923
+recall score: 1.0
+f-1 score: 0.336
+####SAL####
+Loop: 5
+Initial size: 654 limit: 785.0
+42
+precision score: 0.291666666667
+recall score: 1.0
+f-1 score: 0.451612903226
+####SAL####
+Loop: 6
+Initial size: 785 limit: 916.0
+42
+precision score: 0.375
+recall score: 1.0
+f-1 score: 0.545454545455
+####SAL####
+Loop: 7
+Initial size: 916 limit: 1047.0
+42
+precision score: 0.525
+recall score: 1.0
+f-1 score: 0.688524590164
+####SAL####
+Loop: 8
+Initial size: 1047 limit: 1178.0
+42
+precision score: 0.567567567568
+recall score: 1.0
+f-1 score: 0.724137931034
+####SAL####
+Loop: 9
+Initial size: 1178 limit: 1308.0
+42
+precision score: 0.567567567568
+recall score: 1.0
+f-1 score: 0.724137931034
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 424
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1747
+Using TF-IDF
+(1747, 15000)
+Bag of word completed
+Number of One 171
+Number of Zero 1576
+=========Before Sampling======
+Whole Dataset size:  1747
+Number of Relevant 171
+Number of non-relevant 1576
+prevelance ratio 9.78820835718
+----Started Training----
+INitial Seed Limit 175.0
+seed size limit: 175.0
+Requirement made at counter 0 (1:) 57 (0): 107
+Seed Size Limit: 175.0 Seed Explored so far: 175
+Undersampling in the seed list
+Before Loop Lenght: 114 114
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 164 limit: 175.0
+114
+precision score: 0.411255411255
+recall score: 0.555555555556
+f-1 score: 0.47263681592
+####SAL####
+Loop: 1
+Initial size: 175 limit: 350.0
+116
+precision score: 0.283062645012
+recall score: 0.713450292398
+f-1 score: 0.405315614618
+####SAL####
+Loop: 2
+Initial size: 350 limit: 525.0
+132
+precision score: 0.354545454545
+recall score: 0.684210526316
+f-1 score: 0.467065868263
+####SAL####
+Loop: 3
+Initial size: 525 limit: 699.0
+168
+precision score: 0.453924914676
+recall score: 0.777777777778
+f-1 score: 0.573275862069
+####SAL####
+Loop: 4
+Initial size: 699 limit: 874.0
+184
+precision score: 0.566265060241
+recall score: 0.824561403509
+f-1 score: 0.671428571429
+####SAL####
+Loop: 5
+Initial size: 874 limit: 1049.0
+206
+precision score: 0.733668341709
+recall score: 0.853801169591
+f-1 score: 0.789189189189
+####SAL####
+Loop: 6
+Initial size: 1049 limit: 1223.0
+238
+precision score: 0.745283018868
+recall score: 0.923976608187
+f-1 score: 0.825065274151
+####SAL####
+Loop: 7
+Initial size: 1223 limit: 1398.0
+258
+precision score: 0.805825242718
+recall score: 0.970760233918
+f-1 score: 0.880636604775
+####SAL####
+Loop: 8
+Initial size: 1398 limit: 1573.0
+270
+precision score: 0.85
+recall score: 0.994152046784
+f-1 score: 0.916442048518
+####SAL####
+Loop: 9
+Initial size: 1573 limit: 1747.0
+290
+precision score: 0.909574468085
+recall score: 1.0
+f-1 score: 0.952646239554
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 425
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1546
+Using TF-IDF
+(1546, 15000)
+Bag of word completed
+Number of One 162
+Number of Zero 1384
+=========Before Sampling======
+Whole Dataset size:  1546
+Number of Relevant 162
+Number of non-relevant 1384
+prevelance ratio 10.4786545925
+----Started Training----
+INitial Seed Limit 155.0
+seed size limit: 155.0
+Requirement made at counter 0 (1:) 84 (0): 68
+Seed Size Limit: 155.0 Seed Explored so far: 155
+Undersampling in the seed list
+Before Loop Lenght: 136 136
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 152 limit: 155.0
+136
+precision score: 0.344059405941
+recall score: 0.858024691358
+f-1 score: 0.491166077739
+####SAL####
+Loop: 1
+Initial size: 155 limit: 310.0
+142
+precision score: 0.472118959108
+recall score: 0.783950617284
+f-1 score: 0.589327146172
+####SAL####
+Loop: 2
+Initial size: 310 limit: 464.0
+200
+precision score: 0.662037037037
+recall score: 0.882716049383
+f-1 score: 0.756613756614
+####SAL####
+Loop: 3
+Initial size: 464 limit: 619.0
+234
+precision score: 0.785340314136
+recall score: 0.925925925926
+f-1 score: 0.849858356941
+####SAL####
+Loop: 4
+Initial size: 619 limit: 773.0
+256
+precision score: 0.864406779661
+recall score: 0.944444444444
+f-1 score: 0.902654867257
+####SAL####
+Loop: 5
+Initial size: 773 limit: 928.0
+272
+precision score: 0.945454545455
+recall score: 0.962962962963
+f-1 score: 0.954128440367
+####SAL####
+Loop: 6
+Initial size: 928 limit: 1083.0
+286
+precision score: 0.94578313253
+recall score: 0.969135802469
+f-1 score: 0.957317073171
+####SAL####
+Loop: 7
+Initial size: 1083 limit: 1237.0
+296
+precision score: 0.969512195122
+recall score: 0.981481481481
+f-1 score: 0.975460122699
+####SAL####
+Loop: 8
+Initial size: 1237 limit: 1392.0
+296
+precision score: 0.987577639752
+recall score: 0.981481481481
+f-1 score: 0.984520123839
+####SAL####
+Loop: 9
+Initial size: 1392 limit: 1546.0
+306
+precision score: 0.993788819876
+recall score: 0.987654320988
+f-1 score: 0.990712074303
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 426
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 2095
+Using TF-IDF
+(2095, 15000)
+Bag of word completed
+Number of One 202
+Number of Zero 1893
+=========Before Sampling======
+Whole Dataset size:  2095
+Number of Relevant 202
+Number of non-relevant 1893
+prevelance ratio 9.64200477327
+----Started Training----
+INitial Seed Limit 210.0
+seed size limit: 210.0
+Requirement made at counter 0 (1:) 16 (0): 156
+Seed Size Limit: 210.0 Seed Explored so far: 210
+Undersampling in the seed list
+Before Loop Lenght: 32 32
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 172 limit: 210.0
+32
+precision score: 0.411764705882
+recall score: 0.727722772277
+f-1 score: 0.525939177102
+####SAL####
+Loop: 1
+Initial size: 210 limit: 419.0
+50
+precision score: 0.258457374831
+recall score: 0.945544554455
+f-1 score: 0.405951115834
+####SAL####
+Loop: 2
+Initial size: 419 limit: 629.0
+68
+precision score: 0.376447876448
+recall score: 0.965346534653
+f-1 score: 0.541666666667
+####SAL####
+Loop: 3
+Initial size: 629 limit: 838.0
+108
+precision score: 0.459016393443
+recall score: 0.970297029703
+f-1 score: 0.623211446741
+####SAL####
+Loop: 4
+Initial size: 838 limit: 1048.0
+138
+precision score: 0.604229607251
+recall score: 0.990099009901
+f-1 score: 0.750469043152
+####SAL####
+Loop: 5
+Initial size: 1048 limit: 1257.0
+152
+precision score: 0.644230769231
+recall score: 0.99504950495
+f-1 score: 0.782101167315
+####SAL####
+Loop: 6
+Initial size: 1257 limit: 1467.0
+170
+precision score: 0.690721649485
+recall score: 0.99504950495
+f-1 score: 0.815415821501
+####SAL####
+Loop: 7
+Initial size: 1467 limit: 1676.0
+202
+precision score: 0.717857142857
+recall score: 0.99504950495
+f-1 score: 0.834024896266
+####SAL####
+Loop: 8
+Initial size: 1676 limit: 1886.0
+264
+precision score: 0.848739495798
+recall score: 1.0
+f-1 score: 0.918181818182
+####SAL####
+Loop: 9
+Initial size: 1886 limit: 2095.0
+306
+precision score: 0.939534883721
+recall score: 1.0
+f-1 score: 0.968824940048
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 427
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1528
+Using TF-IDF
+(1528, 15000)
+Bag of word completed
+Number of One 50
+Number of Zero 1478
+=========Before Sampling======
+Whole Dataset size:  1528
+Number of Relevant 50
+Number of non-relevant 1478
+prevelance ratio 3.2722513089
+----Started Training----
+INitial Seed Limit 153.0
+seed size limit: 153.0
+Requirement made at counter 0 (1:) 22 (0): 127
+Seed Size Limit: 153.0 Seed Explored so far: 153
+Undersampling in the seed list
+Before Loop Lenght: 44 44
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 149 limit: 153.0
+44
+precision score: 0.284671532847
+recall score: 0.78
+f-1 score: 0.417112299465
+####SAL####
+Loop: 1
+Initial size: 153 limit: 306.0
+44
+precision score: 0.2
+recall score: 0.8
+f-1 score: 0.32
+####SAL####
+Loop: 2
+Initial size: 306 limit: 459.0
+50
+precision score: 0.434343434343
+recall score: 0.86
+f-1 score: 0.577181208054
+####SAL####
+Loop: 3
+Initial size: 459 limit: 612.0
+66
+precision score: 0.576923076923
+recall score: 0.9
+f-1 score: 0.703125
+####SAL####
+Loop: 4
+Initial size: 612 limit: 764.0
+66
+precision score: 0.511363636364
+recall score: 0.9
+f-1 score: 0.652173913043
+####SAL####
+Loop: 5
+Initial size: 764 limit: 917.0
+72
+precision score: 0.582278481013
+recall score: 0.92
+f-1 score: 0.713178294574
+####SAL####
+Loop: 6
+Initial size: 917 limit: 1070.0
+76
+precision score: 0.64
+recall score: 0.96
+f-1 score: 0.768
+####SAL####
+Loop: 7
+Initial size: 1070 limit: 1223.0
+76
+precision score: 0.64
+recall score: 0.96
+f-1 score: 0.768
+####SAL####
+Loop: 8
+Initial size: 1223 limit: 1376.0
+82
+precision score: 0.675675675676
+recall score: 1.0
+f-1 score: 0.806451612903
+####SAL####
+Loop: 9
+Initial size: 1376 limit: 1528.0
+82
+precision score: 0.675675675676
+recall score: 1.0
+f-1 score: 0.806451612903
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 428
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1645
+Using TF-IDF
+(1645, 15000)
+Bag of word completed
+Number of One 118
+Number of Zero 1527
+=========Before Sampling======
+Whole Dataset size:  1645
+Number of Relevant 118
+Number of non-relevant 1527
+prevelance ratio 7.17325227964
+----Started Training----
+INitial Seed Limit 165.0
+seed size limit: 165.0
+Requirement made at counter 0 (1:) 47 (0): 103
+Seed Size Limit: 165.0 Seed Explored so far: 165
+Undersampling in the seed list
+Before Loop Lenght: 94 94
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 150 limit: 165.0
+94
+precision score: 0.158192090395
+recall score: 0.949152542373
+f-1 score: 0.271186440678
+####SAL####
+Loop: 1
+Initial size: 165 limit: 329.0
+94
+precision score: 0.235436893204
+recall score: 0.822033898305
+f-1 score: 0.366037735849
+####SAL####
+Loop: 2
+Initial size: 329 limit: 494.0
+124
+precision score: 0.306406685237
+recall score: 0.932203389831
+f-1 score: 0.461215932914
+####SAL####
+Loop: 3
+Initial size: 494 limit: 658.0
+130
+precision score: 0.391143911439
+recall score: 0.898305084746
+f-1 score: 0.54498714653
+####SAL####
+Loop: 4
+Initial size: 658 limit: 823.0
+156
+precision score: 0.545454545455
+recall score: 0.915254237288
+f-1 score: 0.683544303797
+####SAL####
+Loop: 5
+Initial size: 823 limit: 987.0
+190
+precision score: 0.727848101266
+recall score: 0.974576271186
+f-1 score: 0.833333333333
+####SAL####
+Loop: 6
+Initial size: 987 limit: 1152.0
+218
+precision score: 0.8125
+recall score: 0.991525423729
+f-1 score: 0.893129770992
+####SAL####
+Loop: 7
+Initial size: 1152 limit: 1316.0
+222
+precision score: 0.848920863309
+recall score: 1.0
+f-1 score: 0.918287937743
+####SAL####
+Loop: 8
+Initial size: 1316 limit: 1481.0
+226
+precision score: 0.874074074074
+recall score: 1.0
+f-1 score: 0.932806324111
+####SAL####
+Loop: 9
+Initial size: 1481 limit: 1645.0
+228
+precision score: 0.914728682171
+recall score: 1.0
+f-1 score: 0.955465587045
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 429
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff47ddef60>
+number of documents 1156
+Using TF-IDF
+(1156, 15000)
+Bag of word completed
+Number of One 11
+Number of Zero 1145
+=========Before Sampling======
+Whole Dataset size:  1156
+Number of Relevant 11
+Number of non-relevant 1145
+prevelance ratio 0.951557093426
+----Started Training----
+INitial Seed Limit 116.0
+seed size limit: 116.0
+Requirement made at counter 0 (1:) 11 (0): 103
+Seed Size Limit: 116.0 Seed Explored so far: 116
+Undersampling in the seed list
+Before Loop Lenght: 22 22
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 114 limit: 116.0
+22
+precision score: 0.0263157894737
+recall score: 1.0
+f-1 score: 0.0512820512821
+####SAL####
+Loop: 1
+Initial size: 116 limit: 232.0
+22
+precision score: 0.0236051502146
+recall score: 1.0
+f-1 score: 0.0461215932914
+####SAL####
+Loop: 2
+Initial size: 232 limit: 347.0
+22
+precision score: 0.0308988764045
+recall score: 1.0
+f-1 score: 0.0599455040872
+####SAL####
+Loop: 3
+Initial size: 347 limit: 463.0
+22
+precision score: 0.0561224489796
+recall score: 1.0
+f-1 score: 0.106280193237
+####SAL####
+Loop: 4
+Initial size: 463 limit: 578.0
+22
+precision score: 0.0588235294118
+recall score: 1.0
+f-1 score: 0.111111111111
+####SAL####
+Loop: 5
+Initial size: 578 limit: 694.0
+22
+precision score: 0.0916666666667
+recall score: 1.0
+f-1 score: 0.167938931298
+####SAL####
+Loop: 6
+Initial size: 694 limit: 810.0
+22
+precision score: 0.148648648649
+recall score: 1.0
+f-1 score: 0.258823529412
+####SAL####
+Loop: 7
+Initial size: 810 limit: 925.0
+22
+precision score: 0.196428571429
+recall score: 1.0
+f-1 score: 0.328358208955
+####SAL####
+Loop: 8
+Initial size: 925 limit: 1041.0
+22
+precision score: 0.379310344828
+recall score: 1.0
+f-1 score: 0.55
+####SAL####
+Loop: 9
+Initial size: 1041 limit: 1156.0
+22
+precision score: 0.478260869565
+recall score: 1.0
+f-1 score: 0.647058823529
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 430
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 1709
+Using TF-IDF
+(1709, 15000)
+Bag of word completed
+Number of One 6
+Number of Zero 1703
+=========Before Sampling======
+Whole Dataset size:  1709
+Number of Relevant 6
+Number of non-relevant 1703
+prevelance ratio 0.351082504389
+----Started Training----
+INitial Seed Limit 171.0
+seed size limit: 171.0
+Requirement made at counter 0 (1:) 6 (0): 145
+Seed Size Limit: 171.0 Seed Explored so far: 171
+Undersampling in the seed list
+Before Loop Lenght: 12 12
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 151 limit: 171.0
+12
+precision score: 0.5
+recall score: 1.0
+f-1 score: 0.666666666667
+####SAL####
+Loop: 1
+Initial size: 171 limit: 342.0
+12
+precision score: 0.375
+recall score: 1.0
+f-1 score: 0.545454545455
+####SAL####
+Loop: 2
+Initial size: 342 limit: 513.0
+12
+precision score: 0.6
+recall score: 1.0
+f-1 score: 0.75
+####SAL####
+Loop: 3
+Initial size: 513 limit: 684.0
+12
+precision score: 0.666666666667
+recall score: 1.0
+f-1 score: 0.8
+####SAL####
+Loop: 4
+Initial size: 684 limit: 855.0
+12
+precision score: 0.857142857143
+recall score: 1.0
+f-1 score: 0.923076923077
+####SAL####
+Loop: 5
+Initial size: 855 limit: 1026.0
+12
+precision score: 0.857142857143
+recall score: 1.0
+f-1 score: 0.923076923077
+####SAL####
+Loop: 6
+Initial size: 1026 limit: 1197.0
+12
+precision score: 0.857142857143
+recall score: 1.0
+f-1 score: 0.923076923077
+####SAL####
+Loop: 7
+Initial size: 1197 limit: 1368.0
+12
+precision score: 0.857142857143
+recall score: 1.0
+f-1 score: 0.923076923077
+####SAL####
+Loop: 8
+Initial size: 1368 limit: 1539.0
+12
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+Loop: 9
+Initial size: 1539 limit: 1709.0
+12
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 431
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 1431
+Using TF-IDF
+(1431, 15000)
+Bag of word completed
+Number of One 130
+Number of Zero 1301
+=========Before Sampling======
+Whole Dataset size:  1431
+Number of Relevant 130
+Number of non-relevant 1301
+prevelance ratio 9.08455625437
+----Started Training----
+INitial Seed Limit 144.0
+seed size limit: 144.0
+Requirement made at counter 0 (1:) 41 (0): 97
+Seed Size Limit: 144.0 Seed Explored so far: 144
+Undersampling in the seed list
+Before Loop Lenght: 82 82
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 138 limit: 144.0
+82
+precision score: 0.294444444444
+recall score: 0.815384615385
+f-1 score: 0.432653061224
+####SAL####
+Loop: 1
+Initial size: 144 limit: 287.0
+82
+precision score: 0.456790123457
+recall score: 0.569230769231
+f-1 score: 0.506849315068
+####SAL####
+Loop: 2
+Initial size: 287 limit: 430.0
+108
+precision score: 0.679389312977
+recall score: 0.684615384615
+f-1 score: 0.681992337165
+####SAL####
+Loop: 3
+Initial size: 430 limit: 573.0
+154
+precision score: 0.814516129032
+recall score: 0.776923076923
+f-1 score: 0.795275590551
+####SAL####
+Loop: 4
+Initial size: 573 limit: 716.0
+180
+precision score: 0.892307692308
+recall score: 0.892307692308
+f-1 score: 0.892307692308
+####SAL####
+Loop: 5
+Initial size: 716 limit: 859.0
+194
+precision score: 0.952755905512
+recall score: 0.930769230769
+f-1 score: 0.941634241245
+####SAL####
+Loop: 6
+Initial size: 859 limit: 1002.0
+212
+precision score: 0.961832061069
+recall score: 0.969230769231
+f-1 score: 0.965517241379
+####SAL####
+Loop: 7
+Initial size: 1002 limit: 1145.0
+212
+precision score: 0.984375
+recall score: 0.969230769231
+f-1 score: 0.976744186047
+####SAL####
+Loop: 8
+Initial size: 1145 limit: 1288.0
+224
+precision score: 0.984732824427
+recall score: 0.992307692308
+f-1 score: 0.988505747126
+####SAL####
+Loop: 9
+Initial size: 1288 limit: 1431.0
+232
+precision score: 0.992366412214
+recall score: 1.0
+f-1 score: 0.996168582375
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 432
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 2503
+Using TF-IDF
+(2503, 15000)
+Bag of word completed
+Number of One 28
+Number of Zero 2475
+=========Before Sampling======
+Whole Dataset size:  2503
+Number of Relevant 28
+Number of non-relevant 2475
+prevelance ratio 1.11865761087
+----Started Training----
+INitial Seed Limit 251.0
+seed size limit: 251.0
+Requirement made at counter 0 (1:) 3 (0): 216
+Seed Size Limit: 251.0 Seed Explored so far: 251
+Undersampling in the seed list
+Before Loop Lenght: 6 6
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 219 limit: 251.0
+6
+precision score: 0.0142131979695
+recall score: 1.0
+f-1 score: 0.028028028028
+####SAL####
+Loop: 1
+Initial size: 251 limit: 501.0
+6
+precision score: 0.0140405616225
+recall score: 0.964285714286
+f-1 score: 0.0276781137878
+####SAL####
+Loop: 2
+Initial size: 501 limit: 751.0
+8
+precision score: 0.0241587575496
+recall score: 1.0
+f-1 score: 0.0471777590564
+####SAL####
+Loop: 3
+Initial size: 751 limit: 1002.0
+8
+precision score: 0.01657785672
+recall score: 1.0
+f-1 score: 0.0326150262085
+####SAL####
+Loop: 4
+Initial size: 1002 limit: 1252.0
+8
+precision score: 0.0273170731707
+recall score: 1.0
+f-1 score: 0.0531813865147
+####SAL####
+Loop: 5
+Initial size: 1252 limit: 1502.0
+8
+precision score: 0.0283975659229
+recall score: 1.0
+f-1 score: 0.0552268244576
+####SAL####
+Loop: 6
+Initial size: 1502 limit: 1753.0
+8
+precision score: 0.0553359683794
+recall score: 1.0
+f-1 score: 0.104868913858
+####SAL####
+Loop: 7
+Initial size: 1753 limit: 2003.0
+8
+precision score: 0.0590717299578
+recall score: 1.0
+f-1 score: 0.111553784861
+####SAL####
+Loop: 8
+Initial size: 2003 limit: 2253.0
+8
+precision score: 0.0714285714286
+recall score: 1.0
+f-1 score: 0.133333333333
+####SAL####
+Loop: 9
+Initial size: 2253 limit: 2503.0
+10
+precision score: 0.117154811715
+recall score: 1.0
+f-1 score: 0.209737827715
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 433
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 2162
+Using TF-IDF
+(2162, 15000)
+Bag of word completed
+Number of One 13
+Number of Zero 2149
+=========Before Sampling======
+Whole Dataset size:  2162
+Number of Relevant 13
+Number of non-relevant 2149
+prevelance ratio 0.601295097132
+----Started Training----
+INitial Seed Limit 217.0
+seed size limit: 217.0
+Requirement made at counter 0 (1:) 6 (0): 188
+Seed Size Limit: 217.0 Seed Explored so far: 217
+Undersampling in the seed list
+Before Loop Lenght: 12 12
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 194 limit: 217.0
+12
+precision score: 0.0122324159021
+recall score: 0.923076923077
+f-1 score: 0.0241448692153
+####SAL####
+Loop: 1
+Initial size: 217 limit: 433.0
+12
+precision score: 0.0148911798396
+recall score: 1.0
+f-1 score: 0.0293453724605
+####SAL####
+Loop: 2
+Initial size: 433 limit: 649.0
+14
+precision score: 0.0138150903294
+recall score: 1.0
+f-1 score: 0.0272536687631
+####SAL####
+Loop: 3
+Initial size: 649 limit: 865.0
+16
+precision score: 0.0226480836237
+recall score: 1.0
+f-1 score: 0.0442930153322
+####SAL####
+Loop: 4
+Initial size: 865 limit: 1081.0
+16
+precision score: 0.0237154150198
+recall score: 0.923076923077
+f-1 score: 0.0462427745665
+####SAL####
+Loop: 5
+Initial size: 1081 limit: 1298.0
+16
+precision score: 0.0191082802548
+recall score: 0.923076923077
+f-1 score: 0.0374414976599
+####SAL####
+Loop: 6
+Initial size: 1298 limit: 1514.0
+16
+precision score: 0.0336787564767
+recall score: 1.0
+f-1 score: 0.0651629072682
+####SAL####
+Loop: 7
+Initial size: 1514 limit: 1730.0
+18
+precision score: 0.0467625899281
+recall score: 1.0
+f-1 score: 0.0893470790378
+####SAL####
+Loop: 8
+Initial size: 1730 limit: 1946.0
+22
+precision score: 0.0670103092784
+recall score: 1.0
+f-1 score: 0.125603864734
+####SAL####
+Loop: 9
+Initial size: 1946 limit: 2162.0
+22
+precision score: 0.114035087719
+recall score: 1.0
+f-1 score: 0.204724409449
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 434
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 1676
+Using TF-IDF
+(1676, 15000)
+Bag of word completed
+Number of One 347
+Number of Zero 1329
+=========Before Sampling======
+Whole Dataset size:  1676
+Number of Relevant 347
+Number of non-relevant 1329
+prevelance ratio 20.7040572792
+----Started Training----
+INitial Seed Limit 168.0
+seed size limit: 168.0
+Requirement made at counter 0 (1:) 83 (0): 73
+Seed Size Limit: 168.0 Seed Explored so far: 168
+Undersampling in the seed list
+Before Loop Lenght: 146 146
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 156 limit: 168.0
+146
+precision score: 0.322072072072
+recall score: 0.824207492795
+f-1 score: 0.463157894737
+####SAL####
+Loop: 1
+Initial size: 168 limit: 336.0
+168
+precision score: 0.38683788122
+recall score: 0.694524495677
+f-1 score: 0.496907216495
+####SAL####
+Loop: 2
+Initial size: 336 limit: 503.0
+266
+precision score: 0.57962962963
+recall score: 0.902017291066
+f-1 score: 0.705749718151
+####SAL####
+Loop: 3
+Initial size: 503 limit: 671.0
+304
+precision score: 0.692825112108
+recall score: 0.890489913545
+f-1 score: 0.779319041614
+####SAL####
+Loop: 4
+Initial size: 671 limit: 838.0
+380
+precision score: 0.827411167513
+recall score: 0.939481268012
+f-1 score: 0.879892037787
+####SAL####
+Loop: 5
+Initial size: 838 limit: 1006.0
+448
+precision score: 0.889182058047
+recall score: 0.971181556196
+f-1 score: 0.928374655647
+####SAL####
+Loop: 6
+Initial size: 1006 limit: 1174.0
+500
+precision score: 0.953038674033
+recall score: 0.994236311239
+f-1 score: 0.973201692525
+####SAL####
+Loop: 7
+Initial size: 1174 limit: 1341.0
+522
+precision score: 0.974576271186
+recall score: 0.994236311239
+f-1 score: 0.984308131241
+####SAL####
+Loop: 8
+Initial size: 1341 limit: 1509.0
+562
+precision score: 0.985714285714
+recall score: 0.994236311239
+f-1 score: 0.989956958393
+####SAL####
+Loop: 9
+Initial size: 1509 limit: 1676.0
+618
+precision score: 0.988571428571
+recall score: 0.99711815562
+f-1 score: 0.992826398852
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 435
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1836
+Using TF-IDF
+(1836, 15000)
+Bag of word completed
+Number of One 117
+Number of Zero 1719
+=========Before Sampling======
+Whole Dataset size:  1836
+Number of Relevant 117
+Number of non-relevant 1719
+prevelance ratio 6.37254901961
+----Started Training----
+INitial Seed Limit 184.0
+seed size limit: 184.0
+Requirement made at counter 0 (1:) 21 (0): 141
+Seed Size Limit: 184.0 Seed Explored so far: 184
+Undersampling in the seed list
+Before Loop Lenght: 42 42
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 162 limit: 184.0
+42
+precision score: 0.445161290323
+recall score: 0.589743589744
+f-1 score: 0.507352941176
+####SAL####
+Loop: 1
+Initial size: 184 limit: 368.0
+46
+precision score: 0.381642512077
+recall score: 0.675213675214
+f-1 score: 0.487654320988
+####SAL####
+Loop: 2
+Initial size: 368 limit: 551.0
+112
+precision score: 0.559139784946
+recall score: 0.888888888889
+f-1 score: 0.686468646865
+####SAL####
+Loop: 3
+Initial size: 551 limit: 735.0
+128
+precision score: 0.677215189873
+recall score: 0.91452991453
+f-1 score: 0.778181818182
+####SAL####
+Loop: 4
+Initial size: 735 limit: 918.0
+152
+precision score: 0.795620437956
+recall score: 0.931623931624
+f-1 score: 0.858267716535
+####SAL####
+Loop: 5
+Initial size: 918 limit: 1102.0
+170
+precision score: 0.851851851852
+recall score: 0.982905982906
+f-1 score: 0.912698412698
+####SAL####
+Loop: 6
+Initial size: 1102 limit: 1286.0
+178
+precision score: 0.87969924812
+recall score: 1.0
+f-1 score: 0.936
+####SAL####
+Loop: 7
+Initial size: 1286 limit: 1469.0
+180
+precision score: 0.886363636364
+recall score: 1.0
+f-1 score: 0.939759036145
+####SAL####
+Loop: 8
+Initial size: 1469 limit: 1653.0
+182
+precision score: 0.906976744186
+recall score: 1.0
+f-1 score: 0.951219512195
+####SAL####
+Loop: 9
+Initial size: 1653 limit: 1836.0
+186
+precision score: 0.92125984252
+recall score: 1.0
+f-1 score: 0.959016393443
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 436
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 1949
+Using TF-IDF
+(1949, 15000)
+Bag of word completed
+Number of One 180
+Number of Zero 1769
+=========Before Sampling======
+Whole Dataset size:  1949
+Number of Relevant 180
+Number of non-relevant 1769
+prevelance ratio 9.23550538738
+----Started Training----
+INitial Seed Limit 195.0
+seed size limit: 195.0
+Requirement made at counter 0 (1:) 28 (0): 132
+Seed Size Limit: 195.0 Seed Explored so far: 195
+Undersampling in the seed list
+Before Loop Lenght: 56 56
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 160 limit: 195.0
+56
+precision score: 0.519480519481
+recall score: 0.888888888889
+f-1 score: 0.655737704918
+####SAL####
+Loop: 1
+Initial size: 195 limit: 390.0
+60
+precision score: 0.646586345382
+recall score: 0.894444444444
+f-1 score: 0.750582750583
+####SAL####
+Loop: 2
+Initial size: 390 limit: 585.0
+112
+precision score: 0.843137254902
+recall score: 0.955555555556
+f-1 score: 0.895833333333
+####SAL####
+Loop: 3
+Initial size: 585 limit: 780.0
+150
+precision score: 0.907216494845
+recall score: 0.977777777778
+f-1 score: 0.941176470588
+####SAL####
+Loop: 4
+Initial size: 780 limit: 975.0
+182
+precision score: 0.956756756757
+recall score: 0.983333333333
+f-1 score: 0.969863013699
+####SAL####
+Loop: 5
+Initial size: 975 limit: 1170.0
+206
+precision score: 0.978142076503
+recall score: 0.994444444444
+f-1 score: 0.986225895317
+####SAL####
+Loop: 6
+Initial size: 1170 limit: 1365.0
+226
+precision score: 0.983606557377
+recall score: 1.0
+f-1 score: 0.99173553719
+####SAL####
+Loop: 7
+Initial size: 1365 limit: 1560.0
+232
+precision score: 0.989010989011
+recall score: 1.0
+f-1 score: 0.994475138122
+####SAL####
+Loop: 8
+Initial size: 1560 limit: 1755.0
+232
+precision score: 0.994475138122
+recall score: 1.0
+f-1 score: 0.997229916898
+####SAL####
+Loop: 9
+Initial size: 1755 limit: 1949.0
+248
+precision score: 0.994475138122
+recall score: 1.0
+f-1 score: 0.997229916898
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 437
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 1796
+Using TF-IDF
+(1796, 15000)
+Bag of word completed
+Number of One 72
+Number of Zero 1724
+=========Before Sampling======
+Whole Dataset size:  1796
+Number of Relevant 72
+Number of non-relevant 1724
+prevelance ratio 4.00890868597
+----Started Training----
+INitial Seed Limit 180.0
+seed size limit: 180.0
+Requirement made at counter 0 (1:) 4 (0): 165
+Seed Size Limit: 180.0 Seed Explored so far: 180
+Undersampling in the seed list
+Before Loop Lenght: 8 8
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 169 limit: 180.0
+8
+precision score: 0.0801886792453
+recall score: 0.944444444444
+f-1 score: 0.147826086957
+####SAL####
+Loop: 1
+Initial size: 180 limit: 360.0
+8
+precision score: 0.0866336633663
+recall score: 0.972222222222
+f-1 score: 0.159090909091
+####SAL####
+Loop: 2
+Initial size: 360 limit: 539.0
+8
+precision score: 0.0905562742561
+recall score: 0.972222222222
+f-1 score: 0.165680473373
+####SAL####
+Loop: 3
+Initial size: 539 limit: 719.0
+8
+precision score: 0.0997150997151
+recall score: 0.972222222222
+f-1 score: 0.180878552972
+####SAL####
+Loop: 4
+Initial size: 719 limit: 898.0
+8
+precision score: 0.10480349345
+recall score: 1.0
+f-1 score: 0.189723320158
+####SAL####
+Loop: 5
+Initial size: 898 limit: 1078.0
+12
+precision score: 0.12020033389
+recall score: 1.0
+f-1 score: 0.214605067064
+####SAL####
+Loop: 6
+Initial size: 1078 limit: 1258.0
+22
+precision score: 0.164733178654
+recall score: 0.986111111111
+f-1 score: 0.282306163022
+####SAL####
+Loop: 7
+Initial size: 1258 limit: 1437.0
+36
+precision score: 0.220125786164
+recall score: 0.972222222222
+f-1 score: 0.358974358974
+####SAL####
+Loop: 8
+Initial size: 1437 limit: 1617.0
+64
+precision score: 0.341232227488
+recall score: 1.0
+f-1 score: 0.508833922261
+####SAL####
+Loop: 9
+Initial size: 1617 limit: 1796.0
+106
+precision score: 0.610169491525
+recall score: 1.0
+f-1 score: 0.757894736842
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 438
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1798
+Using TF-IDF
+(1798, 15000)
+Bag of word completed
+Number of One 173
+Number of Zero 1625
+=========Before Sampling======
+Whole Dataset size:  1798
+Number of Relevant 173
+Number of non-relevant 1625
+prevelance ratio 9.62180200222
+----Started Training----
+INitial Seed Limit 180.0
+seed size limit: 180.0
+Requirement made at counter 0 (1:) 54 (0): 109
+Seed Size Limit: 180.0 Seed Explored so far: 180
+Undersampling in the seed list
+Before Loop Lenght: 108 108
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 163 limit: 180.0
+108
+precision score: 0.288590604027
+recall score: 0.745664739884
+f-1 score: 0.416129032258
+####SAL####
+Loop: 1
+Initial size: 180 limit: 360.0
+108
+precision score: 0.389473684211
+recall score: 0.64161849711
+f-1 score: 0.484716157205
+####SAL####
+Loop: 2
+Initial size: 360 limit: 540.0
+154
+precision score: 0.528925619835
+recall score: 0.739884393064
+f-1 score: 0.61686746988
+####SAL####
+Loop: 3
+Initial size: 540 limit: 720.0
+226
+precision score: 0.714975845411
+recall score: 0.85549132948
+f-1 score: 0.778947368421
+####SAL####
+Loop: 4
+Initial size: 720 limit: 899.0
+258
+precision score: 0.801020408163
+recall score: 0.907514450867
+f-1 score: 0.850948509485
+####SAL####
+Loop: 5
+Initial size: 899 limit: 1079.0
+282
+precision score: 0.860103626943
+recall score: 0.959537572254
+f-1 score: 0.907103825137
+####SAL####
+Loop: 6
+Initial size: 1079 limit: 1259.0
+300
+precision score: 0.876923076923
+recall score: 0.988439306358
+f-1 score: 0.929347826087
+####SAL####
+Loop: 7
+Initial size: 1259 limit: 1439.0
+310
+precision score: 0.905263157895
+recall score: 0.994219653179
+f-1 score: 0.947658402204
+####SAL####
+Loop: 8
+Initial size: 1439 limit: 1619.0
+318
+precision score: 0.920212765957
+recall score: 1.0
+f-1 score: 0.958448753463
+####SAL####
+Loop: 9
+Initial size: 1619 limit: 1798.0
+324
+precision score: 0.92513368984
+recall score: 1.0
+f-1 score: 0.961111111111
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 439
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1390>
+number of documents 2015
+Using TF-IDF
+(2015, 15000)
+Bag of word completed
+Number of One 219
+Number of Zero 1796
+=========Before Sampling======
+Whole Dataset size:  2015
+Number of Relevant 219
+Number of non-relevant 1796
+prevelance ratio 10.8684863524
+----Started Training----
+INitial Seed Limit 202.0
+seed size limit: 202.0
+Requirement made at counter 0 (1:) 17 (0): 170
+Seed Size Limit: 202.0 Seed Explored so far: 202
+Undersampling in the seed list
+Before Loop Lenght: 34 34
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 187 limit: 202.0
+34
+precision score: 0.157060518732
+recall score: 0.995433789954
+f-1 score: 0.2713130056
+####SAL####
+Loop: 1
+Initial size: 202 limit: 403.0
+34
+precision score: 0.316151202749
+recall score: 0.840182648402
+f-1 score: 0.459425717853
+####SAL####
+Loop: 2
+Initial size: 403 limit: 605.0
+80
+precision score: 0.318979266348
+recall score: 0.913242009132
+f-1 score: 0.472813238771
+####SAL####
+Loop: 3
+Initial size: 605 limit: 806.0
+94
+precision score: 0.455947136564
+recall score: 0.945205479452
+f-1 score: 0.615156017831
+####SAL####
+Loop: 4
+Initial size: 806 limit: 1008.0
+124
+precision score: 0.502380952381
+recall score: 0.963470319635
+f-1 score: 0.660406885759
+####SAL####
+Loop: 5
+Initial size: 1008 limit: 1209.0
+154
+precision score: 0.593837535014
+recall score: 0.96803652968
+f-1 score: 0.736111111111
+####SAL####
+Loop: 6
+Initial size: 1209 limit: 1411.0
+180
+precision score: 0.691082802548
+recall score: 0.990867579909
+f-1 score: 0.81425891182
+####SAL####
+Loop: 7
+Initial size: 1411 limit: 1612.0
+266
+precision score: 0.811111111111
+recall score: 1.0
+f-1 score: 0.895705521472
+####SAL####
+Loop: 8
+Initial size: 1612 limit: 1814.0
+330
+precision score: 0.935897435897
+recall score: 1.0
+f-1 score: 0.966887417219
+####SAL####
+Loop: 9
+Initial size: 1814 limit: 2015.0
+356
+precision score: 0.986486486486
+recall score: 1.0
+f-1 score: 0.993197278912
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 440
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 1830
+Using TF-IDF
+(1830, 15000)
+Bag of word completed
+Number of One 54
+Number of Zero 1776
+=========Before Sampling======
+Whole Dataset size:  1830
+Number of Relevant 54
+Number of non-relevant 1776
+prevelance ratio 2.95081967213
+----Started Training----
+INitial Seed Limit 183.0
+seed size limit: 183.0
+Requirement made at counter 0 (1:) 21 (0): 141
+Seed Size Limit: 183.0 Seed Explored so far: 183
+Undersampling in the seed list
+Before Loop Lenght: 42 42
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 162 limit: 183.0
+42
+precision score: 0.105376344086
+recall score: 0.907407407407
+f-1 score: 0.188824662813
+####SAL####
+Loop: 1
+Initial size: 183 limit: 366.0
+42
+precision score: 0.131506849315
+recall score: 0.888888888889
+f-1 score: 0.229116945107
+####SAL####
+Loop: 2
+Initial size: 366 limit: 549.0
+50
+precision score: 0.265895953757
+recall score: 0.851851851852
+f-1 score: 0.405286343612
+####SAL####
+Loop: 3
+Initial size: 549 limit: 732.0
+68
+precision score: 0.451327433628
+recall score: 0.944444444444
+f-1 score: 0.610778443114
+####SAL####
+Loop: 4
+Initial size: 732 limit: 915.0
+68
+precision score: 0.566666666667
+recall score: 0.944444444444
+f-1 score: 0.708333333333
+####SAL####
+Loop: 5
+Initial size: 915 limit: 1098.0
+76
+precision score: 0.634146341463
+recall score: 0.962962962963
+f-1 score: 0.764705882353
+####SAL####
+Loop: 6
+Initial size: 1098 limit: 1281.0
+78
+precision score: 0.654320987654
+recall score: 0.981481481481
+f-1 score: 0.785185185185
+####SAL####
+Loop: 7
+Initial size: 1281 limit: 1464.0
+78
+precision score: 0.679487179487
+recall score: 0.981481481481
+f-1 score: 0.80303030303
+####SAL####
+Loop: 8
+Initial size: 1464 limit: 1647.0
+78
+precision score: 0.679487179487
+recall score: 0.981481481481
+f-1 score: 0.80303030303
+####SAL####
+Loop: 9
+Initial size: 1647 limit: 1830.0
+88
+precision score: 0.760563380282
+recall score: 1.0
+f-1 score: 0.864
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 441
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1554
+Using TF-IDF
+(1554, 15000)
+Bag of word completed
+Number of One 17
+Number of Zero 1537
+=========Before Sampling======
+Whole Dataset size:  1554
+Number of Relevant 17
+Number of non-relevant 1537
+prevelance ratio 1.09395109395
+----Started Training----
+INitial Seed Limit 156.0
+seed size limit: 156.0
+Requirement made at counter 0 (1:) 17 (0): 128
+Seed Size Limit: 156.0 Seed Explored so far: 156
+Undersampling in the seed list
+Before Loop Lenght: 34 34
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 145 limit: 156.0
+34
+precision score: 0.0876288659794
+recall score: 1.0
+f-1 score: 0.161137440758
+####SAL####
+Loop: 1
+Initial size: 156 limit: 311.0
+34
+precision score: 0.0829268292683
+recall score: 1.0
+f-1 score: 0.153153153153
+####SAL####
+Loop: 2
+Initial size: 311 limit: 467.0
+34
+precision score: 0.155963302752
+recall score: 1.0
+f-1 score: 0.269841269841
+####SAL####
+Loop: 3
+Initial size: 467 limit: 622.0
+34
+precision score: 0.207317073171
+recall score: 1.0
+f-1 score: 0.343434343434
+####SAL####
+Loop: 4
+Initial size: 622 limit: 777.0
+34
+precision score: 0.739130434783
+recall score: 1.0
+f-1 score: 0.85
+####SAL####
+Loop: 5
+Initial size: 777 limit: 933.0
+34
+precision score: 0.708333333333
+recall score: 1.0
+f-1 score: 0.829268292683
+####SAL####
+Loop: 6
+Initial size: 933 limit: 1088.0
+34
+precision score: 0.739130434783
+recall score: 1.0
+f-1 score: 0.85
+####SAL####
+Loop: 7
+Initial size: 1088 limit: 1244.0
+34
+precision score: 0.894736842105
+recall score: 1.0
+f-1 score: 0.944444444444
+####SAL####
+Loop: 8
+Initial size: 1244 limit: 1399.0
+34
+precision score: 0.894736842105
+recall score: 1.0
+f-1 score: 0.944444444444
+####SAL####
+Loop: 9
+Initial size: 1399 limit: 1554.0
+34
+precision score: 0.85
+recall score: 1.0
+f-1 score: 0.918918918919
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 442
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 2679
+Using TF-IDF
+(2679, 15000)
+Bag of word completed
+Number of One 94
+Number of Zero 2585
+=========Before Sampling======
+Whole Dataset size:  2679
+Number of Relevant 94
+Number of non-relevant 2585
+prevelance ratio 3.50877192982
+----Started Training----
+INitial Seed Limit 268.0
+seed size limit: 268.0
+Requirement made at counter 0 (1:) 11 (0): 210
+Seed Size Limit: 268.0 Seed Explored so far: 268
+Undersampling in the seed list
+Before Loop Lenght: 22 22
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 221 limit: 268.0
+22
+precision score: 0.17130620985
+recall score: 0.851063829787
+f-1 score: 0.285204991087
+####SAL####
+Loop: 1
+Initial size: 268 limit: 536.0
+30
+precision score: 0.157196969697
+recall score: 0.882978723404
+f-1 score: 0.266881028939
+####SAL####
+Loop: 2
+Initial size: 536 limit: 804.0
+38
+precision score: 0.22102425876
+recall score: 0.872340425532
+f-1 score: 0.352688172043
+####SAL####
+Loop: 3
+Initial size: 804 limit: 1072.0
+50
+precision score: 0.273615635179
+recall score: 0.893617021277
+f-1 score: 0.418952618454
+####SAL####
+Loop: 4
+Initial size: 1072 limit: 1340.0
+60
+precision score: 0.342307692308
+recall score: 0.946808510638
+f-1 score: 0.502824858757
+####SAL####
+Loop: 5
+Initial size: 1340 limit: 1608.0
+72
+precision score: 0.454081632653
+recall score: 0.946808510638
+f-1 score: 0.613793103448
+####SAL####
+Loop: 6
+Initial size: 1608 limit: 1876.0
+92
+precision score: 0.65
+recall score: 0.968085106383
+f-1 score: 0.777777777778
+####SAL####
+Loop: 7
+Initial size: 1876 limit: 2144.0
+98
+precision score: 0.720930232558
+recall score: 0.989361702128
+f-1 score: 0.834080717489
+####SAL####
+Loop: 8
+Initial size: 2144 limit: 2412.0
+120
+precision score: 0.83185840708
+recall score: 1.0
+f-1 score: 0.908212560386
+####SAL####
+Loop: 9
+Initial size: 2412 limit: 2679.0
+126
+precision score: 0.846846846847
+recall score: 1.0
+f-1 score: 0.917073170732
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 443
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 2230
+Using TF-IDF
+(2230, 15000)
+Bag of word completed
+Number of One 102
+Number of Zero 2128
+=========Before Sampling======
+Whole Dataset size:  2230
+Number of Relevant 102
+Number of non-relevant 2128
+prevelance ratio 4.57399103139
+----Started Training----
+INitial Seed Limit 223.0
+seed size limit: 223.0
+Requirement made at counter 0 (1:) 37 (0): 165
+Seed Size Limit: 223.0 Seed Explored so far: 223
+Undersampling in the seed list
+Before Loop Lenght: 74 74
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 202 limit: 223.0
+74
+precision score: 0.212765957447
+recall score: 0.686274509804
+f-1 score: 0.324825986079
+####SAL####
+Loop: 1
+Initial size: 223 limit: 446.0
+84
+precision score: 0.203431372549
+recall score: 0.813725490196
+f-1 score: 0.325490196078
+####SAL####
+Loop: 2
+Initial size: 446 limit: 669.0
+106
+precision score: 0.326693227092
+recall score: 0.803921568627
+f-1 score: 0.464589235127
+####SAL####
+Loop: 3
+Initial size: 669 limit: 892.0
+128
+precision score: 0.330882352941
+recall score: 0.882352941176
+f-1 score: 0.48128342246
+####SAL####
+Loop: 4
+Initial size: 892 limit: 1115.0
+144
+precision score: 0.55487804878
+recall score: 0.892156862745
+f-1 score: 0.684210526316
+####SAL####
+Loop: 5
+Initial size: 1115 limit: 1338.0
+164
+precision score: 0.791666666667
+recall score: 0.93137254902
+f-1 score: 0.855855855856
+####SAL####
+Loop: 6
+Initial size: 1338 limit: 1561.0
+180
+precision score: 0.9
+recall score: 0.970588235294
+f-1 score: 0.933962264151
+####SAL####
+Loop: 7
+Initial size: 1561 limit: 1784.0
+184
+precision score: 0.917431192661
+recall score: 0.980392156863
+f-1 score: 0.947867298578
+####SAL####
+Loop: 8
+Initial size: 1784 limit: 2007.0
+194
+precision score: 0.952830188679
+recall score: 0.990196078431
+f-1 score: 0.971153846154
+####SAL####
+Loop: 9
+Initial size: 2007 limit: 2230.0
+196
+precision score: 0.962264150943
+recall score: 1.0
+f-1 score: 0.980769230769
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 444
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1691
+Using TF-IDF
+(1691, 15000)
+Bag of word completed
+Number of One 17
+Number of Zero 1674
+=========Before Sampling======
+Whole Dataset size:  1691
+Number of Relevant 17
+Number of non-relevant 1674
+prevelance ratio 1.0053222945
+----Started Training----
+INitial Seed Limit 170.0
+seed size limit: 170.0
+Requirement made at counter 0 (1:) 16 (0): 141
+Seed Size Limit: 170.0 Seed Explored so far: 170
+Undersampling in the seed list
+Before Loop Lenght: 32 32
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 157 limit: 170.0
+32
+precision score: 0.0269841269841
+recall score: 1.0
+f-1 score: 0.0525502318393
+####SAL####
+Loop: 1
+Initial size: 170 limit: 339.0
+32
+precision score: 0.0570469798658
+recall score: 1.0
+f-1 score: 0.107936507937
+####SAL####
+Loop: 2
+Initial size: 339 limit: 508.0
+32
+precision score: 0.126865671642
+recall score: 1.0
+f-1 score: 0.225165562914
+####SAL####
+Loop: 3
+Initial size: 508 limit: 677.0
+32
+precision score: 0.2125
+recall score: 1.0
+f-1 score: 0.350515463918
+####SAL####
+Loop: 4
+Initial size: 677 limit: 846.0
+32
+precision score: 0.309090909091
+recall score: 1.0
+f-1 score: 0.472222222222
+####SAL####
+Loop: 5
+Initial size: 846 limit: 1015.0
+32
+precision score: 0.425
+recall score: 1.0
+f-1 score: 0.59649122807
+####SAL####
+Loop: 6
+Initial size: 1015 limit: 1184.0
+32
+precision score: 0.515151515152
+recall score: 1.0
+f-1 score: 0.68
+####SAL####
+Loop: 7
+Initial size: 1184 limit: 1353.0
+32
+precision score: 0.548387096774
+recall score: 1.0
+f-1 score: 0.708333333333
+####SAL####
+Loop: 8
+Initial size: 1353 limit: 1522.0
+34
+precision score: 0.653846153846
+recall score: 1.0
+f-1 score: 0.790697674419
+####SAL####
+Loop: 9
+Initial size: 1522 limit: 1691.0
+34
+precision score: 0.68
+recall score: 1.0
+f-1 score: 0.809523809524
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 445
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 1404
+Using TF-IDF
+(1404, 15000)
+Bag of word completed
+Number of One 62
+Number of Zero 1342
+=========Before Sampling======
+Whole Dataset size:  1404
+Number of Relevant 62
+Number of non-relevant 1342
+prevelance ratio 4.41595441595
+----Started Training----
+INitial Seed Limit 141.0
+seed size limit: 141.0
+Requirement made at counter 0 (1:) 15 (0): 121
+Seed Size Limit: 141.0 Seed Explored so far: 141
+Undersampling in the seed list
+Before Loop Lenght: 30 30
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 136 limit: 141.0
+30
+precision score: 0.322580645161
+recall score: 0.645161290323
+f-1 score: 0.430107526882
+####SAL####
+Loop: 1
+Initial size: 141 limit: 281.0
+32
+precision score: 0.440860215054
+recall score: 0.661290322581
+f-1 score: 0.529032258065
+####SAL####
+Loop: 2
+Initial size: 281 limit: 422.0
+70
+precision score: 0.504587155963
+recall score: 0.887096774194
+f-1 score: 0.643274853801
+####SAL####
+Loop: 3
+Initial size: 422 limit: 562.0
+78
+precision score: 0.855072463768
+recall score: 0.951612903226
+f-1 score: 0.900763358779
+####SAL####
+Loop: 4
+Initial size: 562 limit: 702.0
+88
+precision score: 0.885714285714
+recall score: 1.0
+f-1 score: 0.939393939394
+####SAL####
+Loop: 5
+Initial size: 702 limit: 843.0
+88
+precision score: 0.898550724638
+recall score: 1.0
+f-1 score: 0.946564885496
+####SAL####
+Loop: 6
+Initial size: 843 limit: 983.0
+88
+precision score: 0.898550724638
+recall score: 1.0
+f-1 score: 0.946564885496
+####SAL####
+Loop: 7
+Initial size: 983 limit: 1124.0
+88
+precision score: 0.898550724638
+recall score: 1.0
+f-1 score: 0.946564885496
+####SAL####
+Loop: 8
+Initial size: 1124 limit: 1264.0
+90
+precision score: 0.911764705882
+recall score: 1.0
+f-1 score: 0.953846153846
+####SAL####
+Loop: 9
+Initial size: 1264 limit: 1404.0
+90
+precision score: 0.925373134328
+recall score: 1.0
+f-1 score: 0.961240310078
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 446
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 2020
+Using TF-IDF
+(2020, 15000)
+Bag of word completed
+Number of One 162
+Number of Zero 1858
+=========Before Sampling======
+Whole Dataset size:  2020
+Number of Relevant 162
+Number of non-relevant 1858
+prevelance ratio 8.0198019802
+----Started Training----
+INitial Seed Limit 202.0
+seed size limit: 202.0
+Requirement made at counter 0 (1:) 29 (0): 158
+Seed Size Limit: 202.0 Seed Explored so far: 202
+Undersampling in the seed list
+Before Loop Lenght: 58 58
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 187 limit: 202.0
+58
+precision score: 0.364741641337
+recall score: 0.740740740741
+f-1 score: 0.488798370672
+####SAL####
+Loop: 1
+Initial size: 202 limit: 404.0
+68
+precision score: 0.462686567164
+recall score: 0.765432098765
+f-1 score: 0.576744186047
+####SAL####
+Loop: 2
+Initial size: 404 limit: 606.0
+114
+precision score: 0.605150214592
+recall score: 0.87037037037
+f-1 score: 0.713924050633
+####SAL####
+Loop: 3
+Initial size: 606 limit: 808.0
+182
+precision score: 0.721698113208
+recall score: 0.944444444444
+f-1 score: 0.818181818182
+####SAL####
+Loop: 4
+Initial size: 808 limit: 1010.0
+204
+precision score: 0.744075829384
+recall score: 0.969135802469
+f-1 score: 0.8418230563
+####SAL####
+Loop: 5
+Initial size: 1010 limit: 1212.0
+210
+precision score: 0.766990291262
+recall score: 0.975308641975
+f-1 score: 0.858695652174
+####SAL####
+Loop: 6
+Initial size: 1212 limit: 1414.0
+216
+precision score: 0.793103448276
+recall score: 0.993827160494
+f-1 score: 0.882191780822
+####SAL####
+Loop: 7
+Initial size: 1414 limit: 1616.0
+218
+precision score: 0.793103448276
+recall score: 0.993827160494
+f-1 score: 0.882191780822
+####SAL####
+Loop: 8
+Initial size: 1616 limit: 1818.0
+222
+precision score: 0.821428571429
+recall score: 0.993827160494
+f-1 score: 0.899441340782
+####SAL####
+Loop: 9
+Initial size: 1818 limit: 2020.0
+228
+precision score: 0.839378238342
+recall score: 1.0
+f-1 score: 0.912676056338
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 447
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1588
+Using TF-IDF
+(1588, 15000)
+Bag of word completed
+Number of One 16
+Number of Zero 1572
+=========Before Sampling======
+Whole Dataset size:  1588
+Number of Relevant 16
+Number of non-relevant 1572
+prevelance ratio 1.00755667506
+----Started Training----
+INitial Seed Limit 159.0
+seed size limit: 159.0
+Requirement made at counter 0 (1:) 16 (0): 137
+Seed Size Limit: 159.0 Seed Explored so far: 159
+Undersampling in the seed list
+Before Loop Lenght: 32 32
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 153 limit: 159.0
+32
+precision score: 0.173913043478
+recall score: 1.0
+f-1 score: 0.296296296296
+####SAL####
+Loop: 1
+Initial size: 159 limit: 318.0
+32
+precision score: 0.188235294118
+recall score: 1.0
+f-1 score: 0.316831683168
+####SAL####
+Loop: 2
+Initial size: 318 limit: 477.0
+32
+precision score: 0.262295081967
+recall score: 1.0
+f-1 score: 0.415584415584
+####SAL####
+Loop: 3
+Initial size: 477 limit: 636.0
+32
+precision score: 0.410256410256
+recall score: 1.0
+f-1 score: 0.581818181818
+####SAL####
+Loop: 4
+Initial size: 636 limit: 794.0
+32
+precision score: 0.571428571429
+recall score: 1.0
+f-1 score: 0.727272727273
+####SAL####
+Loop: 5
+Initial size: 794 limit: 953.0
+32
+precision score: 0.571428571429
+recall score: 1.0
+f-1 score: 0.727272727273
+####SAL####
+Loop: 6
+Initial size: 953 limit: 1112.0
+32
+precision score: 0.571428571429
+recall score: 1.0
+f-1 score: 0.727272727273
+####SAL####
+Loop: 7
+Initial size: 1112 limit: 1271.0
+32
+precision score: 0.571428571429
+recall score: 1.0
+f-1 score: 0.727272727273
+####SAL####
+Loop: 8
+Initial size: 1271 limit: 1430.0
+32
+precision score: 0.571428571429
+recall score: 1.0
+f-1 score: 0.727272727273
+####SAL####
+Loop: 9
+Initial size: 1430 limit: 1588.0
+32
+precision score: 0.571428571429
+recall score: 1.0
+f-1 score: 0.727272727273
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 448
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff475c1300>
+number of documents 2408
+Using TF-IDF
+(2408, 15000)
+Bag of word completed
+Number of One 46
+Number of Zero 2362
+=========Before Sampling======
+Whole Dataset size:  2408
+Number of Relevant 46
+Number of non-relevant 2362
+prevelance ratio 1.91029900332
+----Started Training----
+INitial Seed Limit 241.0
+seed size limit: 241.0
+Requirement made at counter 0 (1:) 6 (0): 194
+Seed Size Limit: 241.0 Seed Explored so far: 241
+Undersampling in the seed list
+Before Loop Lenght: 12 12
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 200 limit: 241.0
+12
+precision score: 0.06875
+recall score: 0.717391304348
+f-1 score: 0.125475285171
+####SAL####
+Loop: 1
+Initial size: 241 limit: 482.0
+14
+precision score: 0.0822222222222
+recall score: 0.804347826087
+f-1 score: 0.149193548387
+####SAL####
+Loop: 2
+Initial size: 482 limit: 723.0
+28
+precision score: 0.1038647343
+recall score: 0.934782608696
+f-1 score: 0.186956521739
+####SAL####
+Loop: 3
+Initial size: 723 limit: 964.0
+32
+precision score: 0.122222222222
+recall score: 0.95652173913
+f-1 score: 0.216748768473
+####SAL####
+Loop: 4
+Initial size: 964 limit: 1204.0
+34
+precision score: 0.135693215339
+recall score: 1.0
+f-1 score: 0.238961038961
+####SAL####
+Loop: 5
+Initial size: 1204 limit: 1445.0
+34
+precision score: 0.160278745645
+recall score: 1.0
+f-1 score: 0.276276276276
+####SAL####
+Loop: 6
+Initial size: 1445 limit: 1686.0
+34
+precision score: 0.1796875
+recall score: 1.0
+f-1 score: 0.304635761589
+####SAL####
+Loop: 7
+Initial size: 1686 limit: 1927.0
+40
+precision score: 0.181818181818
+recall score: 1.0
+f-1 score: 0.307692307692
+####SAL####
+Loop: 8
+Initial size: 1927 limit: 2168.0
+40
+precision score: 0.225490196078
+recall score: 1.0
+f-1 score: 0.368
+####SAL####
+Loop: 9
+Initial size: 2168 limit: 2408.0
+56
+precision score: 0.393162393162
+recall score: 1.0
+f-1 score: 0.564417177914
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 449
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985ae0>
+number of documents 1451
+Using TF-IDF
+(1451, 15000)
+Bag of word completed
+Number of One 67
+Number of Zero 1384
+=========Before Sampling======
+Whole Dataset size:  1451
+Number of Relevant 67
+Number of non-relevant 1384
+prevelance ratio 4.61750516885
+----Started Training----
+INitial Seed Limit 146.0
+seed size limit: 146.0
+Requirement made at counter 0 (1:) 13 (0): 128
+Seed Size Limit: 146.0 Seed Explored so far: 146
+Undersampling in the seed list
+Before Loop Lenght: 26 26
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 141 limit: 146.0
+26
+precision score: 0.170212765957
+recall score: 0.835820895522
+f-1 score: 0.282828282828
+####SAL####
+Loop: 1
+Initial size: 146 limit: 291.0
+26
+precision score: 0.172011661808
+recall score: 0.880597014925
+f-1 score: 0.287804878049
+####SAL####
+Loop: 2
+Initial size: 291 limit: 436.0
+38
+precision score: 0.191275167785
+recall score: 0.850746268657
+f-1 score: 0.312328767123
+####SAL####
+Loop: 3
+Initial size: 436 limit: 581.0
+50
+precision score: 0.271889400922
+recall score: 0.880597014925
+f-1 score: 0.415492957746
+####SAL####
+Loop: 4
+Initial size: 581 limit: 726.0
+70
+precision score: 0.373493975904
+recall score: 0.925373134328
+f-1 score: 0.532188841202
+####SAL####
+Loop: 5
+Initial size: 726 limit: 871.0
+80
+precision score: 0.429530201342
+recall score: 0.955223880597
+f-1 score: 0.592592592593
+####SAL####
+Loop: 6
+Initial size: 871 limit: 1016.0
+90
+precision score: 0.533333333333
+recall score: 0.955223880597
+f-1 score: 0.68449197861
+####SAL####
+Loop: 7
+Initial size: 1016 limit: 1161.0
+98
+precision score: 0.605504587156
+recall score: 0.985074626866
+f-1 score: 0.75
+####SAL####
+Loop: 8
+Initial size: 1161 limit: 1306.0
+102
+precision score: 0.663366336634
+recall score: 1.0
+f-1 score: 0.797619047619
+####SAL####
+Loop: 9
+Initial size: 1306 limit: 1451.0
+106
+precision score: 0.728260869565
+recall score: 1.0
+f-1 score: 0.842767295597
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %
+Topic: 450
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7eff71985b70>
+number of documents 1221
+Using TF-IDF
+(1221, 15000)
+Bag of word completed
+Number of One 293
+Number of Zero 928
+=========Before Sampling======
+Whole Dataset size:  1221
+Number of Relevant 293
+Number of non-relevant 928
+prevelance ratio 23.9967239967
+----Started Training----
+INitial Seed Limit 123.0
+seed size limit: 123.0
+Requirement made at counter 0 (1:) 74 (0): 48
+Seed Size Limit: 123.0 Seed Explored so far: 123
+Undersampling in the seed list
+Before Loop Lenght: 96 96
+Loop Counter after seed: 0
+Loop: 0
+Initial size: 122 limit: 123.0
+96
+precision score: 0.518218623482
+recall score: 0.873720136519
+f-1 score: 0.650571791614
+####SAL####
+Loop: 1
+Initial size: 123 limit: 245.0
+98
+precision score: 0.512077294686
+recall score: 0.723549488055
+f-1 score: 0.599717114569
+####SAL####
+Loop: 2
+Initial size: 245 limit: 367.0
+224
+precision score: 0.674796747967
+recall score: 0.849829351536
+f-1 score: 0.752265861027
+####SAL####
+Loop: 3
+Initial size: 367 limit: 489.0
+346
+precision score: 0.780346820809
+recall score: 0.921501706485
+f-1 score: 0.845070422535
+####SAL####
+Loop: 4
+Initial size: 489 limit: 611.0
+386
+precision score: 0.8625
+recall score: 0.941979522184
+f-1 score: 0.900489396411
+####SAL####
+Loop: 5
+Initial size: 611 limit: 733.0
+412
+precision score: 0.943708609272
+recall score: 0.972696245734
+f-1 score: 0.957983193277
+####SAL####
+Loop: 6
+Initial size: 733 limit: 855.0
+422
+precision score: 0.956666666667
+recall score: 0.9795221843
+f-1 score: 0.967959527825
+####SAL####
+Loop: 7
+Initial size: 855 limit: 977.0
+460
+precision score: 0.976510067114
+recall score: 0.993174061433
+f-1 score: 0.984771573604
+####SAL####
+Loop: 8
+Initial size: 977 limit: 1099.0
+472
+precision score: 0.986531986532
+recall score: 1.0
+f-1 score: 0.993220338983
+####SAL####
+Loop: 9
+Initial size: 1099 limit: 1221.0
+490
+precision score: 0.993220338983
+recall score: 1.0
+f-1 score: 0.996598639456
+####SAL####
+precision score: 1.0
+recall score: 1.0
+f-1 score: 1.0
+model accuracy (%):  100.0 %

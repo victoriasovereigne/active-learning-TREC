@@ -1,0 +1,10 @@
+Ranker_use True
+iter_sampling False
+correction False
+train_percenetae True
+under sampling True
+base address: /u/vlestari/Documents/Summer/IR/result/TREC8/ranker/undersample/
+pickle loaded
+Reading the Ranker label Information
+Ranker: <open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/systemRanking/TREC8/input.ibmg99b', mode 'r' at 0x7fc975fc3f60>
+Topic: 401

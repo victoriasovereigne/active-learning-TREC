@@ -1,0 +1,31 @@
+Ranker_use True
+iter_sampling True
+correction False
+train_percenetae True
+under sampling False
+base address: /u/vlestari/Documents/Summer/IR/result/TREC8/ranker/oversample/
+pickle loaded
+Reading the Ranker label Information
+Ranker: <open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/systemRanking/TREC8/input.ibmg99b', mode 'r' at 0x7f915110ef60>
+Topic: 401
+Reading the relevance label
+<open file '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt', mode 'r' at 0x7f91508f2300>
+number of documents 2739
+Using TF-IDF
+(2739, 15000)
+Bag of word completed
+Number of One 300
+Number of Zero 2439
+=========Before Sampling======
+Whole Dataset size:  2739
+Number of Relevant 300
+Number of non-relevant 2439
+prevelance ratio 10.9529025192
+----Started Training----
+INitial Seed Limit 274.0
+seed size limit: 274.0
+Requirement made at counter 0 (1:) 11 (0): 210
+Seed Size Limit: 274.0 Seed Explored so far: 274
+Oversampling in the seed list
+(221, 15000)
+(420, 15000)
