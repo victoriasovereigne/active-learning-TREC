@@ -348,21 +348,9 @@ for test_size in test_size_set:
                         print seed_one_counter, seed_zero_counter
                         ####################################Store Result###################
                         y_pred_all = {}
-
-                        # human_label_str = ""
-                        # for train_index in train_index_list:
-                        #     y_pred_all[train_index] = y[train_index]
-                        #     docNo = docIndex_DocNo[train_index]
-                        #     human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
-                        
-                        # human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
                         human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
                             docIndex_DocNo, topic, human_label_location, train_per_centage[loopCounter])
                         print human_label_location_final
-                        
-                        # text_file = open(human_label_location_final, "a")
-                        # text_file.write(human_label_str)
-                        # text_file.close()
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
@@ -375,7 +363,6 @@ for test_size in test_size_set:
                         ##################
                         write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, predicted_location_base, 
                                 train_per_centage[loopCounter])
-
                         precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
                                                         learning_batch_size, batch_size)
 
@@ -409,15 +396,6 @@ for test_size in test_size_set:
                 initial_X_test = []
                 initial_y_test = []
                 test_index_list = create_test_index_list(X, y, train_index_list, initial_X_test, initial_y_test)
-
-                # test_index_list = {}
-                # test_index_counter = 0
-                # for train_index in xrange(0, len(X)):
-                #     if train_index not in train_index_list:
-                #         initial_X_test.append(X[train_index])
-                #         test_index_list[test_index_counter] = train_index
-                #         test_index_counter = test_index_counter + 1
-                #         initial_y_test.append(y[train_index])
 
                 print "Before Loop Lenght:", len(initial_X_train), len(initial_y_train)
                 predictableSize = len(initial_X_test)
@@ -573,17 +551,6 @@ for test_size in test_size_set:
                 y_pred_all = {}
                 human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
                             docIndex_DocNo, topic, human_label_location, 1.1)
-                # human_label_str = ""
-
-                # for train_index in train_index_list:
-                #     y_pred_all[train_index] = y[train_index]
-                #     docNo = docIndex_DocNo[train_index]
-                #     human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
-                #         y_pred_all[train_index]) + "\n"
-                # human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
-                # text_file = open(human_label_location_final, "a")
-                # text_file.write(human_label_str)
-                # text_file.close()
 
                 for train_index in xrange(0, len(X)):
                     if train_index not in train_index_list:
@@ -631,8 +598,6 @@ for test_size in test_size_set:
                     accuracy) + "," + str(best_f1) + "\n";
                 # writing the actual and prediction
 
-
-
                 counter = 0
                 # doing predcition again for all documents in the validation and test set for writing the prediction files
                 
@@ -679,14 +644,6 @@ for test_size in test_size_set:
                 initial_X_test = []
                 initial_y_test = []
                 test_index_list = create_test_index_list(X, y, train_index_list, initial_X_test, initial_y_test)
-                # test_index_list = {}
-                # test_index_counter = 0
-                # for train_index in xrange(0, len(X)):
-                #     if train_index not in train_index_list:
-                #         initial_X_test.append(X[train_index])
-                #         test_index_list[test_index_counter] = train_index
-                #         test_index_counter = test_index_counter + 1
-                #         initial_y_test.append(y[train_index])
 
                 print "Before Loop Lenght:", len(initial_X_train), len(initial_y_train)
                 predictableSize = len(initial_X_test)
@@ -855,21 +812,8 @@ for test_size in test_size_set:
 
                 print "Fininshed loop", len(initial_X_train)
                 y_pred_all = {}
-
-                # human_label_str = ""
-                # for train_index in train_index_list:
-                #     y_pred_all[train_index] = y[train_index]
-                #     docNo = docIndex_DocNo[train_index]
-                #     human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
-                #         y_pred_all[train_index]) + "\n"
-                # human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
-
                 human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
                             docIndex_DocNo, topic, human_label_location, 1.1)
-
-                # text_file = open(human_label_location_final, "a")
-                # text_file.write(human_label_str)
-                # text_file.close()
 
 
                 for train_index in xrange(0, len(X)):
