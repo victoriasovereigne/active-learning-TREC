@@ -125,8 +125,8 @@ command_prompt_use = True
 # under_sampling = sys.argv[7]
 
 datasource = 'TREC8' #sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
-protocol = 'CAL' #sys.argv[2]
-use_ranker = 'False' #sys.argv[3]
+protocol = 'SAL' #sys.argv[2]
+use_ranker = 'True' #sys.argv[3]
 iter_sampling = 'True' #sys.argv[4]
 correction = 'False' #sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
 train_per_centage_flag = 'False' #sys.argv[6]

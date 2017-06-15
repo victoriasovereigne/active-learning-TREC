@@ -51,8 +51,8 @@ command_prompt_use = True
 
 #if command_prompt_use == True:
 datasource = 'TREC8' #sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
-protocol = 'SPL' #sys.argv[2]
-use_ranker = 'False' #sys.argv[3]
+protocol = 'SAL' #sys.argv[2]
+use_ranker = 'True' #sys.argv[3]
 iter_sampling = 'True' #sys.argv[4]
 correction = 'False' #sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
 train_per_centage_flag = 'True' #sys.argv[6]
@@ -163,38 +163,6 @@ else:
     start_topic = 251
     end_topic = 301
 
-class relevance(object):
-    def __init__(self, priority, index):
-        self.priority = priority
-        self.index = index
-        return
-    def __cmp__(self, other):
-        return -cmp(self.priority, other.priority)
-
-def review_to_words( raw_review ):
-    # Function to convert a raw review to a string of words
-    # The input is a single string (a raw movie review), and
-    # the output is a single string (a preprocessed movie review)
-    #
-    # 1. Remove HTML
-    #review_text = BeautifulSoup(raw_review).get_text()
-    #
-    # 2. Remove non-letters
-    letters_only = re.sub("[^a-zA-Z]", " ", raw_review)
-    #
-    # 3. Convert to lower case, split into individual words
-    words = letters_only.lower().split()
-    #
-    # 4. In Python, searching a set is much faster than searching
-    #   a list, so convert the stop words to a set
-    stops = set(stopwords.words("english"))
-    #
-    # 5. Remove stop words
-    meaningful_words = [w for w in words if not w in stops]
-    #
-    # 6. Join the words back into one string separated by space,
-    # and return the result.
-    return( " ".join( meaningful_words ))
 
 all_reviews = {}
 learning_curve = {} # per batch value for  validation set
@@ -207,32 +175,7 @@ else:
     all_reviews = pickle.load(input)
     print "pickle loaded"
 
-
-print('Reading the Ranker label Information')
-f = open(ranker_location[datasource])
-print "Ranker:", f
-tmplist = []
-Ranker_topic_to_doclist = {}
-for lines in f:
-    values = lines.split()
-    topicNo = values[0]
-    docNo = values[2]
-    if (Ranker_topic_to_doclist.has_key(topicNo)):
-        tmplist.append(docNo)
-        Ranker_topic_to_doclist[topicNo] = tmplist
-    else:
-        tmplist = []
-        tmplist.append(docNo)
-        Ranker_topic_to_doclist[topicNo] = tmplist
-f.close()
-# print len(topic_to_doclist)
-
-# ------------------------------------------------------------------------------------------
-
-num_subsets = 11
-ens = EnsembleClassifier(num_subsets)
-
-# ------------------------------------------------------------------------------------------
+Ranker_topic_to_doclist = get_ranker(ranker_location, datasource)
 
 for test_size in test_size_set:
     seed = 1335
@@ -360,7 +303,6 @@ for test_size in test_size_set:
                 print "Train Size:", len(X) , "seed:", n_labeled
                 size = len(X)
 
-
             initial_X_train = []
             initial_y_train = []
             train_index_list = []
@@ -407,17 +349,20 @@ for test_size in test_size_set:
                         ####################################Store Result###################
                         y_pred_all = {}
 
-                        human_label_str = ""
-
-                        for train_index in train_index_list:
-                            y_pred_all[train_index] = y[train_index]
-                            docNo = docIndex_DocNo[train_index]
-                            human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
-                        human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
+                        # human_label_str = ""
+                        # for train_index in train_index_list:
+                        #     y_pred_all[train_index] = y[train_index]
+                        #     docNo = docIndex_DocNo[train_index]
+                        #     human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
+                        
+                        # human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
+                        human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
+                            docIndex_DocNo, topic, human_label_location, train_per_centage[loopCounter])
                         print human_label_location_final
-                        text_file = open(human_label_location_final, "a")
-                        text_file.write(human_label_str)
-                        text_file.close()
+                        
+                        # text_file = open(human_label_location_final, "a")
+                        # text_file.write(human_label_str)
+                        # text_file.close()
 
                         for train_index in xrange(0, len(X)):
                             if train_index not in train_index_list:
@@ -425,42 +370,19 @@ for test_size in test_size_set:
 
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
-                            # print (key,value)
                             y_pred.append(value)
 
                         ##################
+                        write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, predicted_location_base, 
+                                train_per_centage[loopCounter])
 
-                        pred_topic_str = ""
-                        for docIndex in xrange(0, len(X)):
-                            docNo = docIndex_DocNo[docIndex]
-                            pred_topic_str = pred_topic_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[docIndex]) + "\n"
-
-                        predicted_location_final = predicted_location_base + str(
-                            train_per_centage[loopCounter]) + '.txt'
-                        text_file = open(predicted_location_final, "a")
-                        text_file.write(pred_topic_str)
-                        text_file.close()
-
-                        f1score = f1_score(y, y_pred, average='binary')
-
-                        if (learning_curve.has_key(train_per_centage[loopCounter])):
-                            tmplist = learning_curve.get(train_per_centage[loopCounter])
-                            tmplist.append(f1score)
-                            learning_curve[train_per_centage[loopCounter]] = tmplist
-                        else:
-                            tmplist = []
-                            tmplist.append(f1score)
-                            learning_curve[train_per_centage[loopCounter]] = tmplist
-
-                        #learning_batch_size = learning_batch_size + batch_size
-                        precision = precision_score(y, y_pred, average='binary')
-                        recall = recall_score(y, y_pred, average='binary')
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                                                        learning_batch_size, batch_size)
 
                         print "Score in non-active stage"
                         print "precision score:", precision
                         print "recall score:", recall
                         print "f-1 score:", f1score
-
 
                         loopCounter = loopCounter + 1
                         seed_size_limit = math.ceil(train_per_centage[loopCounter] * len(X))
@@ -478,30 +400,24 @@ for test_size in test_size_set:
 
                 # Ranker needs oversampling, but when HTCorrection true we cannot perform oversample
                 if use_ranker == True and correction == False:
-                    if under_sampling == True:
-                        print "Undersampling in the seed list"
-                        rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
-                        initial_X_train_sampled, initial_y_train_sampled, indices = rus.fit_sample(initial_X_train, initial_y_train)
-                    else:    
-                        print "Oversampling in the seed list"
-                        ros = RandomOverSampler()
-                        initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
-                    initial_X_train = initial_X_train_sampled
-                    initial_y_train = initial_y_train_sampled
+                    initial_X_train_sampled, initial_y_train_sampled = update_initial_train(iter_sampling, 
+                        under_sampling, initial_X_train, initial_y_train, num_subsets)
+                    
+                    initial_X_train = initial_X_train_sampled.tolist()
+                    initial_y_train = initial_y_train_sampled.tolist()
 
-                    initial_X_train = initial_X_train.tolist()
-                    initial_y_train = initial_y_train.tolist()
                 initial_X_test = []
                 initial_y_test = []
+                test_index_list = create_test_index_list(X, y, train_index_list, initial_X_test, initial_y_test)
 
-                test_index_list = {}
-                test_index_counter = 0
-                for train_index in xrange(0, len(X)):
-                    if train_index not in train_index_list:
-                        initial_X_test.append(X[train_index])
-                        test_index_list[test_index_counter] = train_index
-                        test_index_counter = test_index_counter + 1
-                        initial_y_test.append(y[train_index])
+                # test_index_list = {}
+                # test_index_counter = 0
+                # for train_index in xrange(0, len(X)):
+                #     if train_index not in train_index_list:
+                #         initial_X_test.append(X[train_index])
+                #         test_index_list[test_index_counter] = train_index
+                #         test_index_counter = test_index_counter + 1
+                #         initial_y_test.append(y[train_index])
 
                 print "Before Loop Lenght:", len(initial_X_train), len(initial_y_train)
                 predictableSize = len(initial_X_test)
@@ -526,11 +442,10 @@ for test_size in test_size_set:
                         print "Loop:", loopCounter
                         loopDocList = []
 
-                        if protocol == 'SPL':
-                            model = LogisticRegression()
-
-                        # no correction
-                        model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
+                        # new method fit model
+                        fit_model(model, ens, protocol, False, under_sampling, 
+                                    initial_X_train, initial_y_train, sampling_weight,
+                                    initial_X_agg, initial_y_agg)
 
                         y_pred_all = {}
 
@@ -545,20 +460,10 @@ for test_size in test_size_set:
                         for key, value in y_pred_all.iteritems():
                             y_pred.append(value)
 
-                        f1score = f1_score(y, y_pred, average='binary')
-
-                        if (learning_curve.has_key(learning_batch_size)):
-                            tmplist = learning_curve.get(learning_batch_size)
-                            tmplist.append(f1score)
-                            learning_curve[learning_batch_size] = tmplist
-                        else:
-                            tmplist = []
-                            tmplist.append(f1score)
-                            learning_curve[learning_batch_size] = tmplist
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                                                        learning_batch_size, batch_size)
 
                         learning_batch_size = learning_batch_size + batch_size
-                        precision = precision_score(y, y_pred, average='binary')
-                        recall = recall_score(y, y_pred, average='binary')
 
                         print "precision score:", precision
                         print "recall score:", recall
@@ -591,30 +496,9 @@ for test_size in test_size_set:
                             SPL_train_percentage_false(batch_size, randomArray, isPredictable, 
                                 unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test,
                                 sampling_weight, train_index_list, test_index_list, loopDocList)
-                            
-                        # initial_X_train[:] = []
-                        # initial_y_train[:] = []
-                        # initial_X_train = copy.deepcopy(unmodified_train_X)
-                        # initial_y_train = copy.deepcopy(unmodified_train_y)
-                        if iter_sampling == True:
-                            print "Oversampling in the active iteration list"
-                            ros = RandomOverSampler()
-                            initial_X_train = None
-                            initial_y_train = None
-                            initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
-                        else:
-                            initial_X_train[:] = []
-                            initial_y_train[:] = []
-                            initial_X_train = copy.deepcopy(unmodified_train_X)
-                            initial_y_train = copy.deepcopy(unmodified_train_y)
-                        # --------------------------------
-                        # if under_sampling == True:
-                        #     print("Under sampling in the active iteration list")
-                        #     # rus = RandomUnderSampler(return_indices=True, replacement=True)
-                        #     rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
-                        #     initial_X_train = None
-                        #     initial_y_train = None
-                        #     initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
+
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                                                            unmodified_train_X, unmodified_train_y, num_subsets)  
 
                         loopCounter = loopCounter + 1
                     # end while
@@ -635,69 +519,19 @@ for test_size in test_size_set:
 
                         loopDocList = []
 
-                        if protocol == 'SPL':
-                            model = LogisticRegression()
+                        # new method fit model
+                        fit_model(model, ens, protocol, correction, under_sampling, 
+                                    initial_X_train, initial_y_train, sampling_weight,
+                                    initial_X_agg, initial_y_agg)
 
-                        if correction == True:
-                            model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
-                        else:
-                            if under_sampling == True:
-                                ens.fit(initial_X_train, initial_y_train)
-                            else:
-                                model.fit(initial_X_train, initial_y_train)
-
-                        y_pred_all = {}
-
-                        human_label_str = ""
-
-                        for train_index in train_index_list:
-                            y_pred_all[train_index] = y[train_index]
-                            docNo = docIndex_DocNo[train_index]
-                            human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
-                        human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
-                        text_file = open(human_label_location_final, "a")
-                        text_file.write(human_label_str)
-                        text_file.close()
-
-                        for train_index in xrange(0, len(X)):
-                            if train_index not in train_index_list:
-                                if under_sampling == True:
-                                    y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
-                                else:
-                                    y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
-
-                        y_pred = []
-                        for key, value in y_pred_all.iteritems():
-                            # print (key,value)
-                            y_pred.append(value)
+                        y_pred_all = get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
+                            train_per_centage, loopCounter, under_sampling, ens, model, X, y)
 
                         ##################
-
-                        pred_topic_str = ""
-                        for docIndex in xrange(0, len(X)):
-                            docNo = docIndex_DocNo[docIndex]
-                            pred_topic_str = pred_topic_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[docIndex]) + "\n"
-
-                        predicted_location_final = predicted_location_base + str(
-                            train_per_centage[loopCounter]) + '.txt'
-                        text_file = open(predicted_location_final, "a")
-                        text_file.write(pred_topic_str)
-                        text_file.close()
-
-                        f1score = f1_score(y, y_pred, average='binary')
-
-                        if (learning_curve.has_key(train_per_centage[loopCounter])):
-                            tmplist = learning_curve.get(train_per_centage[loopCounter])
-                            tmplist.append(f1score)
-                            learning_curve[train_per_centage[loopCounter]] = tmplist
-                        else:
-                            tmplist = []
-                            tmplist.append(f1score)
-                            learning_curve[train_per_centage[loopCounter]] = tmplist
-
+                        y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                                                        learning_batch_size, batch_size)
                         learning_batch_size = learning_batch_size + batch_size
-                        precision = precision_score(y, y_pred, average='binary')
-                        recall = recall_score(y, y_pred, average='binary')
 
                         print "precision score:", precision
                         print "recall score:", recall
@@ -706,16 +540,9 @@ for test_size in test_size_set:
                         if isPredictable.count(1) == 0:
                             break
 
-                        # if f1score == 1.0:
-                        #    break
-                        #    print "BREAKING LOOP BECAUSE F-1 is 1.0"
-
-                        # print "f-1 score:", f1score, "precision:", precision, "recall:", recall, "Number of predicted (1): ", np.count_nonzero(y_pred_validation), "Number of predicted (0):", np.prod(y_pred_validation.shape) - np.count_nonzero(y_pred_validation)
                         '''
                         precision = TP/(TP+FP) as you've just said if predictor doesn't predicts positive class at all - precision is 0.
-
                         recall = TP/(TP+FN), in case if predictor doesn't predict positive class - TP is 0 - recall is 0.
-
                         So now you are dividing 0/0.'''
                         # here is queueSize is the number of predictable element
                         queueSize = isPredictable.count(1)
@@ -738,43 +565,25 @@ for test_size in test_size_set:
                                                         isPredictable, unmodified_train_X, unmodified_train_y, 
                                                         initial_X_test, initial_y_test, sampling_weight, 
                                                         train_index_list, test_index_list, loopDocList)
-
-                        if iter_sampling == True:
-                            print "Oversampling in the active iteration list"
-                            ros = RandomOverSampler()
-                            initial_X_train = None
-                            initial_y_train = None
-                            initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
-                        else:
-                            if under_sampling == True:
-                                # rus = RandomUnderSampler(return_indices=True, replacement=True)
-                                rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
-                                initial_X_train = None
-                                initial_y_train = None
-                                initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
-                                print(indices)
-                                print(initial_y_train)
-                            else:
-                                initial_X_train[:] = []
-                                initial_y_train[:] = []
-                                initial_X_train = copy.deepcopy(unmodified_train_X)
-                                initial_y_train = copy.deepcopy(unmodified_train_y)
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                                                            unmodified_train_X, unmodified_train_y, num_subsets)
 
                         loopCounter = loopCounter + 1
 
                 y_pred_all = {}
+                human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
+                            docIndex_DocNo, topic, human_label_location, 1.1)
+                # human_label_str = ""
 
-                human_label_str = ""
-
-                for train_index in train_index_list:
-                    y_pred_all[train_index] = y[train_index]
-                    docNo = docIndex_DocNo[train_index]
-                    human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
-                        y_pred_all[train_index]) + "\n"
-                human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
-                text_file = open(human_label_location_final, "a")
-                text_file.write(human_label_str)
-                text_file.close()
+                # for train_index in train_index_list:
+                #     y_pred_all[train_index] = y[train_index]
+                #     docNo = docIndex_DocNo[train_index]
+                #     human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
+                #         y_pred_all[train_index]) + "\n"
+                # human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
+                # text_file = open(human_label_location_final, "a")
+                # text_file.write(human_label_str)
+                # text_file.close()
 
                 for train_index in xrange(0, len(X)):
                     if train_index not in train_index_list:
@@ -785,7 +594,6 @@ for test_size in test_size_set:
 
                 y_pred = []
                 for key, value in y_pred_all.iteritems():
-                    # print (key,value)
                     y_pred.append(value)
 
                 f1score = f1_score(y, y_pred, average='binary')
@@ -802,16 +610,8 @@ for test_size in test_size_set:
                         tmplist.append(f1score)
                         learning_curve[1.1] = tmplist
 
-                    pred_topic_str = ""
-                    for docIndex in xrange(0, len(X)):
-                        docNo = docIndex_DocNo[docIndex]
-                        pred_topic_str = pred_topic_str + str(topic) + " " + str(docNo) + " " + str(
-                            y_pred_all[docIndex]) + "\n"
-
-                    predicted_location_final = predicted_location_base + str(1.1) + '.txt'
-                    text_file = open(predicted_location_final, "a")
-                    text_file.write(pred_topic_str)
-                    text_file.close()
+                    write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, 
+                        predicted_location_base, 1.1)
 
                 print "precision score:", precision
                 print "recall score:", recall
@@ -820,9 +620,7 @@ for test_size in test_size_set:
                 # print "f-1 score:", f1score, "precision:", precision, "recall:", recall, "Number of predicted (1): ", np.count_nonzero(y_pred_validation), "Number of predicted (0):", np.prod(y_pred_validation.shape) - np.count_nonzero(y_pred_validation)
                 '''
                 precision = TP/(TP+FP) as you've just said if predictor doesn't predicts positive class at all - precision is 0.
-
                 recall = TP/(TP+FN), in case if predictor doesn't predict positive class - TP is 0 - recall is 0.
-
                 So now you are dividing 0/0.'''
 
                 accuracy = accuracy_score(y, y_pred)
@@ -851,33 +649,15 @@ for test_size in test_size_set:
                 text_file.write(pred_str)
                 text_file.close()
 
+            # ==============================================================
             # use_ranker == false
+            # ==============================================================
             else:
                 initial_X_train, initial_y_train = create_initial_training_set(X, y, seed_one_counter, n_labeled/2, 
                     train_index_list, initial_X_train, initial_y_train, 1)
 
                 initial_X_train, initial_y_train = create_initial_training_set(X, y, seed_zero_counter, n_labeled/2, 
                     train_index_list, initial_X_train, initial_y_train, 0)
-
-                # for index in xrange(0,len(X)):
-                #     if y[index] == 1:
-                #         seed_one_counter = seed_one_counter + 1
-                #         train_index_list.append(index)
-                #         initial_X_train.append(X[index])
-                #         initial_y_train.append(y[index])
-                #         print seed_one_counter
-                #     if seed_one_counter == n_labeled/2 :
-                #         break
-
-                # for index in xrange(0,len(X)):
-                #     if y[index] == 0:
-                #         seed_zero_counter = seed_zero_counter + 1
-                #         train_index_list.append(index)
-                #         initial_X_train.append(X[index])
-                #         initial_y_train.append(y[index])
-                #         print seed_zero_counter
-                #     if seed_zero_counter == n_labeled/2:
-                #         break
 
                 if seed_zero_counter != seed_one_counter:
                     skipList.append(topic)
@@ -890,32 +670,23 @@ for test_size in test_size_set:
                     sampling_weight.append(1.0)
 
                 if sampling == True:
-                    if under_sampling == True:
-                        print "Undersampling in the seed list"
-                        # rus = RandomUnderSampler(return_indices=True, replacement=True)
-                        rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
-                        initial_X_train_sampled, initial_y_train_sampled, indices = rus.fit_sample(initial_X_train, initial_y_train)
-                    else:
-                        print "Oversampling in the seed list"
-                        ros = RandomOverSampler()
-                        initial_X_train_sampled, initial_y_train_sampled = ros.fit_sample(initial_X_train, initial_y_train)
-                    initial_X_train = initial_X_train_sampled
-                    initial_y_train = initial_y_train_sampled
+                    initial_X_train_sampled, initial_y_train_sampled = update_initial_train(iter_sampling, 
+                        under_sampling, initial_X_train, initial_y_train, num_subsets)
 
-                    initial_X_train = initial_X_train.tolist()
-                    initial_y_train = initial_y_train.tolist()
+                    initial_X_train = initial_X_train_sampled.tolist()
+                    initial_y_train = initial_y_train_sampled.tolist()
 
                 initial_X_test = []
                 initial_y_test = []
-
-                test_index_list = {}
-                test_index_counter = 0
-                for train_index in xrange(0, len(X)):
-                    if train_index not in train_index_list:
-                        initial_X_test.append(X[train_index])
-                        test_index_list[test_index_counter] = train_index
-                        test_index_counter = test_index_counter + 1
-                        initial_y_test.append(y[train_index])
+                test_index_list = create_test_index_list(X, y, train_index_list, initial_X_test, initial_y_test)
+                # test_index_list = {}
+                # test_index_counter = 0
+                # for train_index in xrange(0, len(X)):
+                #     if train_index not in train_index_list:
+                #         initial_X_test.append(X[train_index])
+                #         test_index_list[test_index_counter] = train_index
+                #         test_index_counter = test_index_counter + 1
+                #         initial_y_test.append(y[train_index])
 
                 print "Before Loop Lenght:", len(initial_X_train), len(initial_y_train)
                 predictableSize = len(initial_X_test)
@@ -925,8 +696,10 @@ for test_size in test_size_set:
                 best_model = 0
                 learning_batch_size = n_labeled # starts with the seed size
 
+                # ==============================================================
                 # use ranker == False
                 # train percentage == False
+                # ==============================================================
                 if train_per_centage_flag == False:
                     numberofloop = math.ceil(size / batch_size)
                     if numberofloop == 0:
@@ -1006,33 +779,20 @@ for test_size in test_size_set:
                                 unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test,
                                 sampling_weight, train_index_list, test_index_list, loopDocList)
 
-                        if iter_sampling == True:
-                            print "Oversampling in the active iteration list"
-                            ros = RandomOverSampler()
-                            initial_X_train = None
-                            initial_y_train = None
-                            initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
-                        else:
-                            # if under_sampling == True:
-                            #     # rus = RandomUnderSampler(return_indices=True, replacement=True)
-                            #     rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
-                            #     initial_X_train = None
-                            #     initial_y_train = None
-                            #     initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
-                            # else:
-                            initial_X_train[:] = []
-                            initial_y_train[:] = []
-                            initial_X_train = copy.deepcopy(unmodified_train_X)
-                            initial_y_train = copy.deepcopy(unmodified_train_y)
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                                                            unmodified_train_X, unmodified_train_y, num_subsets)
 
                         loopCounter = loopCounter + 1
                     # end while
 
+                # ==============================================================
                 # use ranker == False
                 # train percentage == True
+                # ==============================================================
                 else:
                     numberofloop = len(train_per_centage)
                     train_size_controller = len(initial_X_train)
+                    
                     while loopCounter < numberofloop:
                         size_limit = math.ceil(train_per_centage[loopCounter]*len(X))
 
@@ -1041,69 +801,20 @@ for test_size in test_size_set:
 
                         loopDocList = []
 
-                        if protocol == 'SPL':
-                            model = LogisticRegression()
+                        # new method fit model
+                        fit_model(model, ens, protocol, correction, under_sampling, 
+                                    initial_X_train, initial_y_train, sampling_weight, 
+                                    initial_X_agg, initial_y_agg)
 
-                        print "length of initial X train:", len(initial_X_train)
-                        print initial_y_train
+                        y_pred_all = get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
+                            train_per_centage, loopCounter, under_sampling, ens, model, X, y)
 
-                        if correction == True:
-                            model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
-                        else:
-                            if under_sampling == True:
-                                ens.fit(initial_X_train, initial_y_train)
-                            else:
-                                model.fit(initial_X_train, initial_y_train)
 
-                        y_pred_all = {}
-                        human_label_str = ""
-
-                        for train_index in train_index_list:
-                            y_pred_all[train_index] = y[train_index]
-                            docNo = docIndex_DocNo[train_index]
-                            human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
-                            
-                        human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
-                        text_file = open(human_label_location_final, "a")
-                        text_file.write(human_label_str)
-                        text_file.close()
-
-                        for train_index in xrange(0, len(X)):
-                            if train_index not in train_index_list:
-                                if under_sampling == True:
-                                    y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
-                                else:
-                                    y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
-
-                        y_pred = []
-                        for key, value in y_pred_all.iteritems():
-                            # print (key,value)
-                            y_pred.append(value)
-
-                        pred_topic_str = ""
-                        for docIndex in xrange(0, len(X)):
-                            docNo = docIndex_DocNo[docIndex]
-                            pred_topic_str = pred_topic_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[docIndex]) + "\n"
-                        predicted_location_final = predicted_location_base + str(train_per_centage[loopCounter]) + '.txt'
-                        text_file = open(predicted_location_final, "a")
-                        text_file.write(pred_topic_str)
-                        text_file.close()
-
-                        f1score = f1_score(y, y_pred, average='binary')
-
-                        if (learning_curve.has_key(train_per_centage[loopCounter])):
-                            tmplist = learning_curve.get(train_per_centage[loopCounter])
-                            tmplist.append(f1score)
-                            learning_curve[train_per_centage[loopCounter]] = tmplist
-                        else:
-                            tmplist = []
-                            tmplist.append(f1score)
-                            learning_curve[train_per_centage[loopCounter]] = tmplist
-
+                        ##################
+                        y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                                                        learning_batch_size, batch_size)
                         learning_batch_size = learning_batch_size + batch_size
-                        precision = precision_score(y, y_pred, average='binary')
-                        recall = recall_score(y, y_pred, average='binary')
-
                         print "precision score:", precision
                         print "recall score:", recall
                         print "f-1 score:", f1score
@@ -1136,27 +847,8 @@ for test_size in test_size_set:
                                                         isPredictable, unmodified_train_X, unmodified_train_y, 
                                                         initial_X_test, initial_y_test, sampling_weight, 
                                                         train_index_list, test_index_list, loopDocList)
-
-                        if iter_sampling == True:
-                            print "Oversampling in the active iteration list"
-                            ros = RandomOverSampler()
-                            initial_X_train = None
-                            initial_y_train = None
-                            initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
-                        else:
-                            if under_sampling == True:
-                                # rus = RandomUnderSampler(return_indices=True, replacement=True)
-                                rus = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
-                                initial_X_train = None
-                                initial_y_train = None
-                                initial_X_train, initial_y_train, indices = rus.fit_sample(unmodified_train_X, unmodified_train_y)
-                                print(indices)
-                                print(initial_y_train)
-                            else:
-                                initial_X_train[:] = []
-                                initial_y_train[:] = []
-                                initial_X_train = copy.deepcopy(unmodified_train_X)
-                                initial_y_train = copy.deepcopy(unmodified_train_y)
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                                                            unmodified_train_X, unmodified_train_y, num_subsets)
 
                         loopCounter = loopCounter + 1
 
@@ -1164,17 +856,20 @@ for test_size in test_size_set:
                 print "Fininshed loop", len(initial_X_train)
                 y_pred_all = {}
 
-                human_label_str = ""
+                # human_label_str = ""
+                # for train_index in train_index_list:
+                #     y_pred_all[train_index] = y[train_index]
+                #     docNo = docIndex_DocNo[train_index]
+                #     human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
+                #         y_pred_all[train_index]) + "\n"
+                # human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
 
-                for train_index in train_index_list:
-                    y_pred_all[train_index] = y[train_index]
-                    docNo = docIndex_DocNo[train_index]
-                    human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(
-                        y_pred_all[train_index]) + "\n"
-                human_label_location_final = human_label_location + str(1.1) + '_human_.txt'
-                text_file = open(human_label_location_final, "a")
-                text_file.write(human_label_str)
-                text_file.close()
+                human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
+                            docIndex_DocNo, topic, human_label_location, 1.1)
+
+                # text_file = open(human_label_location_final, "a")
+                # text_file.write(human_label_str)
+                # text_file.close()
 
 
                 for train_index in xrange(0, len(X)):
@@ -1208,18 +903,8 @@ for test_size in test_size_set:
                         tmplist.append(f1score)
                         learning_curve[1.1] = tmplist
 
-                    pred_topic_str = ""
-                    for docIndex in xrange(0, len(X)):
-                        docNo = docIndex_DocNo[docIndex]
-                        pred_topic_str = pred_topic_str + str(topic) + " " + str(docNo) + " " + str(
-                            y_pred_all[docIndex]) + "\n"
-
-                    predicted_location_final = predicted_location_base + str(1.1) + '.txt'
-                    text_file = open(predicted_location_final, "a")
-                    text_file.write(pred_topic_str)
-                    text_file.close()
-
-                # print "f-1 score:", f1score, "precision:", precision, "recall:", recall, "Number of predicted (1): ", np.count_nonzero(y_pred_validation), "Number of predicted (0):", np.prod(y_pred_validation.shape) - np.count_nonzero(y_pred_validation)
+                    write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, 
+                        predicted_location_base, 1.1)
                 '''
                 precision = TP/(TP+FP) as you've just said if predictor doesn't predicts positive class at all - precision is 0.
                 recall = TP/(TP+FN), in case if predictor doesn't predict positive class - TP is 0 - recall is 0.
