@@ -3,6 +3,7 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 import numpy as np
+import copy
 
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.ensemble import EasyEnsemble
@@ -135,7 +136,7 @@ def create_initial_training_set(X, y, counter, limit, train_index_list, initial_
 
     return initial_X_train, initial_y_train
 
-def fit_model(model, ens, protocol, correction, under_sampling, 
+def fit_model(model, ens, protocol, correction, sampling_mode, 
                 initial_X_train, initial_y_train, sampling_weight,
                 initial_X_agg, initial_y_agg):
     if protocol == 'SPL':
@@ -144,30 +145,23 @@ def fit_model(model, ens, protocol, correction, under_sampling,
     if correction == True:
         model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
     else:
-        if under_sampling == True:
+        if sampling_mode == 'Under':
             ens.fit(initial_X_agg, initial_y_agg)
             print("ensemble works")
         else:
             model.fit(initial_X_train, initial_y_train)
 
 def get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
-                            train_per_centage, loopCounter, under_sampling, ens, model, X, y):
+                            train_per_centage, loopCounter, sampling_mode, ens, model, X, y):
     y_pred_all = {}
-    human_label_str = ""
 
-    for train_index in train_index_list:
-        y_pred_all[train_index] = y[train_index]
-        docNo = docIndex_DocNo[train_index]
-        human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
-        
-    human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
-    text_file = open(human_label_location_final, "a")
-    text_file.write(human_label_str)
-    text_file.close()
+    human_label_location_final, human_label_str = write_human_label_location(train_index_list, 
+                                    y, y_pred_all, docIndex_DocNo, topic, human_label_location, 
+                                    train_per_centage[loopCounter])
 
     for train_index in xrange(0, len(X)):
         if train_index not in train_index_list:
-            if under_sampling == True:
+            if sampling_mode == 'Under':
                 y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
             else:
                 y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
@@ -209,14 +203,14 @@ def get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter
 
     return precision, recall, f1score
 
-def update_initial_train(iter_sampling, under_sampling, unmodified_train_X, unmodified_train_y, num_subsets):
-    if iter_sampling == True:
+def update_initial_train(sampling_mode, unmodified_train_X, unmodified_train_y, num_subsets):
+    if sampling_mode == 'Over':
         print "Oversampling in the active iteration list"
         ros = RandomOverSampler()
         initial_X_train = None
         initial_y_train = None
         initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
-    elif under_sampling == True:
+    elif sampling_mode == 'Under':
         ee = EasyEnsemble(return_indices=True, replacement=True, n_subsets=num_subsets)
         initial_X_train = None
         initial_y_train = None
@@ -244,6 +238,10 @@ def write_predicted_location(X, docIndex_DocNo, topic, y_pred_all,
 def write_human_label_location(train_index_list, y, y_pred_all, docIndex_DocNo, topic, 
     human_label_location, index):
     human_label_str = ""
+    # print "write_human_label_location"
+    # print train_index_list
+    # print "================================"
+
     for train_index in train_index_list:
         y_pred_all[train_index] = y[train_index]
         docNo = docIndex_DocNo[train_index]
@@ -253,6 +251,9 @@ def write_human_label_location(train_index_list, y, y_pred_all, docIndex_DocNo, 
     text_file = open(human_label_location_final, "a")
     text_file.write(human_label_str)
     text_file.close()
+
+    # print "================================"
+    # print y_pred_all
 
     return human_label_location_final, human_label_str
 
@@ -267,3 +268,36 @@ def create_test_index_list(X, y, train_index_list, initial_X_test, initial_y_tes
             initial_y_test.append(y[train_index])
 
     return test_index_list
+
+def predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, sampling_mode):
+    print "update_y_pred_and_all"
+    print "================================"
+
+    for train_index in xrange(0, len(X)):
+        if train_index not in train_index_list:
+            if sampling_mode == 'Under':
+                print "under_sampling"
+                y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                print y_pred_all[train_index]
+            else:
+                y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+
+    return y_pred_all
+
+def fill_agg(initial_X_train, initial_y_train, num_subsets):
+    initial_X_agg = []
+    initial_y_agg = []
+
+    for i in xrange(0, num_subsets):
+        tmplist = copy.deepcopy(initial_X_train)
+        initial_X_agg.append(tmplist)
+
+        tmplist = copy.deepcopy(initial_y_train)
+        initial_y_agg.append(tmplist)
+
+    print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+    print np.array(initial_X_train).shape, np.array(initial_y_train).shape
+    print np.array(initial_X_agg).shape, np.array(initial_y_agg).shape
+    print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+
+    return np.array(initial_X_agg), np.array(initial_y_agg)

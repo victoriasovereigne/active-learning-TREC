@@ -23,11 +23,8 @@ class EnsembleClassifier:
 		print("-----------------------------------------------")
 		print("X, y train agg")
 		print("-----------------------------------------------")
-		print(len(X_train_agg), np.array(X_train_agg[0]).shape)
-		print(len(y_train_agg), y_train_agg)
-		print("-----------------------------------------------")
 		for i in range(self.size):
-			print(np.array(X_train_agg[i]).shape)
+			print np.array(X_train_agg[i]).shape
 			self.models[i].fit(X_train_agg[i], y_train_agg[i], sample_weight=sample_weight)
 
 	def predict(self, X_test):
@@ -35,8 +32,13 @@ class EnsembleClassifier:
 
 		for i in range(self.size):
 			y_pred = self.models[i].predict(X_test)[0]
-			# print "y pred", y_pred
 			y_preds.append(y_pred)
+
+		if 0 in y_preds and 1 in y_preds:
+			print("-----------------------------------------------")
+			print("y preds")
+			print("-----------------------------------------------")
+			print y_preds
 
 		return collections.Counter(y_preds).most_common(1)[0][0]
 

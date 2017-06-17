@@ -402,9 +402,6 @@ for test_size in test_size_set:
             print "Number of non-relevant", numberZero
             print "prevelance ratio", prevelance * 100
 
-            #print "After", y_train
-
-
             print '----Started Training----'
             model = LogisticRegression()
             size = len(X) - n_labeled
@@ -450,7 +447,6 @@ for test_size in test_size_set:
                         break
 
                 for index in xrange(0,len(X)):
-
                     if y[index] == 0:
                         seed_zero_counter = seed_zero_counter + 1
                         train_index_list.append(index)
@@ -688,7 +684,6 @@ for test_size in test_size_set:
                 text_file = open(human_label_location_final, "a")
                 text_file.write(human_label_str)
                 text_file.close()
-
 
                 for train_index in xrange(0, len(X)):
                     if train_index not in train_index_list:
