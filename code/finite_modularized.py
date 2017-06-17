@@ -20,7 +20,7 @@ from libact.models import *
 from libact.query_strategies import *
 from libact.labelers import IdealLabeler
 from imblearn.over_sampling import RandomOverSampler
-# from imblearn.under_sampling import RandomUnderSampler
+from imblearn.under_sampling import RandomUnderSampler
 from imblearn.ensemble import EasyEnsemble
 from imblearn.over_sampling import SMOTE
 from imblearn.over_sampling import ADASYN
@@ -53,11 +53,10 @@ command_prompt_use = True
 datasource = 'TREC8' #sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
 protocol = 'SAL' #sys.argv[2]
 use_ranker = 'False' #sys.argv[3]
-# iter_sampling = 'False' #sys.argv[4]
+iter_sampling = 'True' #sys.argv[4]
 correction = 'False' #sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
 train_per_centage_flag = 'True' #sys.argv[6]
-# sampling_mode = 'True' #sys.argv[7]
-sampling_mode = 'Under' # over, under, or none
+under_sampling = 'Truef' #sys.argv[7]
 
 #parameter set # all FLAGS must be string
 '''
@@ -69,11 +68,10 @@ correction = 'False'
 train_per_centage_flag = 'True'
 '''
 print "Ranker_use", use_ranker
-# print "iter_sampling", iter_sampling
+print "iter_sampling", iter_sampling
 print "correction", correction
 print "train_percenetae", train_per_centage_flag
-# print "under sampling", sampling_mode
-print "sampling_mode", sampling_mode
+print "under sampling", under_sampling
 
 
 test_size = 0    # the percentage of samples in the dataset that will be
@@ -109,19 +107,24 @@ if use_ranker == 'True':
 else:
     base_address = base_address + "no_ranker/"
     use_ranker = False
-if sampling_mode == 'Over':
+if iter_sampling == 'True':
     base_address = base_address + "oversample/"
-    # iter_sampling = True
-elif sampling_mode == 'Under':
-    base_address = base_address + "undersample/"
-
-# if iter_sampling == 'False':
-#     iter_sampling = False
+    iter_sampling = True
+if iter_sampling == 'False':
+    iter_sampling = False
 if correction == 'True':
     base_address = base_address + "htcorrection/"
     correction = True
 if correction == 'False':
     correction = False
+
+# --------------------------------
+if under_sampling == 'True':
+    base_address = base_address + "undersample/"
+    under_sampling = True
+if under_sampling == 'False':
+    under_sampling = False
+# --------------------------------
 
 if train_per_centage_flag == 'True':
     train_per_centage_flag = True
@@ -131,10 +134,13 @@ else:
 print "base address:", base_address
 
 
-if sampling_mode == 'Over' and correction == True:
+if iter_sampling == True and correction == True:
     print "Over sampling and HT correction cannot be done together"
     exit(-1)
-
+# --------------------------------
+if iter_sampling == True and under_sampling == True:
+    print "Over sampling and under sampling cannot be done together"
+    exit(-1)
 
 if datasource=='TREC8':
     processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/processed.txt'
@@ -384,14 +390,20 @@ for test_size in test_size_set:
 
                 # Ranker needs oversampling, but when HTCorrection true we cannot perform oversample
                 if use_ranker == True and correction == False:
-                    initial_X_train_sampled, initial_y_train_sampled = update_initial_train(sampling_mode, 
-                        initial_X_train, initial_y_train, num_subsets)
+                    initial_X_train_sampled, initial_y_train_sampled = update_initial_train(iter_sampling, 
+                        under_sampling, initial_X_train, initial_y_train, num_subsets)
                     
                     initial_X_train = initial_X_train_sampled.tolist()
                     initial_y_train = initial_y_train_sampled.tolist()
 
                 # fill the agg
                 initial_X_agg, initial_y_agg = fill_agg(initial_X_train, initial_y_train, num_subsets)
+                # for i in xrange(0, num_subsets):
+                #     tmplist = copy.deepcopy(initial_X_train)
+                #     initial_X_agg.append(tmplist)
+
+                #     tmplist = copy.deepcopy(initial_y_train)
+                #     initial_y_agg.append(tmplist)
 
                 initial_X_test = []
                 initial_y_test = []
@@ -421,7 +433,7 @@ for test_size in test_size_set:
                         loopDocList = []
 
                         # new method fit model
-                        fit_model(model, ens, protocol, False, sampling_mode, 
+                        fit_model(model, ens, protocol, False, under_sampling, 
                                     initial_X_train, initial_y_train, sampling_weight,
                                     initial_X_agg, initial_y_agg)
 
@@ -430,7 +442,11 @@ for test_size in test_size_set:
                         for train_index in train_index_list:
                             y_pred_all[train_index] = y[train_index]
                         
-                        y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, sampling_mode)
+                        y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
+
+                        # for train_index in xrange(0, len(X)):
+                        #     if train_index not in train_index_list:
+                        #         y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
@@ -456,13 +472,13 @@ for test_size in test_size_set:
                         queueSize = isPredictable.count(1)
 
                         if protocol == 'CAL':
-                            queue = CAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = CAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             empty_queue(queue, 0, batch_size, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
 
                         if protocol == 'SAL':
-                            queue = SAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             empty_queue(queue, 0, batch_size, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
@@ -473,7 +489,7 @@ for test_size in test_size_set:
                                 unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test,
                                 sampling_weight, train_index_list, test_index_list, loopDocList)
 
-                        initial_X_train, initial_y_train = update_initial_train(sampling_mode
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)  
 
                         loopCounter = loopCounter + 1
@@ -496,12 +512,12 @@ for test_size in test_size_set:
                         loopDocList = []
 
                         # new method fit model
-                        fit_model(model, ens, protocol, correction, sampling_mode, 
+                        fit_model(model, ens, protocol, correction, under_sampling, 
                                     initial_X_train, initial_y_train, sampling_weight,
                                     initial_X_agg, initial_y_agg)
 
                         y_pred_all = get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
-                            train_per_centage, loopCounter, sampling_mode, ens, model, X, y)
+                            train_per_centage, loopCounter, under_sampling, ens, model, X, y)
 
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
@@ -524,13 +540,13 @@ for test_size in test_size_set:
                         queueSize = isPredictable.count(1)
 
                         if protocol == 'CAL':
-                            queue = CAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = CAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             train_size_controller = empty_queue(queue, train_size_controller, size_limit, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
 
                         if protocol == 'SAL':
-                            queue = SAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             train_size_controller = empty_queue(queue, train_size_controller, size_limit, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
@@ -541,7 +557,7 @@ for test_size in test_size_set:
                                                         isPredictable, unmodified_train_X, unmodified_train_y, 
                                                         initial_X_test, initial_y_test, sampling_weight, 
                                                         train_index_list, test_index_list, loopDocList)
-                        initial_X_train, initial_y_train = update_initial_train(sampling_mode,
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)
 
                         loopCounter = loopCounter + 1
@@ -549,7 +565,14 @@ for test_size in test_size_set:
                 y_pred_all = {}
                 human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
                             docIndex_DocNo, topic, human_label_location, 1.1)
-                y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, sampling_mode)
+                y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
+                # for train_index in xrange(0, len(X)):
+                #     if train_index not in train_index_list:
+                #         if under_sampling == True:
+                #             y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                #         else:
+                #             y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+
                 y_pred = []
                 for key, value in y_pred_all.iteritems():
                     y_pred.append(value)
@@ -644,8 +667,8 @@ for test_size in test_size_set:
                     sampling_weight.append(1.0)
 
                 if sampling == True:
-                    initial_X_train_sampled, initial_y_train_sampled = update_initial_train(sampling_mode,
-                        initial_X_train, initial_y_train, num_subsets)
+                    initial_X_train_sampled, initial_y_train_sampled = update_initial_train(iter_sampling, 
+                        under_sampling, initial_X_train, initial_y_train, num_subsets)
 
                     initial_X_train = initial_X_train_sampled.tolist()
                     initial_y_train = initial_y_train_sampled.tolist()
@@ -690,7 +713,12 @@ for test_size in test_size_set:
                         for train_index in train_index_list:
                             y_pred_all[train_index] = y[train_index]
 
-                        y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, sampling_mode)
+                        y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
+
+                        # for train_index in xrange(0, len(X)):
+                        #     if train_index not in train_index_list:
+                        #         y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
                             y_pred.append(value)
@@ -725,13 +753,13 @@ for test_size in test_size_set:
                         queueSize = isPredictable.count(1)
 
                         if protocol == 'CAL':
-                            queue = CAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = CAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             empty_queue(queue, 0, batch_size, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
 
                         if protocol == 'SAL':
-                            queue = SAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             empty_queue(queue, 0, batch_size, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
@@ -742,7 +770,7 @@ for test_size in test_size_set:
                                 unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test,
                                 sampling_weight, train_index_list, test_index_list, loopDocList)
 
-                        initial_X_train, initial_y_train = update_initial_train(sampling_mode,
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)
 
                         loopCounter = loopCounter + 1
@@ -766,7 +794,7 @@ for test_size in test_size_set:
                         loopDocList = []
 
                         # new method fit model
-                        fit_model(model, ens, protocol, correction, sampling_mode, 
+                        fit_model(model, ens, protocol, correction, under_sampling, 
                                     initial_X_train, initial_y_train, sampling_weight, 
                                     initial_X_agg, initial_y_agg)
 
@@ -777,7 +805,7 @@ for test_size in test_size_set:
                         print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
 
                         y_pred_all = get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
-                            train_per_centage, loopCounter, sampling_mode, ens, model, X, y)
+                            train_per_centage, loopCounter, under_sampling, ens, model, X, y)
 
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
@@ -799,13 +827,13 @@ for test_size in test_size_set:
                         queueSize = isPredictable.count(1)
 
                         if protocol == 'CAL':
-                            queue = CAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = CAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             train_size_controller = empty_queue(queue, train_size_controller, size_limit, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
 
                         if protocol == 'SAL':
-                            queue = SAL(queueSize, predictableSize, isPredictable, sampling_mode, ens, model, initial_X_test)
+                            queue = SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, initial_X_test)
                             train_size_controller = empty_queue(queue, train_size_controller, size_limit, isPredictable, correction, 
                                         unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test, 
                                         sampling_weight, train_index_list, test_index_list, loopDocList)
@@ -818,10 +846,10 @@ for test_size in test_size_set:
                                                         train_index_list, test_index_list, loopDocList)
                         
                         # update initial train
-                        initial_X_train, initial_y_train = update_initial_train(sampling_mode,
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)
 
-                        if sampling_mode == True:
+                        if under_sampling == True:
                             initial_X_agg = initial_X_train
                             initial_y_agg = initial_y_train
 
@@ -833,7 +861,14 @@ for test_size in test_size_set:
                 human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
                             docIndex_DocNo, topic, human_label_location, 1.1)
 
-                y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, sampling_mode)
+                y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
+                # for train_index in xrange(0, len(X)):
+                #     if train_index not in train_index_list:
+                #         if under_sampling == True:
+                #             y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
+                #         else:    
+                #             y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
+
                 y_pred = []
                 for key, value in y_pred_all.iteritems():
                     # print (key,value)
