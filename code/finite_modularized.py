@@ -56,7 +56,7 @@ use_ranker = 'False' #sys.argv[3]
 iter_sampling = 'True' #sys.argv[4]
 correction = 'False' #sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
 train_per_centage_flag = 'True' #sys.argv[6]
-under_sampling = 'Truef' #sys.argv[7]
+under_sampling = 'False' #sys.argv[7]
 
 #parameter set # all FLAGS must be string
 '''
@@ -297,7 +297,7 @@ for test_size in test_size_set:
             print '----Started Training----'
             model = LogisticRegression()
             size = len(X) - n_labeled
-            num_subsets = 3
+            num_subsets = 11
             ens = EnsembleClassifier(num_subsets)
 
             if size<0:
@@ -366,7 +366,7 @@ for test_size in test_size_set:
                         ##################
                         write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, predicted_location_base, 
                                 train_per_centage[loopCounter])
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
                                                         learning_batch_size, batch_size)
 
                         print "Score in non-active stage"
@@ -398,12 +398,6 @@ for test_size in test_size_set:
 
                 # fill the agg
                 initial_X_agg, initial_y_agg = fill_agg(initial_X_train, initial_y_train, num_subsets)
-                # for i in xrange(0, num_subsets):
-                #     tmplist = copy.deepcopy(initial_X_train)
-                #     initial_X_agg.append(tmplist)
-
-                #     tmplist = copy.deepcopy(initial_y_train)
-                #     initial_y_agg.append(tmplist)
 
                 initial_X_test = []
                 initial_y_test = []
@@ -443,16 +437,12 @@ for test_size in test_size_set:
                             y_pred_all[train_index] = y[train_index]
                         
                         y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
-
-                        # for train_index in xrange(0, len(X)):
-                        #     if train_index not in train_index_list:
-                        #         y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
-
                         y_pred = []
+
                         for key, value in y_pred_all.iteritems():
                             y_pred.append(value)
 
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
                                                         learning_batch_size, batch_size)
 
                         learning_batch_size = learning_batch_size + batch_size
@@ -497,6 +487,7 @@ for test_size in test_size_set:
                 # ==============================================================
                 # use ranker == True
                 # train percentage == True
+                # ANOTHER ONE
                 # ==============================================================
                 else:
                     print "Loop Counter after seed:", loopCounter
@@ -521,7 +512,7 @@ for test_size in test_size_set:
 
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
                                                         learning_batch_size, batch_size)
                         learning_batch_size = learning_batch_size + batch_size
 
@@ -559,19 +550,17 @@ for test_size in test_size_set:
                                                         train_index_list, test_index_list, loopDocList)
                         initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)
-
+                        
+                        if under_sampling == True:
+                            initial_X_agg = initial_X_train
+                            initial_y_agg = initial_y_train
+                        
                         loopCounter = loopCounter + 1
 
                 y_pred_all = {}
                 human_label_location_final, human_label_str = write_human_label_location(train_index_list, y, y_pred_all, 
                             docIndex_DocNo, topic, human_label_location, 1.1)
                 y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
-                # for train_index in xrange(0, len(X)):
-                #     if train_index not in train_index_list:
-                #         if under_sampling == True:
-                #             y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
-                #         else:
-                #             y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                 y_pred = []
                 for key, value in y_pred_all.iteritems():
@@ -647,13 +636,6 @@ for test_size in test_size_set:
                 # fill the agg
                 initial_X_agg, initial_y_agg =  fill_agg(initial_X_train, initial_y_train, num_subsets)
 
-                # for i in xrange(0, num_subsets):
-                #     tmplist = copy.deepcopy(initial_X_train)
-                #     initial_X_agg.append(tmplist)
-
-                #     tmplist = copy.deepcopy(initial_y_train)
-                #     initial_y_agg.append(tmplist)
-
                 orig_X_agg = copy.deepcopy(initial_X_agg)
 
                 if seed_zero_counter != seed_one_counter:
@@ -714,11 +696,6 @@ for test_size in test_size_set:
                             y_pred_all[train_index] = y[train_index]
 
                         y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
-
-                        # for train_index in xrange(0, len(X)):
-                        #     if train_index not in train_index_list:
-                        #         y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
-
                         y_pred = []
                         for key, value in y_pred_all.iteritems():
                             y_pred.append(value)
@@ -809,7 +786,7 @@ for test_size in test_size_set:
 
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
                                                         learning_batch_size, batch_size)
                         learning_batch_size = learning_batch_size + batch_size
                         print "precision score:", precision
@@ -874,26 +851,14 @@ for test_size in test_size_set:
                     # print (key,value)
                     y_pred.append(value)
 
+                precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, 1.1,
+                    learning_batch_size, batch_size)
+
                 f1score = f1_score(y, y_pred, average='binary')
                 precision = precision_score(y, y_pred, average='binary')
                 recall = recall_score(y, y_pred, average='binary')
 
-
-                print "precision score:", precision
-                print "recall score:", recall
-                print "f-1 score:", f1score
-
-                if train_per_centage_flag == True:
-                    if (learning_curve.has_key(1.1)):
-                        tmplist = learning_curve.get(1.1)
-                        tmplist.append(f1score)
-                        learning_curve[1.1] = tmplist
-                    else:
-                        tmplist = []
-                        tmplist.append(f1score)
-                        learning_curve[1.1] = tmplist
-
-                    write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, 
+                write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, 
                         predicted_location_base, 1.1)
                 '''
                 precision = TP/(TP+FP) as you've just said if predictor doesn't predicts positive class at all - precision is 0.
@@ -923,14 +888,17 @@ for topic in skipList:
     print topic
 
 s=""
-for (key, valueList) in sorted(learning_curve.items()):
-    size = len(valueList)
-    sum = 0
-    for value in valueList:
-        sum = sum + value
-    #print "value", sum/size
-    s = s + str(sum/size) + ","
+# for (key, valueList) in sorted(learning_curve.items()):
+#     size = len(valueList)
+#     sum = 0
+#     for value in valueList:
+#         sum = sum + value
+#     #print "value", sum/size
+#     s = s + str(sum/size) + ","
 
-text_file = open(learning_curve_location, "w")
-text_file.write(s)
-text_file.close()
+for (key, value) in sorted(learning_curve.items()):
+    print(key, value)
+
+# text_file = open(learning_curve_location, "w")
+# text_file.write(s)
+# text_file.close()

@@ -6,6 +6,7 @@ import numpy as np
 import copy
 
 from imblearn.over_sampling import RandomOverSampler
+from imblearn.under_sampling import RandomUnderSampler
 from imblearn.ensemble import EasyEnsemble
 
 def get_ranker(ranker_location, datasource):
@@ -195,21 +196,20 @@ def write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_
 
     return y_pred
 
-def get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage, loopCounter,
+def get_prec_recall_f1(y, y_pred, learning_curve, index,
     learning_batch_size, batch_size):
     f1score = f1_score(y, y_pred, average='binary')
-
-    if (learning_curve.has_key(train_per_centage[loopCounter])):
-        tmplist = learning_curve.get(train_per_centage[loopCounter])
-        tmplist.append(f1score)
-        learning_curve[train_per_centage[loopCounter]] = tmplist
-    else:
-        tmplist = []
-        tmplist.append(f1score)
-        learning_curve[train_per_centage[loopCounter]] = tmplist
-
     precision = precision_score(y, y_pred, average='binary')
     recall = recall_score(y, y_pred, average='binary')
+
+    if (learning_curve.has_key(index)):
+        tmplist = learning_curve.get(index)
+        tmplist.append([precision, recall, f1score])
+        learning_curve[index] = tmplist
+    else:
+        tmplist = []
+        tmplist.append([precision, recall, f1score])
+        learning_curve[index] = tmplist
 
     return precision, recall, f1score
 
@@ -217,6 +217,7 @@ def update_initial_train(iter_sampling, under_sampling, unmodified_train_X, unmo
     if iter_sampling == True:
         print "Oversampling in the active iteration list"
         ros = RandomOverSampler()
+        # ros = RandomUnderSampler()
         initial_X_train = None
         initial_y_train = None
         initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)

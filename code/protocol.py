@@ -65,6 +65,9 @@ def SAL(queueSize, predictableSize, isPredictable, under_sampling, ens, model, i
                 y_prob = ens.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))
             else:
                 y_prob = model.predict_proba(np.array(initial_X_test[counter]).reshape(1, -1))[0]
+
+            # print y_prob 
+            
             entropy = (-1) * (y_prob[0] * log(y_prob[0], 2) + y_prob[1] * log(y_prob[1], 2))
             queue.put(relevance(entropy, counter))
             sumForCorrection = sumForCorrection + entropy
