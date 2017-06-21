@@ -166,6 +166,10 @@ else:
 
 all_reviews = {}
 learning_curve = {} # per batch value for  validation set
+learning_curve_precision = {}
+learning_curve_recall = {}
+learning_curve_sensitivity = {}
+learning_curve_specificity = {}
 
 if preloaded==False:
     all_reviews = load_pickle(TEXT_DATA_DIR, processed_file_location)
@@ -297,7 +301,7 @@ for test_size in test_size_set:
             print '----Started Training----'
             model = LogisticRegression()
             size = len(X) - n_labeled
-            num_subsets = 11
+            num_subsets = 3
             ens = EnsembleClassifier(num_subsets)
 
             if size<0:
@@ -366,8 +370,11 @@ for test_size in test_size_set:
                         ##################
                         write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, predicted_location_base, 
                                 train_per_centage[loopCounter])
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
-                                                        learning_batch_size, batch_size)
+                        f1score = get_f1score(y, y_pred, learning_curve, train_per_centage[loopCounter])
+
+                        precision = get_precision(y, y_pred, learning_curve_precision, train_per_centage[loopCounter])
+
+                        recall = get_recall(y, y_pred, learning_curve_recall, train_per_centage[loopCounter])
 
                         print "Score in non-active stage"
                         print "precision score:", precision
@@ -392,12 +399,20 @@ for test_size in test_size_set:
                 if use_ranker == True and correction == False:
                     initial_X_train_sampled, initial_y_train_sampled = update_initial_train(iter_sampling, 
                         under_sampling, initial_X_train, initial_y_train, num_subsets)
-                    
-                    initial_X_train = initial_X_train_sampled.tolist()
-                    initial_y_train = initial_y_train_sampled.tolist()
+
+                    if under_sampling == True:
+                        initial_X_agg = initial_X_train_sampled.tolist()
+                        initial_y_agg = initial_y_train_sampled.tolist()
+                    else:
+                        initial_X_train = initial_X_train_sampled.tolist()
+                        initial_y_train = initial_y_train_sampled.tolist()
 
                 # fill the agg
-                initial_X_agg, initial_y_agg = fill_agg(initial_X_train, initial_y_train, num_subsets)
+                # initial_X_agg, initial_y_agg = fill_agg(initial_X_train, initial_y_train, num_subsets)
+                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+                # print np.array(initial_X_agg).shape
+                # print np.array(initial_X_train).shape
+                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
 
                 initial_X_test = []
                 initial_y_test = []
@@ -442,8 +457,11 @@ for test_size in test_size_set:
                         for key, value in y_pred_all.iteritems():
                             y_pred.append(value)
 
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
-                                                        learning_batch_size, batch_size)
+                        f1score = get_f1score(y, y_pred, learning_curve, train_per_centage[loopCounter])
+
+                        precision = get_precision(y, y_pred, learning_curve_precision, train_per_centage[loopCounter])
+
+                        recall = get_recall(y, y_pred, learning_curve_recall, train_per_centage[loopCounter])
 
                         learning_batch_size = learning_batch_size + batch_size
 
@@ -512,13 +530,23 @@ for test_size in test_size_set:
 
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
-                                                        learning_batch_size, batch_size)
+                        f1score = get_f1score(y, y_pred, learning_curve, train_per_centage[loopCounter])
+
+                        precision = get_precision(y, y_pred, learning_curve_precision, train_per_centage[loopCounter])
+
+                        recall = get_recall(y, y_pred, learning_curve_recall, train_per_centage[loopCounter])
+
                         learning_batch_size = learning_batch_size + batch_size
 
                         print "precision score:", precision
                         print "recall score:", recall
                         print "f-1 score:", f1score
+
+                        sensitivity, specificity = get_sensitivity_specificity(y, y_pred, learning_curve_specificity, train_per_centage[loopCounter])
+                        learning_batch_size = learning_batch_size + batch_size
+                        
+                        print "sensitivity:", sensitivity
+                        print "specificity:", specificity
 
                         if isPredictable.count(1) == 0:
                             break
@@ -786,12 +814,22 @@ for test_size in test_size_set:
 
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
-                        precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, train_per_centage[loopCounter],
-                                                        learning_batch_size, batch_size)
-                        learning_batch_size = learning_batch_size + batch_size
+                        f1score = get_f1score(y, y_pred, learning_curve, train_per_centage[loopCounter])
+
+                        precision = get_precision(y, y_pred, learning_curve_precision, train_per_centage[loopCounter])
+
+                        recall = get_recall(y, y_pred, learning_curve_recall, train_per_centage[loopCounter])
+                        
                         print "precision score:", precision
                         print "recall score:", recall
                         print "f-1 score:", f1score
+
+                        sensitivity, specificity = get_sensitivity_specificity(y, y_pred, learning_curve_specificity, train_per_centage[loopCounter])
+                        learning_batch_size = learning_batch_size + batch_size
+
+                        print "sensitivity:", sensitivity
+                        print "specificity:", specificity
+
 
                         if isPredictable.count(1) == 0:
                             break
@@ -839,24 +877,22 @@ for test_size in test_size_set:
                             docIndex_DocNo, topic, human_label_location, 1.1)
 
                 y_pred_all = predict_y_pred_all(X, train_index_list, y_pred_all, model, ens, under_sampling)
-                # for train_index in xrange(0, len(X)):
-                #     if train_index not in train_index_list:
-                #         if under_sampling == True:
-                #             y_pred_all[train_index] = ens.predict(np.array(X[train_index]).reshape(1, -1))
-                #         else:    
-                #             y_pred_all[train_index] = model.predict(np.array(X[train_index]).reshape(1, -1))[0]
 
                 y_pred = []
                 for key, value in y_pred_all.iteritems():
-                    # print (key,value)
                     y_pred.append(value)
 
-                precision, recall, f1score = get_prec_recall_f1(y, y_pred, learning_curve, 1.1,
-                    learning_batch_size, batch_size)
+                f1score = get_f1score(y, y_pred, learning_curve, 1.1)
+                precision = get_precision(y, y_pred, learning_curve_precision, 1.1)
+                recall = get_recall(y, y_pred, learning_curve_recall, 1.1)
 
                 f1score = f1_score(y, y_pred, average='binary')
                 precision = precision_score(y, y_pred, average='binary')
                 recall = recall_score(y, y_pred, average='binary')
+
+                sensitivity, specificity = get_sensitivity_specificity(y, y_pred, learning_curve_specificity, 1.1)
+                print "sensitivity:", sensitivity
+                print "specificity:", specificity
 
                 write_predicted_location(X, docIndex_DocNo, topic, y_pred_all, 
                         predicted_location_base, 1.1)
@@ -887,18 +923,46 @@ for test_size in test_size_set:
 for topic in skipList:
     print topic
 
+text_file = open(learning_curve_location, "w")
+
 s=""
-# for (key, valueList) in sorted(learning_curve.items()):
-#     size = len(valueList)
-#     sum = 0
-#     for value in valueList:
-#         sum = sum + value
-#     #print "value", sum/size
-#     s = s + str(sum/size) + ","
+for (key, valueList) in sorted(learning_curve.items()):
+    size = len(valueList)
+    sum = 0
+    for value in valueList:
+        sum = sum + value
+    s = s + str(sum/size) + ","
 
-for (key, value) in sorted(learning_curve.items()):
-    print(key, value)
+text_file.write(s + '\n')
 
-# text_file = open(learning_curve_location, "w")
-# text_file.write(s)
-# text_file.close()
+s=""
+for (key, valueList) in sorted(learning_curve_precision.items()):
+    size = len(valueList)
+    sum = 0
+    for value in valueList:
+        sum = sum + value
+    s = s + str(sum/size) + ","
+
+text_file.write(s + '\n')
+
+s=""
+for (key, valueList) in sorted(learning_curve_recall.items()):
+    size = len(valueList)
+    sum = 0
+    for value in valueList:
+        sum = sum + value
+    s = s + str(sum/size) + ","
+
+text_file.write(s + '\n')
+
+s=""
+for (key, valueList) in sorted(learning_curve_specificity.items()):
+    size = len(valueList)
+    sum = 0
+    for value in valueList:
+        sum = sum + value
+    s = s + str(sum/size) + ","
+
+text_file.write(s + '\n')
+
+text_file.close()

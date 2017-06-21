@@ -9,6 +9,8 @@ from imblearn.over_sampling import RandomOverSampler
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.ensemble import EasyEnsemble
 
+from sklearn.metrics import confusion_matrix
+
 def get_ranker(ranker_location, datasource):
     print('Reading the Ranker label Information')
     f = open(ranker_location[datasource])
@@ -155,20 +157,9 @@ def fit_model(model, ens, protocol, correction, under_sampling,
 def get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
                             train_per_centage, loopCounter, under_sampling, ens, model, X, y):
     y_pred_all = {}
-    # human_label_str = ""
-
     human_label_location_final, human_label_str = write_human_label_location(train_index_list, 
                                     y, y_pred_all, docIndex_DocNo, topic, human_label_location, 
                                     train_per_centage[loopCounter])
-    # for train_index in train_index_list:
-    #     y_pred_all[train_index] = y[train_index]
-    #     docNo = docIndex_DocNo[train_index]
-    #     human_label_str = human_label_str + str(topic) + " " + str(docNo) + " " + str(y_pred_all[train_index]) + "\n"
-        
-    # human_label_location_final = human_label_location + str(train_per_centage[loopCounter]) + '_human_.txt'
-    # text_file = open(human_label_location_final, "a")
-    # text_file.write(human_label_str)
-    # text_file.close()
 
     for train_index in xrange(0, len(X)):
         if train_index not in train_index_list:
@@ -196,22 +187,75 @@ def write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_
 
     return y_pred
 
-def get_prec_recall_f1(y, y_pred, learning_curve, index,
-    learning_batch_size, batch_size):
+def get_f1score(y, y_pred, learning_curve, index):
     f1score = f1_score(y, y_pred, average='binary')
+
+    if (learning_curve.has_key(index)):
+        tmplist = learning_curve.get(index)
+        tmplist.append(f1score)
+        learning_curve[index] = tmplist
+    else:
+        tmplist = []
+        tmplist.append(f1score)
+        learning_curve[index] = tmplist
+
+    return f1score
+
+def get_precision(y, y_pred, learning_curve, index):
     precision = precision_score(y, y_pred, average='binary')
+
+    if (learning_curve.has_key(index)):
+        tmplist = learning_curve.get(index)
+        tmplist.append(precision)
+        learning_curve[index] = tmplist
+    else:
+        tmplist = []
+        tmplist.append(precision)
+        learning_curve[index] = tmplist
+
+    return precision
+
+def get_recall(y, y_pred, learning_curve, index):
     recall = recall_score(y, y_pred, average='binary')
 
     if (learning_curve.has_key(index)):
         tmplist = learning_curve.get(index)
-        tmplist.append([precision, recall, f1score])
+        tmplist.append(recall)
         learning_curve[index] = tmplist
     else:
         tmplist = []
-        tmplist.append([precision, recall, f1score])
+        tmplist.append(recall)
         learning_curve[index] = tmplist
 
-    return precision, recall, f1score
+    return recall
+
+def get_sensitivity_specificity(y, y_pred, learning_curve, index):
+    C = confusion_matrix(y, y_pred)
+    print "---------------------------"
+    print "Confusion matrix"
+    print "---------------------------"
+    print C
+    print "---------------------------"
+
+    TN = C[0][0]
+    FP = C[0][1]
+    FN = C[1][0]
+    TP = C[1][1]
+
+    sensitivity = float(TP) / (TP + FN)
+    specificity = float(TN) / (TN + FP)
+
+    if (learning_curve.has_key(index)):
+        tmplist = learning_curve.get(index)
+        tmplist.append(specificity)
+        learning_curve[index] = tmplist
+    else:
+        tmplist = []
+        tmplist.append(specificity)
+        learning_curve[index] = tmplist
+
+    return sensitivity, specificity    
+
 
 def update_initial_train(iter_sampling, under_sampling, unmodified_train_X, unmodified_train_y, num_subsets):
     if iter_sampling == True:
@@ -249,9 +293,6 @@ def write_predicted_location(X, docIndex_DocNo, topic, y_pred_all,
 def write_human_label_location(train_index_list, y, y_pred_all, docIndex_DocNo, topic, 
     human_label_location, index):
     human_label_str = ""
-    # print "write_human_label_location"
-    # print train_index_list
-    # print "================================"
 
     for train_index in train_index_list:
         y_pred_all[train_index] = y[train_index]
@@ -262,9 +303,6 @@ def write_human_label_location(train_index_list, y, y_pred_all, docIndex_DocNo, 
     text_file = open(human_label_location_final, "a")
     text_file.write(human_label_str)
     text_file.close()
-
-    # print "================================"
-    # print y_pred_all
 
     return human_label_location_final, human_label_str
 
