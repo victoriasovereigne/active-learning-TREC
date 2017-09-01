@@ -30,14 +30,14 @@ logging.basicConfig()
 
 np.random.seed(1335)
 TEXT_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv/'
-RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/newrel2.txt'
+RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/rel.txt'
 docrepresentation = "TF-IDF"  # can be BOW, TF-IDF
 sampling=True # can be True or False
 test_size = 0.2    # the percentage of samples in the dataset that will be
 n_labeled = 10      # number of samples that are initially labeled
 preloaded = False #True
 processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/processed.txt'
-result_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/results_80_percentage_train_LR_over_smapling.txt'
+result_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/results_80_percentage_train_LR_over_sampling.txt'
 start_topic = 401
 end_topic = 451
 

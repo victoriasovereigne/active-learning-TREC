@@ -50,13 +50,22 @@ sampling=False # can be True or False
 command_prompt_use = True
 
 #if command_prompt_use == True:
-datasource = 'TREC8' #sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
-protocol = 'SAL' #sys.argv[2]
-use_ranker = 'False' #sys.argv[3]
-iter_sampling = 'True' #sys.argv[4]
+datasource = 'WT2014' #sys.argv[1] # can be  dataset = ['TREC8', 'gov2', 'WT']
+protocol = 'SPL' #sys.argv[2]
+use_ranker = 'True' #sys.argv[3]
+iter_sampling = 'False' #sys.argv[4]
 correction = 'False' #sys.argv[5] #'SAL' can be ['SAL', 'CAL', 'SPL']
 train_per_centage_flag = 'True' #sys.argv[6]
 under_sampling = 'False' #sys.argv[7]
+smote = 'True'
+
+# speech dataset
+# if datasource == 'clef':
+#     TEXT_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv'
+#     RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/rel.txt'
+# TEXT_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv_' + datasource
+# RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/rel.txt'
+
 
 #parameter set # all FLAGS must be string
 '''
@@ -97,9 +106,6 @@ start_topic = 0
 end_topic = 0
 
 base_address = "/u/vlestari/Documents/Summer/IR/result/"
-
-# base_address = "/home/nahid/UT_research/clueweb12/nooversample_result1/"
-
 base_address = base_address +str(datasource)+"/"
 if use_ranker == 'True':
     base_address = base_address + "ranker/"
@@ -124,6 +130,12 @@ if under_sampling == 'True':
     under_sampling = True
 if under_sampling == 'False':
     under_sampling = False
+
+if smote == 'True':
+    base_address = base_address + "smote/"
+    smote = True
+if smote == 'False':
+    smote = False
 # --------------------------------
 
 if train_per_centage_flag == 'True':
@@ -142,6 +154,8 @@ if iter_sampling == True and under_sampling == True:
     print "Over sampling and under sampling cannot be done together"
     exit(-1)
 
+topics = []
+
 if datasource=='TREC8':
     processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/processed.txt'
     RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/TREC8/relevance.txt'
@@ -157,12 +171,23 @@ elif datasource=='WT2013':
     RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/WT2013/qrelsadhoc2013.txt'
     start_topic = 201
     end_topic = 251
-else:
+elif datasource=='WT2014':
     processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/WT2014/processed_new.txt'
     RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dataAll/IndriProcessedData/WT2014/qrelsadhoc2014.txt'
     start_topic = 251
     end_topic = 301
+else:
+    processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/processed_' + datasource + '.txt'
+    RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/rel.txt'
 
+    f = open(RELEVANCE_DATA_DIR, 'r')
+    lines = f.readlines()
+    datasource = 'clef'
+    for line in lines:
+        val = line.split()
+
+        if val[0] not in topics:
+            topics.append(val[0])
 
 all_reviews = {}
 learning_curve = {} # per batch value for  validation set
@@ -177,11 +202,14 @@ if preloaded==False:
 else:
     input = open(processed_file_location, 'rb')
     all_reviews = pickle.load(input)
+    print processed_file_location
     print "pickle loaded"
 
-Ranker_topic_to_doclist = get_ranker(ranker_location, datasource)
+if use_ranker == True:
+    Ranker_topic_to_doclist = get_ranker(ranker_location, datasource)
 
 for test_size in test_size_set:
+    print test_size
     seed = 1335
     for fold in xrange(1,2):
         np.random.seed(seed)
@@ -196,8 +224,13 @@ for test_size in test_size_set:
         s = "";
         pred_str = ""
         #for topic in sorted(topic_to_doclist.keys()):
-        for topic in xrange(start_topic,end_topic):
+        # for topic in xrange(start_topic,end_topic):
+        if datasource != 'clef':
+            topics = xrange(start_topic,end_topic)
+
+        for topic in topics:
             print "Topic:", topic
+
             if topic in topicSkipList:
                 print "Skipping Topic :", topic
                 continue
@@ -240,6 +273,13 @@ for test_size in test_size_set:
             judged_review = []
 
             docIndex = 0
+            
+            # print len(all_reviews.keys())
+            print docList[0]
+            print all_reviews.keys()[0]
+
+            # print list(set(docList) & set(all_reviews.keys()))
+
             for documentNo in docList:
                 if all_reviews.has_key(documentNo):
                     docIndex_DocNo[docIndex] = documentNo
@@ -248,6 +288,8 @@ for test_size in test_size_set:
                     judged_review.append(all_reviews[documentNo])
                     relevance_label.append(docNo_label[documentNo])
 
+            print "judged_review length", len(judged_review)
+            print "relevance_label", relevance_label
 
             if docrepresentation == "TF-IDF":
                 print "Using TF-IDF"
@@ -256,8 +298,13 @@ for test_size in test_size_set:
                                          preprocessor = None, \
                                          stop_words = None,   \
                                          max_features = 15000)
-
+                # try:
                 bag_of_word = vectorizer.fit_transform(judged_review)
+                # except:
+                #     print docIndex
+                #     print judged_review
+                #     # break
+                #     continue
 
 
             elif docrepresentation == "BOW":
@@ -289,8 +336,13 @@ for test_size in test_size_set:
             numberZero = y.count(0)
             print "Number of One", numberOne
             print "Number of Zero", numberZero
+
             datasize = len(X)
             prevelance = (numberOne * 1.0) / datasize
+
+            if numberOne == 0 or numberZero == 0:
+                print topic, datasize
+                continue
          
             print "=========Before Sampling======"
             print "Whole Dataset size: ", datasize
@@ -301,7 +353,7 @@ for test_size in test_size_set:
             print '----Started Training----'
             model = LogisticRegression()
             size = len(X) - n_labeled
-            num_subsets = 3
+            num_subsets = 11
             ens = EnsembleClassifier(num_subsets)
 
             if size<0:
@@ -315,8 +367,8 @@ for test_size in test_size_set:
             initial_X_agg = []
             initial_y_agg = []
 
-            # collecting the seed list from the Rankers
-            seed_list = Ranker_topic_to_doclist[topic]
+            # # collecting the seed list from the Rankers
+            # seed_list = Ranker_topic_to_doclist[topic]
             seed_counter = 0
             seed_one_counter = 0
             seed_zero_counter = 0
@@ -324,6 +376,12 @@ for test_size in test_size_set:
 
             # ==============================================================================================
             if use_ranker == True:
+                # collecting the seed list from the Rankers
+                seed_list = Ranker_topic_to_doclist[topic]
+                seed_counter = 0
+                seed_one_counter = 0
+                seed_zero_counter = 0
+                ask_for_label = 0
                 loopCounter = 0
 
                 seed_size_limit = math.ceil(train_per_centage[loopCounter] * len(X))
@@ -398,7 +456,7 @@ for test_size in test_size_set:
                 # Ranker needs oversampling, but when HTCorrection true we cannot perform oversample
                 if use_ranker == True and correction == False:
                     initial_X_train_sampled, initial_y_train_sampled = update_initial_train(iter_sampling, 
-                        under_sampling, initial_X_train, initial_y_train, num_subsets)
+                        under_sampling, smote, initial_X_train, initial_y_train, num_subsets)
 
                     if under_sampling == True:
                         initial_X_agg = initial_X_train_sampled.tolist()
@@ -406,13 +464,6 @@ for test_size in test_size_set:
                     else:
                         initial_X_train = initial_X_train_sampled.tolist()
                         initial_y_train = initial_y_train_sampled.tolist()
-
-                # fill the agg
-                # initial_X_agg, initial_y_agg = fill_agg(initial_X_train, initial_y_train, num_subsets)
-                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
-                # print np.array(initial_X_agg).shape
-                # print np.array(initial_X_train).shape
-                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
 
                 initial_X_test = []
                 initial_y_test = []
@@ -497,7 +548,7 @@ for test_size in test_size_set:
                                 unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test,
                                 sampling_weight, train_index_list, test_index_list, loopDocList)
 
-                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, smote, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)  
 
                         loopCounter = loopCounter + 1
@@ -531,11 +582,8 @@ for test_size in test_size_set:
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
                         f1score = get_f1score(y, y_pred, learning_curve, train_per_centage[loopCounter])
-
                         precision = get_precision(y, y_pred, learning_curve_precision, train_per_centage[loopCounter])
-
                         recall = get_recall(y, y_pred, learning_curve_recall, train_per_centage[loopCounter])
-
                         learning_batch_size = learning_batch_size + batch_size
 
                         print "precision score:", precision
@@ -576,7 +624,7 @@ for test_size in test_size_set:
                                                         isPredictable, unmodified_train_X, unmodified_train_y, 
                                                         initial_X_test, initial_y_test, sampling_weight, 
                                                         train_index_list, test_index_list, loopDocList)
-                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, smote, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)
                         
                         if under_sampling == True:
@@ -655,11 +703,11 @@ for test_size in test_size_set:
                 initial_X_train, initial_y_train = create_initial_training_set(X, y, seed_zero_counter, n_labeled/2, 
                     train_index_list, initial_X_train, initial_y_train, 0)
 
-                print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
-                print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
-                print np.array(initial_X_train).shape, np.array(initial_y_train).shape
-                print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
-                print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+                # print np.array(initial_X_train).shape, np.array(initial_y_train).shape
+                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+                # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
 
                 # fill the agg
                 initial_X_agg, initial_y_agg =  fill_agg(initial_X_train, initial_y_train, num_subsets)
@@ -678,7 +726,7 @@ for test_size in test_size_set:
 
                 if sampling == True:
                     initial_X_train_sampled, initial_y_train_sampled = update_initial_train(iter_sampling, 
-                        under_sampling, initial_X_train, initial_y_train, num_subsets)
+                        under_sampling, smote, initial_X_train, initial_y_train, num_subsets)
 
                     initial_X_train = initial_X_train_sampled.tolist()
                     initial_y_train = initial_y_train_sampled.tolist()
@@ -775,7 +823,7 @@ for test_size in test_size_set:
                                 unmodified_train_X, unmodified_train_y, initial_X_test, initial_y_test,
                                 sampling_weight, train_index_list, test_index_list, loopDocList)
 
-                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, smote, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)
 
                         loopCounter = loopCounter + 1
@@ -789,6 +837,8 @@ for test_size in test_size_set:
                 else:
                     numberofloop = len(train_per_centage)
                     train_size_controller = len(initial_X_train)
+                    print 'numberofloop', numberofloop
+                    print 'train_size_controller', train_size_controller
                     
                     while loopCounter < numberofloop:
                         size_limit = math.ceil(train_per_centage[loopCounter]*len(X))
@@ -797,6 +847,7 @@ for test_size in test_size_set:
                         print "Initial size:",train_size_controller, "limit:", size_limit
 
                         loopDocList = []
+                        print(topic)
 
                         # new method fit model
                         fit_model(model, ens, protocol, correction, under_sampling, 
@@ -804,10 +855,10 @@ for test_size in test_size_set:
                                     initial_X_agg, initial_y_agg)
 
                         # need to update initial X, y agg
-                        print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
-                        print (np.array_equal(initial_X_agg, orig_X_agg))
-                        print (np.array_equal(initial_X_train, unmodified_train_X))
-                        print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+                        # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
+                        # print (np.array_equal(initial_X_agg, orig_X_agg))
+                        # print (np.array_equal(initial_X_train, unmodified_train_X))
+                        # print "@#$%^&*(*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$#@#$%^&**&^%$#@#$%^&*"
 
                         y_pred_all = get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
                             train_per_centage, loopCounter, under_sampling, ens, model, X, y)
@@ -815,9 +866,7 @@ for test_size in test_size_set:
                         ##################
                         y_pred = write_pred_to_file(y_pred_all, X, docIndex_DocNo, topic, predicted_location_base, train_per_centage, loopCounter)
                         f1score = get_f1score(y, y_pred, learning_curve, train_per_centage[loopCounter])
-
                         precision = get_precision(y, y_pred, learning_curve_precision, train_per_centage[loopCounter])
-
                         recall = get_recall(y, y_pred, learning_curve_recall, train_per_centage[loopCounter])
                         
                         print "precision score:", precision
@@ -829,7 +878,6 @@ for test_size in test_size_set:
 
                         print "sensitivity:", sensitivity
                         print "specificity:", specificity
-
 
                         if isPredictable.count(1) == 0:
                             break
@@ -861,7 +909,7 @@ for test_size in test_size_set:
                                                         train_index_list, test_index_list, loopDocList)
                         
                         # update initial train
-                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, 
+                        initial_X_train, initial_y_train = update_initial_train(iter_sampling, under_sampling, smote, 
                                                             unmodified_train_X, unmodified_train_y, num_subsets)
 
                         if under_sampling == True:
@@ -886,9 +934,9 @@ for test_size in test_size_set:
                 precision = get_precision(y, y_pred, learning_curve_precision, 1.1)
                 recall = get_recall(y, y_pred, learning_curve_recall, 1.1)
 
-                f1score = f1_score(y, y_pred, average='binary')
-                precision = precision_score(y, y_pred, average='binary')
-                recall = recall_score(y, y_pred, average='binary')
+                # f1score = f1_score(y, y_pred, average='binary')
+                # precision = precision_score(y, y_pred, average='binary')
+                # recall = recall_score(y, y_pred, average='binary')
 
                 sensitivity, specificity = get_sensitivity_specificity(y, y_pred, learning_curve_specificity, 1.1)
                 print "sensitivity:", sensitivity
@@ -919,7 +967,6 @@ for test_size in test_size_set:
             text_file.write(s)
             text_file.close()
 
-
 for topic in skipList:
     print topic
 
@@ -933,7 +980,7 @@ for (key, valueList) in sorted(learning_curve.items()):
         sum = sum + value
     s = s + str(sum/size) + ","
 
-text_file.write(s + '\n')
+text_file.write('F1 SCORE\n' + s + '\n\n')
 
 s=""
 for (key, valueList) in sorted(learning_curve_precision.items()):
@@ -943,7 +990,7 @@ for (key, valueList) in sorted(learning_curve_precision.items()):
         sum = sum + value
     s = s + str(sum/size) + ","
 
-text_file.write(s + '\n')
+text_file.write('PRECISION\n' + s + '\n\n')
 
 s=""
 for (key, valueList) in sorted(learning_curve_recall.items()):
@@ -953,7 +1000,7 @@ for (key, valueList) in sorted(learning_curve_recall.items()):
         sum = sum + value
     s = s + str(sum/size) + ","
 
-text_file.write(s + '\n')
+text_file.write('RECALL\n' + s + '\n\n')
 
 s=""
 for (key, valueList) in sorted(learning_curve_specificity.items()):
@@ -963,6 +1010,6 @@ for (key, valueList) in sorted(learning_curve_specificity.items()):
         sum = sum + value
     s = s + str(sum/size) + ","
 
-text_file.write(s + '\n')
+text_file.write('SPECIFICITY\n' + s + '\n')
 
 text_file.close()

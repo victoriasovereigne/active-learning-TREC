@@ -1,95 +1,17 @@
-import os, pickle
+import os, pickle, re
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 import numpy as np
 import copy
+from nltk.corpus import stopwords
 
-from imblearn.over_sampling import RandomOverSampler
+from imblearn.over_sampling import RandomOverSampler, SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.ensemble import EasyEnsemble
 
 from sklearn.metrics import confusion_matrix
-
-def get_ranker(ranker_location, datasource):
-    print('Reading the Ranker label Information')
-    f = open(ranker_location[datasource])
-    print "Ranker:", f
-    tmplist = []
-    Ranker_topic_to_doclist = {}
-    for lines in f:
-        values = lines.split()
-        topicNo = values[0]
-        docNo = values[2]
-        if (Ranker_topic_to_doclist.has_key(topicNo)):
-            tmplist.append(docNo)
-            Ranker_topic_to_doclist[topicNo] = tmplist
-        else:
-            tmplist = []
-            tmplist.append(docNo)
-            Ranker_topic_to_doclist[topicNo] = tmplist
-    f.close()
-    return Ranker_topic_to_doclist
-
-def load_pickle(TEXT_DATA_DIR, processed_file_location):
-	all_reviews = {}
-
-	for name in sorted(os.listdir(TEXT_DATA_DIR)):
-		path = os.path.join(TEXT_DATA_DIR, name)
-        print path
-
-        f = open(path)
-        docNo = name[0:name.index('.')]
-
-        # counting the line number until '---Terms---'
-        count = 0
-        for lines in f:
-            if lines.find("Terms")>0:
-                count = count + 1
-                break
-            count = count + 1
-
-        # skipping the lines until  '---Terms---' and reading the rest
-        c = 0
-        tmpStr = ""
-        for lines in f:
-            if c < count:
-                c = c + 1
-                continue
-            values = lines.split()
-            c = c + 1
-            tmpStr = tmpStr + " "+ str(values[2])
-        print tmpStr
-        #exit(0)
-
-        #if docNo in docNo_label:
-        all_reviews[docNo] = (review_to_words(tmpStr))
-        f.close()
-
-	output = open(processed_file_location, 'ab+')
-	pickle.dump(all_reviews, output)
-	output.close()
-	return all_reviews
-
-def rank_topic_to_doclist(ranker_location, datasource):
-	print('Reading the Ranker label Information')
-	f = open(ranker_location[datasource])
-	print "Ranker:", f
-	tmplist = []
-	Ranker_topic_to_doclist = {}
-	for lines in f:
-	    values = lines.split()
-	    topicNo = values[0]
-	    docNo = values[2]
-	    if (Ranker_topic_to_doclist.has_key(topicNo)):
-	        tmplist.append(docNo)
-	        Ranker_topic_to_doclist[topicNo] = tmplist
-	    else:
-	        tmplist = []
-	        tmplist.append(docNo)
-	        Ranker_topic_to_doclist[topicNo] = tmplist
-	f.close()
-	return Ranker_topic_to_doclist
+from sklearn.linear_model import LogisticRegression
 
 #print result_location
 #exit(0)
@@ -126,6 +48,112 @@ def review_to_words( raw_review ):
     # and return the result.
     return( " ".join( meaningful_words ))
 
+
+def get_ranker(ranker_location, datasource):
+    print('Reading the Ranker label Information')
+    f = open(ranker_location[datasource])
+    print "Ranker:", f
+    tmplist = []
+    Ranker_topic_to_doclist = {}
+    for lines in f:
+        values = lines.split()
+        topicNo = values[0]
+        docNo = values[2]
+        if (Ranker_topic_to_doclist.has_key(topicNo)):
+            tmplist.append(docNo)
+            Ranker_topic_to_doclist[topicNo] = tmplist
+        else:
+            tmplist = []
+            tmplist.append(docNo)
+            Ranker_topic_to_doclist[topicNo] = tmplist
+    f.close()
+    return Ranker_topic_to_doclist
+
+def load_pickle(TEXT_DATA_DIR, processed_file_location):
+    files = os.listdir(TEXT_DATA_DIR)
+    all_reviews = {}
+
+    for name in sorted(files):
+        path = os.path.join(TEXT_DATA_DIR, name)
+        print path
+        f = open(path)
+        docNo = name[0:name.index('.txt')]
+
+        # counting the line number until '---Terms---'
+        count = 0
+        for lines in f:
+            if lines.find("Terms")>0:
+                count = count + 1
+                break
+            count = count + 1
+
+        # skipping the lines until  '---Terms---' and reading the rest
+        c = 0
+        tmpStr = ""
+        for lines in f:
+            if c < count:
+                c = c + 1
+                continue
+            values = lines.split()
+            c = c + 1
+            tmpStr = tmpStr + " "+ str(values[2])
+        print tmpStr
+        #exit(0)
+
+        #if docNo in docNo_label:
+        all_reviews[docNo] = (review_to_words(tmpStr))
+        f.close()
+
+    output = open(processed_file_location, 'ab+')
+    pickle.dump(all_reviews, output)
+    output.close()
+    return all_reviews
+
+# f = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv_auto_asr'
+# processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/processed_auto_asr.txt'
+# load_pickle(f, processed_file_location)
+
+# f = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv_auto_both'
+# processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/processed_auto_both.txt'
+# load_pickle(f, processed_file_location)
+
+# f = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv_auto_keyword'
+# processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/processed_auto_keyword.txt'
+# load_pickle(f, processed_file_location)
+
+# f = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv_manual_keyword'
+# processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/processed_manual_keyword.txt'
+# load_pickle(f, processed_file_location)
+
+# f = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv_manual_summary'
+# processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/processed_manual_summary.txt'
+# load_pickle(f, processed_file_location)
+
+# f = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/dv_manual_both'
+# processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/clef2007/processed_manual_both.txt'
+# load_pickle(f, processed_file_location)
+
+def rank_topic_to_doclist(ranker_location, datasource):
+	print('Reading the Ranker label Information')
+	f = open(ranker_location[datasource])
+	print "Ranker:", f
+	tmplist = []
+	Ranker_topic_to_doclist = {}
+	for lines in f:
+	    values = lines.split()
+	    topicNo = values[0]
+	    docNo = values[2]
+	    if (Ranker_topic_to_doclist.has_key(topicNo)):
+	        tmplist.append(docNo)
+	        Ranker_topic_to_doclist[topicNo] = tmplist
+	    else:
+	        tmplist = []
+	        tmplist.append(docNo)
+	        Ranker_topic_to_doclist[topicNo] = tmplist
+	f.close()
+	return Ranker_topic_to_doclist
+
+
 def create_initial_training_set(X, y, counter, limit, train_index_list, initial_X_train, initial_y_train, clas):
     for index in xrange(0,len(X)):
         if y[index] == clas:
@@ -142,8 +170,8 @@ def create_initial_training_set(X, y, counter, limit, train_index_list, initial_
 def fit_model(model, ens, protocol, correction, under_sampling, 
                 initial_X_train, initial_y_train, sampling_weight,
                 initial_X_agg, initial_y_agg):
-    if protocol == 'SPL':
-        model = LogisticRegression()
+    # if protocol == 'SPL':
+        # model = LogisticRegression()
 
     if correction == True:
         model.fit(initial_X_train, initial_y_train, sample_weight=sampling_weight)
@@ -153,6 +181,7 @@ def fit_model(model, ens, protocol, correction, under_sampling,
             print("ensemble works")
         else:
             model.fit(initial_X_train, initial_y_train)
+
 
 def get_prediction_y_pred(train_index_list, docIndex_DocNo, topic, human_label_location, 
                             train_per_centage, loopCounter, under_sampling, ens, model, X, y):
@@ -257,11 +286,10 @@ def get_sensitivity_specificity(y, y_pred, learning_curve, index):
     return sensitivity, specificity    
 
 
-def update_initial_train(iter_sampling, under_sampling, unmodified_train_X, unmodified_train_y, num_subsets):
+def update_initial_train(iter_sampling, under_sampling, smote, unmodified_train_X, unmodified_train_y, num_subsets):
     if iter_sampling == True:
         print "Oversampling in the active iteration list"
         ros = RandomOverSampler()
-        # ros = RandomUnderSampler()
         initial_X_train = None
         initial_y_train = None
         initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
@@ -270,9 +298,14 @@ def update_initial_train(iter_sampling, under_sampling, unmodified_train_X, unmo
         initial_X_train = None
         initial_y_train = None
         initial_X_train, initial_y_train, indices = ee.fit_sample(unmodified_train_X, unmodified_train_y)
+    elif smote == True:
+        ros = SMOTE(k_neighbors=3)
+        initial_X_train = None
+        initial_y_train = None
+        initial_X_train, initial_y_train = ros.fit_sample(unmodified_train_X, unmodified_train_y)
     else:
-        initial_X_train[:] = []
-        initial_y_train[:] = []
+        # initial_X_train[:] = []
+        # initial_y_train[:] = []
         initial_X_train = copy.deepcopy(unmodified_train_X)
         initial_y_train = copy.deepcopy(unmodified_train_y)
 

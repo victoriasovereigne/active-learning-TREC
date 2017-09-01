@@ -1,20 +1,28 @@
 from scipy.stats.stats import kendalltau
 from numpy import trapz
 import os
+import matplotlib
+matplotlib.use('Agg')
+
+import subprocess
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 gs = gridspec.GridSpec(5, 2)
 
-os.chdir('/home/nahid/Downloads/trec_eval.9.0/')
+# os.chdir('/home/nahid/Downloads/trec_eval.9.0/')
 
-base_address1 = "/home/nahid/UT_research/clueweb12/bpref_result/"
-plotAddress = "/home/nahid/UT_research/clueweb12/bpref_result/plots/tau/mapbpref/"
-baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
+# base_address1 = "/home/nahid/UT_research/clueweb12/bpref_result/"
+# plotAddress = "/home/nahid/UT_research/clueweb12/bpref_result/plots/tau/mapbpref/"
+# baseAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/"
+os.chdir('/v/filer4b/v20q001/vlestari/Documents/Summer/IR/trec_eval.9.0')
 
+base_address1 = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/result/'
+plotAddress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/result/'
 
-protocol_list = ['SAL','CAL', 'SPL']
-#dataset_list = ['WT2013']
-dataset_list = ['WT2014','WT2013', 'gov2', 'TREC8']
+# protocol_list = ['SAL','CAL', 'SPL']
+protocol_list = ['CAL']
+dataset_list = ['WT2013', 'WT2014']
+# dataset_list = ['WT2014','WT2013', 'gov2', 'TREC8']
 ranker_list = ['False']
 sampling_list = ['True']
 map_list = ['True', 'False']
@@ -49,8 +57,6 @@ for use_map in map_list:
 
     for use_ranker in ranker_list:
         for iter_sampling in sampling_list:
-
-
             s = ""
             s1 = ""
             originalqrelMap = []
@@ -73,24 +79,39 @@ for use_map in map_list:
                     destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
                     predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/prediction/"
                     predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/modifiedprediction/"
+                
                 elif datasource == 'WT2013':
-                    originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
-                    qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
-                    originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/'
-                    destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
-                    predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/prediction/"
-                    predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modifiedprediction/"
+                    
+                    # originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
+                    # qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
+                    # originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/'
+                    # destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
+                    # predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/prediction/"
+                    # predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modifiedprediction/"
+
+                    originAdress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/unzipped/' + datasource + '/'
+                    qrelAdress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/qrels/WT2013/modified_qreldocs2013.txt'
+                    originalMapResult = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource + '/'
+                    destinationBase = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource + '/'
+                    predictionAddress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource +'/prediction/'
+                    predictionModifiedAddress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource +'/modified_prediction/'
 
                 else:
-                    originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
-                    qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modified_qreldocs2014.txt'
-                    originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/'
-                    destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
-                    predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/prediction/"
-                    predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modifiedprediction/"
+                    # originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/" + datasource + "/"
+                    # qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modified_qreldocs2014.txt'
+                    # originalMapResult = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/'
+                    # destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
+                    # predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/prediction/"
+                    # predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modifiedprediction/"
+                    originAdress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/unzipped/' + datasource + '/'
+                    qrelAdress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/qrels/WT2014/modified_qreldocs2014.txt'
+                    originalMapResult = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource + '/'
+                    destinationBase = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource + '/'
+                    predictionAddress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource +'/prediction/'
+                    predictionModifiedAddress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/modified_system_ranking/' + datasource +'/modified_prediction/'
 
                 print "Original Part"
-                '''
+                
                 fileList = os.listdir(originAdress)
                 for fileName in fileList:
                     system = originAdress + fileName
@@ -102,8 +123,11 @@ for use_map in map_list:
                     for line in p.stdout.readlines():
                         print line
                         values = line.split()
-                        map = float(values[2])
-                        originalqrelMap.append(map)
+                        try:
+                            map = float(values[2])
+                            originalqrelMap.append(map)
+                        except:
+                            continue
 
                     retval = p.wait()
 
@@ -116,8 +140,9 @@ for use_map in map_list:
                 text_file = open(originalMapResult, "w")
                 text_file.write(tmp)
                 text_file.close()
-                '''
-                originalMapResult = originalMapResult + stringUse+'.txt'
+                
+
+                # originalMapResult = originalMapResult + stringUse+'.txt'
                 f = open(originalMapResult)
                 length = 0
                 tmplist = []
@@ -141,8 +166,10 @@ for use_map in map_list:
                     base_address3 = base_address2 + "no_ranker/"
                     s1 = "Interactive Search and "
                 if iter_sampling == 'True':
-                    base_address4 = base_address3 + "oversample/"
-                    s1 = s1 + "oversampling"
+                    # base_address4 = base_address3 + "oversample/"
+                    # s1 = s1 + "oversampling"
+                    base_address4 = base_address3 + "undersample/"
+                    s1 = s1 + "undersampling"
                 else:
                     base_address4 = base_address3 + "htcorrection/"
                     s1 = s1 + "HT correction"

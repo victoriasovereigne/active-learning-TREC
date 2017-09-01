@@ -1,4 +1,3 @@
-
 #topicSkipList = [202,225,255, 278, 805]
 #topicSkipList = [202,210,225,234,235,238,244,251,255,262,269,271,278,283,289,291,803,805]
 topicSkipList = [202,225,255, 278, 805]
@@ -17,32 +16,52 @@ elif datasource=='gov2':
     start_topic = 801
     end_topic = 851
 elif datasource=='WT2013':
-    processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
-    realFile = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/realnumberofdocs2013.txt'
-    destinationAddress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
+    # processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
+    # RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2013.txt'
+    # realFile = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/realnumberofdocs2013.txt'
+    # destinationAddress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
+    processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/processed/WT2013/processed_new.txt'
+    RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/qrels/WT2013/qrelsadhoc2013.txt'
+    destinationAddress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/qrels/WT2013/modified_qreldocs2013.txt'
     start_topic = 201
     end_topic = 251
 else:
-    processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
-    RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2014.txt'
-    realFile = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/realnumberofdocs2014.txt'
-    destinationAddress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modified_qreldocs2014.txt'
+    # processed_file_location = '/home/nahid/UT_research/clueweb12/pythonprocessed/processed_new.txt'
+    # RELEVANCE_DATA_DIR = '/home/nahid/UT_research/clueweb12/qrels/qrelsadhoc2014.txt'
+    # realFile = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/realnumberofdocs2014.txt'
+    # destinationAddress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2014/modified_qreldocs2014.txt'
+    processed_file_location = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/processed/WT2014/processed_new.txt'
+    RELEVANCE_DATA_DIR = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/qrels/WT2014/qrelsadhoc2014.txt'
+    destinationAddress =  '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/qrels/WT2014/modified_qreldocs2014.txt'
     start_topic = 251
     end_topic = 301
 
-
-lineCounter = 0
-f = open(realFile)
-print f
+# create real file
+ff = open(RELEVANCE_DATA_DIR)
 realqrel = []
-for lines in f:
+lineCounter = 0
+
+for lines in ff:
     values = lines.split()
-    docNo = values[1]
-    #print docNo
-    realqrel.append(docNo)
-    lineCounter = lineCounter + 1
-f.close()
+    docNo = values[2]
+    if docNo not in realqrel:
+        realqrel.append(docNo)
+        lineCounter += 1
+ff.close()
+
+
+
+# lineCounter = 0
+# f = open(realFile)
+# print f
+# realqrel = []
+# for lines in f:
+#     values = lines.split()
+#     docNo = values[1]
+#     #print docNo
+#     realqrel.append(docNo)
+#     lineCounter = lineCounter + 1
+# f.close()
 
 print "Real File Contains Line:", lineCounter
 

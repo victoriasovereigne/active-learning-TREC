@@ -65,7 +65,7 @@ elif datasource=='TREC8':
     predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/prediction/"
     predictionModifiedAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/TREC8/modifiedprediction/"
 elif datasource=='WT2013':
-    originAdress = "/media/nahid/Windows8_OS/unzippedsystemRanking/"+datasource+"/"
+    originAdress = "/v/filer4b/v20q001/vlestari/Documents/Summer/IR/unzipped/"+datasource+"/"
     qrelAdress = '/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/modified_qreldocs2013.txt'
     destinationBase = "/media/nahid/Windows8_OS/modifiedSystemRanking/" + datasource + "/"
     predictionAddress = "/media/nahid/Windows8_OS/finalDownlaod/TREC/WT2013/prediction/"

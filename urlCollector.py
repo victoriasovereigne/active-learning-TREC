@@ -5,9 +5,9 @@ import os
 import requests
 from requests.auth import HTTPBasicAuth
 
-dataset = "WT2014"
+dataset = "WT2013"
 
-if dataset == "TREC-8":
+if dataset == "TREC8":
     SystemRankingAddress = "http://trec.nist.gov/results/trec8/trec8.results.input/index.html"
     RankingBaseAddress = "http://trec.nist.gov/results/trec8/trec8.results.input/"
 elif dataset == "gov2":
@@ -24,7 +24,9 @@ request = urllib2.Request(SystemRankingAddress)
 base64string = base64.encodestring('%s:%s' % ('tipster', 'cdroms')).replace('\n', '')
 request.add_header("Authorization", "Basic %s" % base64string)
 resp = urllib2.urlopen(request)
-destinationAddress = "/home/nahid/PycharmProjects/parser/systemRanking/"+dataset+"/"
+# destinationAddress = "/home/nahid/PycharmProjects/parser/systemRanking/"+dataset+"/"
+destinationAddress = '/v/filer4b/v20q001/vlestari/Documents/Summer/IR/whatever/' + dataset + '/'
+
 
 soup = BeautifulSoup(resp, from_encoding=resp.info().getparam('charset'))
 
